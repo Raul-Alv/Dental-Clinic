@@ -24,7 +24,7 @@ class Practicante(models.Model):
     cualificacion = models.CharField(max_length=100) #Buscar como hacerlo más detallado
 
     def __str__(self):
-        return f"{"Dr." if {self.genero == "Masculino"} else "Dra."} {self.nombre} {self.apellido}"
+        return f"{"Dr." if self.genero == "M" else "Dra."} {self.nombre} {self.apellido}"
 
 class Diente(models.Model):
     codigo = models.CharField(max_length=7, unique=True) #Codigo basado en ADA SNOMED 
