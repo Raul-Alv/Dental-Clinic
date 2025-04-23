@@ -5,14 +5,13 @@
 {% endblock %}
 
 {% block content %}
-<h1>Show Orders</h1>
+<h1>Procedimientos</h1>
 <table class="table">
    <thead>
      <tr>
        <th scope="col">Codigo</th>
        <th scope="col">Status</th>
        <th scope="col">Paciente</th>
-       <th scope="col">Practicante</th>
        <th scope="col">Diente</th>
        <th scope="col">Descripcion</th>
        <th scope="col">Realizado el</th>
@@ -21,10 +20,9 @@
    <tbody>
    {% for i in procedimientos %}
      <tr>
-       <td>{{i.codigo}}</td>
+       <td><a href="/clinica/procedimiento/{{i.id}}/">{{i.codigo}}</a></td>
        <td>{{i.status}}</td>
        <td>{{i.paciente}}</td>
-       <td>{{i.practicante}}</td>
        <td>{{i.diente}}</td>
        <td>{{i.descripcion}}</td>
        <td>{{i.realizado_el}}</td>

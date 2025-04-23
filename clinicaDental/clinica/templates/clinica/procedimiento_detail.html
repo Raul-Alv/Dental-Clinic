@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+   <title>Show Page</title>
+{% endblock %}
+
+{% block content %}
+<h1>Procedimiento {{ procedimiento.codigo }} - </h1>
+
+<p><strong>Codigo:</strong> {{ procedimiento.codigo }}</p>
+<p><strong>Status:</strong> {{ procedimiento.status }}</p>
+<p><strong>Paciente:</strong> {{ procedimiento.paciente }}</p>
+<p><strong>Diente:</strong> {{ procedimiento.diente }}</p>
+<p><strong>Realizado el:</strong> {{ procedimiento.realizado_el }}</p>
+
+<a href="{% url 'procedimiento_list' %}">← Atrás</a>
+{% endblock %}
