@@ -20,7 +20,7 @@
    <tbody>
    {% for i in procedimientos %}
      <tr>
-       <td><a href="/clinica/procedimiento/{{i.id}}/">{{i.codigo}}</a></td>
+       <td><a href="{% url 'procedimiento_detail' i.id %}">{{i.codigo}}</a></td>
        <td>{{i.status}}</td>
        <td>{{i.paciente}}</td>
        <td>{{i.diente}}</td>
