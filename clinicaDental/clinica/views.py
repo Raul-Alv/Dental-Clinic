@@ -28,3 +28,14 @@ def procedimiento_list(request):
 def getProcedimiento(request, id):
     procedimiento = get_object_or_404(Procedimiento, id=id)
     return render(request, 'clinica/procedimiento_detail.html', {'procedimiento': procedimiento})
+
+def updateProcedimiento(request, id):
+    procedimiento = get_object_or_404(Procedimiento, id=id)
+    if request.method == 'POST':
+        form = ProcedimientoForm(request.POST, instance=procedimiento)
+        if form.is_valid():
+            form.save()
+            return redirect('procedimiento_list')
+    else:
+        form = ProcedimientoForm(instance=procedimiento)
+    return render(request, 'clinica/procedimiento_update.html', {'form': form, 'procedimiento': procedimiento})

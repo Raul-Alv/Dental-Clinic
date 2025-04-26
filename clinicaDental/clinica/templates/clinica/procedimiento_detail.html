@@ -11,7 +11,12 @@
 <p><strong>Status:</strong> {{ procedimiento.status }}</p>
 <p><strong>Paciente:</strong> {{ procedimiento.paciente }}</p>
 <p><strong>Diente:</strong> {{ procedimiento.diente }}</p>
+<p><strong>Descripcion:</strong> {{ procedimiento.descripcion }}</p>
 <p><strong>Realizado el:</strong> {{ procedimiento.realizado_el }}</p>
+
+<button><a href="{% url 'procedimiento_update' procedimiento.id %}">Editar</a></button>
+
+
 
 <a href="{% url 'procedimiento_list' %}">← Atrás</a>
 {% endblock %}
