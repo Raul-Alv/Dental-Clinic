@@ -7,4 +7,5 @@ urlpatterns = [
     path("procedimiento/crear/", views.crearProcedimiento, name='procedimiento_crear'),
     path("procedimiento/<int:id>/", views.getProcedimiento, name='procedimiento_detail'),
     path("procedimiento/<int:id>/update/", views.updateProcedimiento, name='procedimiento_update'),
+    path("procedimiento/<int:id>/delete/", views.deleteProcedimiento, name='procedimiento_delete'),
 ]

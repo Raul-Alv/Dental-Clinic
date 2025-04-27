@@ -22,7 +22,6 @@ def crearProcedimiento(request):
 
 def procedimiento_list(request):
     procedimientos = Procedimiento.objects.all()
-    print(procedimientos)
     return render(request, 'clinica/procedimiento_list.html', {'procedimientos': procedimientos})
 
 def getProcedimiento(request, id):
@@ -39,3 +38,12 @@ def updateProcedimiento(request, id):
     else:
         form = ProcedimientoForm(instance=procedimiento)
     return render(request, 'clinica/procedimiento_update.html', {'form': form, 'procedimiento': procedimiento})
+
+def deleteProcedimiento(request, id):
+    procedimiento = get_object_or_404(Procedimiento, id=id)
+    print(procedimiento)
+    if request.method == 'POST':
+        procedimiento.delete()
+        
+        return redirect('procedimiento_list')
+    return render(request, 'clinica/procedimiento_delete.html', {'procedimiento': procedimiento})
