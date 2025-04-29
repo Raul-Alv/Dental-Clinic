@@ -1,0 +1,34 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+   <title>Show Page</title>
+{% endblock %}
+
+{% block content %}
+<h1>Procedimientos</h1>
+<table class="table">
+   <thead>
+     <tr>
+       <th scope="col">Codigo</th>
+       <th scope="col">Status</th>
+       <th scope="col">Paciente</th>
+       <th scope="col">Diente</th>
+       <th scope="col">Descripcion</th>
+       <th scope="col">Realizado el</th>
+     </tr>
+   </thead>
+   <tbody>
+   {% for i in procedimientos %}
+     <tr>
+       <td><a href="{% url 'procedimiento_detail' i.id %}">{{i.codigo}}</a></td>
+       <td>{{i.status}}</td>
+       <td>{{i.paciente}}</td>
+       <td>{{i.diente}}</td>
+       <td>{{i.descripcion}}</td>
+       <td>{{i.realizado_el}}</td>
+
+     </tr>
+   {% endfor %}
+   </tbody>
+ </table>
+{% endblock %}

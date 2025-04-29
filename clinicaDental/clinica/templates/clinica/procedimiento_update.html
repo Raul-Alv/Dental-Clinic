@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+   <title>Show Page</title>
+{% endblock %}
+
+{% block content %}
+<h2>{{ view.title|default:"Form" }}</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Save</button>
+</form>
+
+{% if form.errors %}
+  <div class="alert alert-danger">
+    <strong>Error!</strong> Please correct the errors below.
+  </div>
+{% endif %}
+
+{% endblock %}
