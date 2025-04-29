@@ -31,4 +31,8 @@
    {% endfor %}
    </tbody>
  </table>
+ <form method="get" action="{% url 'procedimiento_export_rdf' %}">
+  {% csrf_token%}
+  <button type="submit" class="btn btn-info">Exportar</button>
+</form>
 {% endblock %}

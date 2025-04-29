@@ -4,6 +4,7 @@ from django.http import HttpResponse
 
 from .forms import ProcedimientoForm
 from .models import Procedimiento, Paciente, Practicante, Diente
+from . import rdfConverter
 
 def index(request):
     return HttpResponse("Hello, world. You're at the clinica index.")
