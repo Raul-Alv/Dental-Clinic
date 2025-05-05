@@ -14,13 +14,11 @@ def export_all_rdf(request):
     temp_dir = tempfile.mkdtemp()
 
     try:
-        # Call model export functions
         export_pacientes_rdf(temp_dir)
         """ export_practitioners_rdf(temp_dir)
         export_teeth_rdf(temp_dir) """
         export_procedimientos_rdf(temp_dir)
 
-        # Zip them all
         zip_path = os.path.join(temp_dir, "rdf_exports.zip")
         with zipfile.ZipFile(zip_path, 'w') as zipf:
             for filename in os.listdir(temp_dir):
@@ -28,11 +26,9 @@ def export_all_rdf(request):
                     file_path = os.path.join(temp_dir, filename)
                     zipf.write(file_path, arcname=filename)
 
-        # Return zip as response
         return FileResponse(open(zip_path, 'rb'), as_attachment=True, filename="rdf_exports.zip")
 
     finally:
-        # Clean up temp directory later if needed
         shutil.rmtree(temp_dir)
 
 def export_pacientes_rdf(request):
@@ -45,7 +41,6 @@ def export_pacientes_rdf(request):
     pacientes = Paciente.objects.all()
 
     for paciente in pacientes:
-        # Define a unique subject URI for each paciente
         #print("ID:",str(paciente.id))
         pac_uri = URIRef(FHIR.identifier + "/" + str(paciente.id))
         print(pac_uri)
@@ -78,7 +73,6 @@ def export_pacientes_rdf(request):
 
     rdf_data = g.serialize(format="turtle")
 
-    # Return it as a file download
     response = HttpResponse(rdf_data, content_type="text/turtle")
     response["Content-Disposition"] = 'attachment; filename="pacients.ttl"' 
 
@@ -95,7 +89,6 @@ def export_procedimientos_rdf(request):
     procedimientos = Procedimiento.objects.all()
 
     for procedimiento in procedimientos:
-        # Define a unique subject URI for each procedimiento
         #print("ID:",str(procedimiento.id))
         proc_uri = URIRef(FHIR.identifier + "/" + str(procedimiento.id))
 
@@ -126,15 +119,9 @@ def export_procedimientos_rdf(request):
         g.add((proc_uri, FHIR.performer, performer))
 
         #g.add((proc_uri, FHIR.bodySite, Literal(procedimiento.diente)))
-
-        # Link to Paciente
         
-        
-
-    # Serialize the graph
     rdf_data = g.serialize(format="turtle")
 
-    # Return it as a file download
     response = HttpResponse(rdf_data, content_type="text/turtle")
     response["Content-Disposition"] = 'attachment; filename="procedures.ttl"' 
 
