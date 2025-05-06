@@ -1,22 +1,38 @@
 ---
 name: Bug report
-about: Exportando RDF no permite el uso de predicados "complejos"
-title: "[BUG]"
-labels: bug
-assignees: Raul-Alv
+about: Create a report to help us improve
+title: ''
+labels: ''
+assignees: ''
 
 ---
 
-**Describe el bug**
-A la hora de hacer el formato de exportación de los datos a RDF, se usa como ejemplo el proporcionado en la página de FHIR [Procedimiento de ejemplo](https://hl7.org/fhir/us/dental-data-exchange/Procedure-Oral-eval-example.ttl.html). Sin embargo, al usar los predicados como se usan en el ejemplo, la aplicación lanza el error: AttributeError at /clinica/procedimiento/export/rdf/
-'URIRef' object has no attribute 'status'
+**Describe the bug**
+A clear and concise description of what the bug is.
 
-**Como reproducir**
-Un caso como ejemplo, en `export_procedimiento_rdf` la propiedad `status`
-1. Cambiar el añadir al grafo la propiedad `status` de `FHIR.status` a `FHIR.Procedure.status`
-2. En `urls.py`, cambiar la funcionalidad del botón de exportar a `export_procedimiento_rdf` si tiene otro valor
-3. Entrar en la vista `clinica\procedimientos`
-4. Pulsar el botón `Exportar`
+**To Reproduce**
+Steps to reproduce the behavior:
+1. Go to '...'
+2. Click on '....'
+3. Scroll down to '....'
+4. See error
 
-**Comportamiento esperado**
-El programa debería exportar y descargar un fichero `procedimiento.ttl` en el que la sintaxis es igual a la mostrada en el ejemplo de FHIR.
+**Expected behavior**
+A clear and concise description of what you expected to happen.
+
+**Screenshots**
+If applicable, add screenshots to help explain your problem.
+
+**Desktop (please complete the following information):**
+ - OS: [e.g. iOS]
+ - Browser [e.g. chrome, safari]
+ - Version [e.g. 22]
+
+**Smartphone (please complete the following information):**
+ - Device: [e.g. iPhone6]
+ - OS: [e.g. iOS8.1]
+ - Browser [e.g. stock browser, safari]
+ - Version [e.g. 22]
+
+**Additional context**
+Add any other context about the problem here.
