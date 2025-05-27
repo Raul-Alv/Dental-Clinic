@@ -6,3 +6,4 @@ admin.site.register(Paciente)
 admin.site.register(Practicante)
 admin.site.register(Diente)
 admin.site.register(Procedimiento)
+

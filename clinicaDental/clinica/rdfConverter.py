@@ -1,6 +1,7 @@
 from rdflib import Graph, URIRef, Literal, Namespace, BNode
 from rdflib.namespace import RDF, FOAF, XSD
 from django.http import HttpResponse
+from django.conf import settings
 from .models import Procedimiento, Paciente, Practicante, Diente
 
 import os
@@ -80,6 +81,11 @@ def export_pacientes_rdf(request):
 
 
 def export_procedimientos_rdf(request):
+    tmp_dir = tempfile.mkdtemp()
+    rdf_file = os.path.join(tmp_dir, "procedures.ttl")
+    shex_file = os.path.join(tmp_dir, "procedure-schemas.shex")
+    zip_path = os.path.join(tmp_dir, "export.zip")
+
     g = Graph()
 
     FHIR = Namespace("http://hl7.org/fhir/")
@@ -94,7 +100,7 @@ def export_procedimientos_rdf(request):
 
         g.add((proc_uri, RDF.type, FHIR.Procedure))
 
-        g.add((proc_uri, FHIR.status, Literal(procedimiento.status)))
+        g.add((proc_uri, FHIR.Procedure.status, Literal(procedimiento.status)))
 
         procCode = BNode()
         code = BNode()
@@ -122,7 +128,95 @@ def export_procedimientos_rdf(request):
         
     rdf_data = g.serialize(format="turtle")
 
+    shex_path = os.path.join(settings.BASE_DIR, "clinicaDental", "schemas", "procedure-schemas.shex")
+    shutil.copy(shex_path, shex_file)
+
+     # 3. Create zip
+    with zipfile.ZipFile(zip_path, "w") as zipf:
+        zipf.write(rdf_file, "procedures.ttl")
+        zipf.write(shex_file, "procedure-schema.shex")
+
+    # 4. Serve the zip
+    with open(zip_path, "rb") as f:
+        response = HttpResponse(f.read(), content_type="application/zip")
+        response["Content-Disposition"] = 'attachment; filename="fhir_procedure_export.zip"'
+        return response
+
     response = HttpResponse(rdf_data, content_type="text/turtle")
     response["Content-Disposition"] = 'attachment; filename="procedures.ttl"' 
+
+    return response
+
+def export_practitioners_rdf(request):
+    g = Graph()
+
+    FHIR = Namespace("http://hl7.org/fhir/")
+
+    g.bind("fhir", FHIR)
+
+    practitioners = Practicante.objects.all()
+
+    for practitioner in practitioners:
+        #print("ID:",str(practitioner.id))
+        pract_uri = URIRef(FHIR.identifier + "/" + str(practitioner.id))
+        print(pract_uri)
+        
+        g.add((pract_uri, RDF.type, FHIR.Practitioner))
+
+        g.add((pract_uri, FHIR.active, Literal(practitioner.activo)))
+
+        name = BNode()
+        g.add((pract_uri, FHIR.name, name))
+        g.add((name, FHIR.given, Literal(practitioner.nombre)))
+        g.add((name, FHIR.family, Literal(practitioner.apellido)))
+
+        telcom = BNode()
+        telephone = BNode()
+        g.add((pract_uri, FHIR.telecom, telcom))
+        g.add((telephone, FHIR.system, Literal("phone")))
+        g.add((telephone, FHIR.value, Literal(practitioner.telefono)))
+        g.add((telcom, FHIR.ContactPoint, telephone))
+        
+    rdf_data = g.serialize(format="turtle")
+
+    response = HttpResponse(rdf_data, content_type="text/turtle")
+    response["Content-Disposition"] = 'attachment; filename="practicantes.ttl"' 
+
+    return response
+
+def export_teeth_rdf(request):
+    g = Graph()
+
+    FHIR = Namespace("http://hl7.org/fhir/")
+
+    g.bind("fhir", FHIR)
+
+    dientes = Diente.objects.all()
+
+    for diente in dientes:
+        #print("ID:",str(diente.id))
+        diente_uri = URIRef(FHIR.identifier + "/" + str(diente.id))
+        print(diente_uri)
+        
+        g.add((diente_uri, RDF.type, FHIR.Tooth))
+
+        g.add((diente_uri, FHIR.active, Literal(diente.activo)))
+
+        name = BNode()
+        g.add((diente_uri, FHIR.name, name))
+        g.add((name, FHIR.given, Literal(diente.nombre)))
+        g.add((name, FHIR.family, Literal(diente.apellido)))
+
+        telcom = BNode()
+        telephone = BNode()
+        g.add((diente_uri, FHIR.telecom, telcom))
+        g.add((telephone, FHIR.system, Literal("phone")))
+        g.add((telephone, FHIR.value, Literal(diente.telefono)))
+        g.add((telcom, FHIR.ContactPoint, telephone))
+        
+    rdf_data = g.serialize(format="turtle")
+
+    response = HttpResponse(rdf_data, content_type="text/turtle")
+    response["Content-Disposition"] = 'attachment; filename="dientes.ttl"' 
 
     return response

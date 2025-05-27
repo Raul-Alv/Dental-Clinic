@@ -9,5 +9,6 @@ urlpatterns = [
     path("procedimiento/<int:id>/", views.getProcedimiento, name='procedimiento_detail'),
     path("procedimiento/<int:id>/update/", views.updateProcedimiento, name='procedimiento_update'),
     path("procedimiento/<int:id>/delete/", views.deleteProcedimiento, name='procedimiento_delete'),
-    path('procedimiento/export/rdf/', rdfConverter.export_pacientes_rdf, name='procedimiento_export_rdf')
+    path('procedimiento/export/rdf/', rdfConverter.export_procedimientos_rdf, name='procedimiento_export_rdf'),
+    path("import/", views.import_data, name='import_data'),
 ]
