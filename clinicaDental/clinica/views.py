@@ -100,3 +100,23 @@ def import_data(request):
             #diente.save()
         return redirect('procedimiento_list')
     return render(request, 'clinica/form.html')
+
+def patient_export_view(request):
+    pacientes = Paciente.objects.all()
+    selected_id = request.GET.get("paciente")
+    
+    procedimientos = []
+    paciente = None
+
+    if selected_id:
+        paciente = get_object_or_404(Paciente, id=selected_id)
+        procedimientos = Procedimiento.objects.filter(paciente=paciente)
+
+    return render(request, "clinica/export_procedures.html", {
+        "pacientes": pacientes,
+        "procedimientos": procedimientos,
+        "selected_paciente": paciente
+    })
+
+
+

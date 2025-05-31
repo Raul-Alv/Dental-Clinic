@@ -79,7 +79,6 @@ def export_pacientes_rdf(request):
 
     return response
 
-
 def export_procedimientos_rdf(request):
     tmp_dir = tempfile.mkdtemp()
     rdf_file = os.path.join(tmp_dir, "procedures.ttl")
@@ -220,3 +219,55 @@ def export_teeth_rdf(request):
     response["Content-Disposition"] = 'attachment; filename="dientes.ttl"' 
 
     return response
+
+def build_patient_rdf(patient_id):
+    from rdflib import Graph, URIRef, Literal, Namespace, BNode
+    from rdflib.namespace import RDF, XSD
+
+    FHIR = Namespace("http://hl7.org/fhir/")
+    EX = Namespace("http://example.org/")
+
+    g = Graph()
+    g.bind("fhir", FHIR)
+    g.bind("ex", EX)
+
+    paciente = Paciente.objects.get(id=patient_id)
+    procedimientos = Procedimiento.objects.select_related("diente", "practicante").filter(paciente=paciente)
+
+    for proc in procedimientos:
+        proc_uri = URIRef(f"http://example.org/Procedimiento/{proc.id}")
+        g.add((proc_uri, RDF.type, FHIR.Procedure))
+
+        # Reference to Patient
+        subject = BNode()
+        subject_ref = BNode()
+        g.add((proc_uri, FHIR.subject, subject))
+        g.add((subject, FHIR.reference, subject_ref))
+        g.add((subject_ref, FHIR.value, Literal(f"Paciente/{paciente.id}")))
+
+        # Reference to Tooth
+        
+        tooth_node = BNode()
+        g.add((proc_uri, FHIR.location, tooth_node))
+        if proc.diente:
+            g.add((tooth_node, FHIR.reference, Literal(f"Diente/{proc.diente.codigo}")))
+        else:
+            g.add((tooth_node, FHIR.reference, Literal("Diente/no-aplicable")))
+
+        # Reference to Practitioner
+        performer = BNode()
+        actor = BNode()
+        actor_ref = BNode()
+        g.add((proc_uri, FHIR.performer, performer))
+        g.add((performer, FHIR.actor, actor))
+        g.add((actor, FHIR.reference, actor_ref))
+        g.add((actor_ref, FHIR.value, Literal(f"Practicante/{proc.practicante.id}")))
+
+    return g
+
+def export_patient_rdf(request, paciente_id):
+    g = build_patient_rdf(paciente_id)
+    tmp = tempfile.NamedTemporaryFile(delete=False, suffix=".ttl")
+    g.serialize(destination=tmp.name, format="turtle")
+
+    return FileResponse(open(tmp.name, "rb"), as_attachment=True, filename=f"paciente_{paciente_id}_procedures.ttl")
