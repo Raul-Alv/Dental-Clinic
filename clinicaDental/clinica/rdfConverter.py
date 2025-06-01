@@ -74,10 +74,10 @@ def export_pacientes_rdf(request):
 
     rdf_data = g.serialize(format="turtle")
 
-    response = HttpResponse(rdf_data, content_type="text/turtle")
-    response["Content-Disposition"] = 'attachment; filename="pacients.ttl"' 
+    """ response = HttpResponse(rdf_data, content_type="text/turtle")
+    response["Content-Disposition"] = 'attachment; filename="pacients.ttl"'  """
 
-    return response
+    return rdf_data
 
 def export_procedimientos_rdf(request):
     tmp_dir = tempfile.mkdtemp()
@@ -127,7 +127,7 @@ def export_procedimientos_rdf(request):
         
     rdf_data = g.serialize(format="turtle")
 
-    shex_path = os.path.join(settings.BASE_DIR, "clinicaDental", "schemas", "procedure-schemas.shex")
+    """ shex_path = os.path.join(settings.BASE_DIR, "clinicaDental", "schemas", "procedure-schemas.shex")
     shutil.copy(shex_path, shex_file)
 
      # 3. Create zip
@@ -142,9 +142,9 @@ def export_procedimientos_rdf(request):
         return response
 
     response = HttpResponse(rdf_data, content_type="text/turtle")
-    response["Content-Disposition"] = 'attachment; filename="procedures.ttl"' 
+    response["Content-Disposition"] = 'attachment; filename="procedures.ttl"'  """
 
-    return response
+    return rdf_data
 
 def export_practitioners_rdf(request):
     g = Graph()
@@ -215,10 +215,10 @@ def export_teeth_rdf(request):
         
     rdf_data = g.serialize(format="turtle")
 
-    response = HttpResponse(rdf_data, content_type="text/turtle")
-    response["Content-Disposition"] = 'attachment; filename="dientes.ttl"' 
+    """ response = HttpResponse(rdf_data, content_type="text/turtle")
+    response["Content-Disposition"] = 'attachment; filename="dientes.ttl"'  """
 
-    return response
+    return rdf_data
 
 def build_patient_rdf(patient_id):
     from rdflib import Graph, URIRef, Literal, Namespace, BNode
@@ -234,34 +234,53 @@ def build_patient_rdf(patient_id):
     paciente = Paciente.objects.get(id=patient_id)
     procedimientos = Procedimiento.objects.select_related("diente", "practicante").filter(paciente=paciente)
 
-    for proc in procedimientos:
-        proc_uri = URIRef(f"http://example.org/Procedimiento/{proc.id}")
+    for procedimiento in procedimientos:
+        #print("ID:",str(procedimiento.id))
+        proc_uri = URIRef(FHIR.identifier + "/" + str(procedimiento.id))
+
         g.add((proc_uri, RDF.type, FHIR.Procedure))
 
-        # Reference to Patient
-        subject = BNode()
-        subject_ref = BNode()
-        g.add((proc_uri, FHIR.subject, subject))
-        g.add((subject, FHIR.reference, subject_ref))
-        g.add((subject_ref, FHIR.value, Literal(f"Paciente/{paciente.id}")))
+        g.add((proc_uri, FHIR.status, Literal(procedimiento.status)))
 
-        # Reference to Tooth
-        
-        tooth_node = BNode()
-        g.add((proc_uri, FHIR.location, tooth_node))
-        if proc.diente:
-            g.add((tooth_node, FHIR.reference, Literal(f"Diente/{proc.diente.codigo}")))
-        else:
-            g.add((tooth_node, FHIR.reference, Literal("Diente/no-aplicable")))
+        procCode = BNode()
+        code = BNode()
+        g.add((code, FHIR.system, Literal("http://ada.org/cdt")))
+        g.add((code, FHIR.code, Literal(procedimiento.codigo)))
+        g.add((procCode, FHIR.text, Literal(procedimiento.descripcion)))
+        g.add((procCode, FHIR.coding, code))
+        g.add((proc_uri, FHIR.code, procCode))
 
-        # Reference to Practitioner
-        performer = BNode()
+        pacient_reference = BNode()
+        g.add((pacient_reference, FHIR.value, Literal(f"Patient/{procedimiento.paciente.id}")))
+        g.add((proc_uri, FHIR.subject, pacient_reference))
+
+        g.add((proc_uri, FHIR.performedDateTime, Literal(procedimiento.realizado_el, datatype=XSD.date)))
+
         actor = BNode()
-        actor_ref = BNode()
-        g.add((proc_uri, FHIR.performer, performer))
+        actor_reference = BNode()
+        performer = BNode()
+        g.add((actor_reference, FHIR.value, Literal(f"Practitioner/{procedimiento.practicante.id}")))
+        g.add((actor, FHIR.reference, actor_reference))
         g.add((performer, FHIR.actor, actor))
-        g.add((actor, FHIR.reference, actor_ref))
-        g.add((actor_ref, FHIR.value, Literal(f"Practicante/{proc.practicante.id}")))
+        g.add((proc_uri, FHIR.performer, performer))
+        if procedimiento.diente:
+            location = BNode()
+            coding = BNode()
+            system_code = BNode()
+            code_code = BNode()
+            display_code = BNode()
+
+            g.add((system_code, FHIR.system, Literal("http://ada.org/tooth")))
+            g.add((code_code, FHIR.code, Literal(procedimiento.diente.codigo)))
+            g.add((display_code, FHIR.display, Literal(procedimiento.diente.display)))
+            
+            g.add((coding, FHIR.system, system_code))
+            g.add((coding, FHIR.code, code_code))
+            g.add((coding, FHIR.display, display_code))
+
+            g.add((location, FHIR.coding, coding))
+            g.add((proc_uri, FHIR.location, location))
+            
 
     return g
 
