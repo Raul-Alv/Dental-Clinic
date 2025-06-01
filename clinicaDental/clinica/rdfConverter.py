@@ -264,22 +264,17 @@ def build_patient_rdf(patient_id):
         g.add((performer, FHIR.actor, actor))
         g.add((proc_uri, FHIR.performer, performer))
         if procedimiento.diente:
-            location = BNode()
+            bodySite = BNode()
             coding = BNode()
-            system_code = BNode()
-            code_code = BNode()
-            display_code = BNode()
 
-            g.add((system_code, FHIR.system, Literal("http://ada.org/tooth")))
-            g.add((code_code, FHIR.code, Literal(procedimiento.diente.codigo)))
-            g.add((display_code, FHIR.display, Literal(procedimiento.diente.display)))
-            
-            g.add((coding, FHIR.system, system_code))
-            g.add((coding, FHIR.code, code_code))
-            g.add((coding, FHIR.display, display_code))
+            g.add((coding, FHIR.system, Literal("http://ada.org/snodent")))
+            g.add((coding, FHIR.code, Literal(procedimiento.diente.codigo)))
+            g.add((coding, FHIR.display, Literal(procedimiento.diente.display)))
 
-            g.add((location, FHIR.coding, coding))
-            g.add((proc_uri, FHIR.location, location))
+            g.add((bodySite, FHIR.coding, coding))
+            g.add((bodySite, FHIR.text, Literal(procedimiento.diente.definicion)))
+
+            g.add((proc_uri, FHIR.bodySite, bodySite))
             
 
     return g
