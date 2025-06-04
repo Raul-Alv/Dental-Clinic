@@ -14,8 +14,12 @@
 <p><strong>Descripcion:</strong> {{ procedimiento.descripcion }}</p>
 <p><strong>Realizado el:</strong> {{ procedimiento.realizado_el }}</p>
 
-
-<button type="button" class="btn btn-primary" action="{% url 'procedimiento_update' procedimiento.id %}">Editar</button>
+<button type="button"
+        class="btn btn-primary"
+        onclick=window.location.href='{% url "procedimiento_update" procedimiento.id %}'>
+  Editar
+</button>
+<!-- Aquí puedes agregar más botones o contenido si lo necesitas -->
 
 <button type="button" class="btn btn-danger" data-bs-toggle="modal"
   data-bs-target="#confirmDeleteModal{{ procedimiento.id }}">

@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
+from django.db.models import Q
 # Create your views here.
 
 from .forms import ProcedimientoForm
@@ -21,15 +22,16 @@ def crearProcedimiento(request):
             return redirect('procedimiento_list')
     else:
         form = ProcedimientoForm()
-    return render(request, 'clinica/procedimiento_crear.html', {'form': form}) 
+    return render(request, 'clinica/procedimientos/procedimiento_crear.html', {'form': form}) 
 
 def procedimiento_list(request):
-    procedimientos = Procedimiento.objects.all()
-    return render(request, 'clinica/procedimiento_list.html', {'procedimientos': procedimientos})
+    procedimientos = Procedimiento.objects.filter(
+        Q(paciente__activo=True), Q(practicante__activo=True))
+    return render(request, 'clinica/procedimientos/procedimiento_list.html', {'procedimientos': procedimientos})
 
 def getProcedimiento(request, id):
     procedimiento = get_object_or_404(Procedimiento, id=id)
-    return render(request, 'clinica/procedimiento_detail.html', {'procedimiento': procedimiento})
+    return render(request, 'clinica/procedimientos/procedimiento_detail.html', {'procedimiento': procedimiento})
 
 def updateProcedimiento(request, id):
     procedimiento = get_object_or_404(Procedimiento, id=id)
@@ -40,7 +42,7 @@ def updateProcedimiento(request, id):
             return redirect('procedimiento_list')
     else:
         form = ProcedimientoForm(instance=procedimiento)
-    return render(request, 'clinica/procedimiento_update.html', {'form': form, 'procedimiento': procedimiento})
+    return render(request, 'clinica/procedimientos/procedimiento_update.html', {'form': form, 'procedimiento': procedimiento})
 
 def deleteProcedimiento(request, id):
     procedimiento = get_object_or_404(Procedimiento, id=id)
@@ -49,7 +51,7 @@ def deleteProcedimiento(request, id):
         procedimiento.delete()
         
         return redirect('procedimiento_list')
-    return render(request, 'clinica/procedimiento_delete.html', {'procedimiento': procedimiento})
+    return render(request, 'clinica/procedimientos/procedimiento_delete.html', {'procedimiento': procedimiento})
 
 def import_data(request):
     if request.method == 'POST' and request.FILES['json_file']:
