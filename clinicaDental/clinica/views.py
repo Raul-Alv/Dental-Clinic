@@ -132,3 +132,8 @@ def crearPaciente(request):
     else:
         form = PacienteForm()
     return render(request, 'clinica/pacientes/pacientes_crear.html', {'form': form})
+
+
+def paciente_list(request):
+    pacientes = Paciente.objects.filter(activo=True)
+    return render(request, 'clinica/pacientes/pacientes_list.html', {'pacientes': pacientes})
