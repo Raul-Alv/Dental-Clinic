@@ -27,7 +27,7 @@ class ProcedimientoForm(forms.ModelForm):
 class PacienteForm(forms.ModelForm):
     class Meta:
         model = Paciente
-        fields = '__all__'
+        exclude = ['activo']
         labels = {
             'nombre': 'Nombre del Paciente',
             'apellido': 'Apellido del Paciente',
@@ -39,7 +39,6 @@ class PacienteForm(forms.ModelForm):
             
         }
         widgets = {
-            'activo':forms.CheckboxInput(),
             'nombre': forms.TextInput(attrs={'placeholder': 'Nombre del Paciente'}),
             'apellido': forms.TextInput(attrs={'placeholder': 'Apellido del Paciente'}),
             'genero': forms.Select(attrs={'placeholder': 'Género'}),
@@ -48,19 +47,6 @@ class PacienteForm(forms.ModelForm):
             'direccion': forms.TextInput(attrs={'placeholder': 'Dirección'}),
             'estado_civil': forms.Select(attrs={'placeholder': 'Estado Civil'}), 
         }
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
 
-        # Case 1: Creating a new Paciente
-        if self.instance.pk is None:
-            self.fields['activo'].initial = True
-            self.fields['activo'].widget = forms.HiddenInput()  # hide on creation
-
-        # Case 2: Editing an existing Paciente
-        else:
-            if self.instance.activo is False:
-                # Disable all fields except 'activo'
-                for name, field in self.fields.items():
-                    if name != 'activo':
-                        field.disabled = True
+        
          

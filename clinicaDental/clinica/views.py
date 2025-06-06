@@ -127,6 +127,7 @@ def crearPaciente(request):
         if form.is_valid():
             paciente = form.save(commit=False)
             paciente.id = Paciente.objects.count() + 1
+            paciente.activo = True  
             paciente.save()
             return redirect('procedimiento_list')
     else:
@@ -141,3 +142,14 @@ def paciente_list(request):
 def getPaciente(request, id):
     paciente = get_object_or_404(Paciente, id=id)
     return render(request, 'clinica/pacientes/pacientes_detail.html', {'paciente': paciente})
+
+def paciente_update(request, id):
+    paciente = get_object_or_404(Paciente, id=id)
+    if request.method == 'POST':
+        form = PacienteForm(request.POST, instance=paciente)
+        if form.is_valid():
+            form.save()
+            return redirect('pacientes_list')
+    else:
+        form = PacienteForm(instance=paciente)
+    return render(request, 'clinica/pacientes/pacientes_update.html', {'form': form, 'paciente': paciente})

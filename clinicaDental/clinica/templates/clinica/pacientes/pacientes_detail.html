@@ -13,7 +13,11 @@
 <p><strong>Direccion:</strong> {{ paciente.direccion }}</p>
 <p><strong>Estado civil:</strong> {{ paciente.get_estado_civil_display }}</p>
 
-
+<button type="button"
+        class="btn btn-primary"
+        onclick=window.location.href='{% url "paciente_update" paciente.id %}'>
+  Editar
+</button>
 
 
 <a href="{% url 'pacientes_list' %}">← Atrás</a>
