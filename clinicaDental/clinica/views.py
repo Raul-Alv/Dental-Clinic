@@ -153,3 +153,11 @@ def paciente_update(request, id):
     else:
         form = PacienteForm(instance=paciente)
     return render(request, 'clinica/pacientes/pacientes_update.html', {'form': form, 'paciente': paciente})
+
+def paciente_delete(request, id):
+    paciente = get_object_or_404(Paciente, id=id)
+    if request.method == 'POST':
+        paciente.activo = False
+        paciente.save()
+        return redirect('pacientes_list')
+    return render(request, 'clinica/pacientes/pacientes_delete.html', {'paciente': paciente})
