@@ -13,4 +13,6 @@ urlpatterns = [
     path("import/", views.import_data, name='import_data'),
     path("procedimiento/export", views.patient_export_view, name="export_procedures"),
     path("procedimiento/export/<int:paciente_id>", rdfConverter.export_patient_rdf, name="export_procedures"),
+
+    path("paciente/crear/", views.crearPaciente, name='pacientes_crear'),
 ]

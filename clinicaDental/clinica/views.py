@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.db.models import Q
 # Create your views here.
 
-from .forms import ProcedimientoForm
+from .forms import ProcedimientoForm, PacienteForm
 from .models import Procedimiento, Paciente, Practicante, Diente
 from . import rdfConverter
 import json, re
@@ -121,4 +121,14 @@ def patient_export_view(request):
     })
 
 
-
+def crearPaciente(request):
+    if request.method == 'POST':
+        form = PacienteForm(request.POST)
+        if form.is_valid():
+            paciente = form.save(commit=False)
+            paciente.id = Paciente.objects.count() + 1
+            paciente.save()
+            return redirect('procedimiento_list')
+    else:
+        form = PacienteForm()
+    return render(request, 'clinica/pacientes/pacientes_crear.html', {'form': form})
