@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+<title>Show Page</title>
+{% endblock %}
+
+{% block content %}
+<h1>{{ paciente.nombre }} {{ paciente.apellido  }}</h1>
+
+<p><strong>Genero:</strong> {{ paciente.get_genero_display }}</p>
+<p><strong>Telefono:</strong> {{ paciente.telefono }}</p>
+<p><strong>Fecha de nacimiento:</strong> {{ paciente.fecha_nacimiento }}</p>
+<p><strong>Direccion:</strong> {{ paciente.direccion }}</p>
+<p><strong>Estado civil:</strong> {{ paciente.get_estado_civil_display }}</p>
+
+
+
+
+<a href="{% url 'pacientes_list' %}">← Atrás</a>
+{% endblock %}

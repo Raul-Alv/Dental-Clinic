@@ -137,3 +137,7 @@ def crearPaciente(request):
 def paciente_list(request):
     pacientes = Paciente.objects.filter(activo=True)
     return render(request, 'clinica/pacientes/pacientes_list.html', {'pacientes': pacientes})
+
+def getPaciente(request, id):
+    paciente = get_object_or_404(Paciente, id=id)
+    return render(request, 'clinica/pacientes/pacientes_detail.html', {'paciente': paciente})
