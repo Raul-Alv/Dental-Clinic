@@ -68,5 +68,7 @@ class PracticanteForm(forms.ModelForm):
             'telefono': forms.TextInput(attrs={'placeholder': '123456789'}),
             'cualificacion': forms.TextInput(attrs={'placeholder': 'Dentista'}),
         }
-        
+
+class RDFUploadForm(forms.Form):
+    rdf_file = forms.FileField(label="Archivo RDF")
          

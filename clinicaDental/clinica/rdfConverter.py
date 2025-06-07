@@ -10,6 +10,8 @@ import shutil
 import zipfile
 from django.http import FileResponse
 
+FHIR = Namespace("http://hl7.org/fhir/")
+
 def export_all_rdf(request):
    
     temp_dir = tempfile.mkdtemp()
@@ -34,8 +36,6 @@ def export_all_rdf(request):
 
 def export_pacientes_rdf(request):
     g = Graph()
-
-    FHIR = Namespace("http://hl7.org/fhir/")
 
     g.bind("fhir", FHIR)
 
@@ -86,8 +86,6 @@ def export_procedimientos_rdf(request):
     zip_path = os.path.join(tmp_dir, "export.zip")
 
     g = Graph()
-
-    FHIR = Namespace("http://hl7.org/fhir/")
 
     g.bind("fhir", FHIR)
 
@@ -149,8 +147,6 @@ def export_procedimientos_rdf(request):
 def export_practitioners_rdf(request):
     g = Graph()
 
-    FHIR = Namespace("http://hl7.org/fhir/")
-
     g.bind("fhir", FHIR)
 
     practitioners = Practicante.objects.all()
@@ -185,8 +181,6 @@ def export_practitioners_rdf(request):
 
 def export_teeth_rdf(request):
     g = Graph()
-
-    FHIR = Namespace("http://hl7.org/fhir/")
 
     g.bind("fhir", FHIR)
 
@@ -223,8 +217,7 @@ def export_teeth_rdf(request):
 def build_patient_rdf(patient_id):
     from rdflib import Graph, URIRef, Literal, Namespace, BNode
     from rdflib.namespace import RDF, XSD
-
-    FHIR = Namespace("http://hl7.org/fhir/")
+    
     EX = Namespace("http://example.org/")
 
     g = Graph()
@@ -285,3 +278,41 @@ def export_patient_rdf(request, paciente_id):
     g.serialize(destination=tmp.name, format="turtle")
 
     return FileResponse(open(tmp.name, "rb"), as_attachment=True, filename=f"paciente_{paciente_id}_procedures.ttl")
+
+def import_data(request, form):
+    rdf_file = form.cleaned_data['rdf_file']
+
+    g = Graph()
+    g.parse(rdf_file, format='turtle')  # or guess format
+
+    # 1. Import Pacientes
+    for s in g.subjects(RDF.type, URIRef(FHIR + "Patient")):
+        patient_id = str(s).split("/")[-1]
+        name = g.value(s, URIRef(FHIR + "name"))
+        if not Paciente.objects.filter(id=patient_id).exists():
+            Paciente.objects.create(
+                id=patient_id,
+                nombre=name or f"Paciente {patient_id}"
+            )
+
+    # 2. Import Procedimientos
+    for s in g.subjects(RDF.type, URIRef(FHIR + "Procedure")):
+        proc_id = str(s).split("/")[-1]
+        status = g.value(s, URIRef(FHIR + "status"), default=Literal("unknown")).toPython()
+        code = g.value(s, URIRef(FHIR + "code")).toPython()
+        date = g.value(s, URIRef(FHIR + "performedDateTime"))
+        desc = g.value(s, URIRef(FHIR + "description"), default=Literal(""))
+
+        # Get related patient
+        patient_ref = g.value(s, URIRef(FHIR + "subject"))
+        patient_val = g.value(patient_ref, URIRef(FHIR + "reference"))
+        patient_id = str(patient_val).split("/")[-1] if patient_val else None
+        paciente = Paciente.objects.filter(id=patient_id).first() if patient_id else None
+
+        Procedimiento.objects.create(
+            codigo=code,
+            status=status,
+            descripcion=desc,
+            realizado_el=date.toPython() if date else None,
+            paciente=paciente
+        )
