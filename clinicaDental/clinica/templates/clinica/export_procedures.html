@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block content %}
+  <h2>Exportar Procedimientos de un Paciente</h2>
+
+  <form method="get" action="{% url 'export_procedures' %}">
+    <label for="paciente">Selecciona un paciente:</label>
+    <select name="paciente" id="paciente" class="form-select" onchange="this.form.submit()">
+      <option value="">-- Elegir --</option>
+      {% for p in pacientes %}
+        <option value="{{ p.id }}" {% if p == selected_paciente %}selected{% endif %}>
+          {{ p.nombre }} {{ p.apellido }}
+        </option>
+      {% endfor %}
+    </select>
+  </form>
+
+  {% if selected_paciente %}
+    <hr>
+    <h4>Procedimientos de {{ selected_paciente.nombre }} {{ selected_paciente.apellido }}</h4>
+
+    {% if procedimientos %}
+      <table class="table table-sm">
+        <thead>
+          <tr>
+            <th scope="col">Código</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Diente</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for proc in procedimientos %}
+            <tr>
+              <td>{{ proc.codigo }}</td>
+              <td>{{ proc.descripcion }}</td>
+              <td>{{ proc.realizado_el }}</td>
+              <td>{% if proc.diente %}
+                    {{ proc.diente.codigo }}
+                  {% else %}
+                    —
+                  {% endif %}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <a href="{% url 'export_procedures' selected_paciente.id %}" class="btn btn-success">
+        📤 Exportar RDF
+      </a>
+    {% else %}
+      <p>No hay procedimientos registrados.</p>
+    {% endif %}
+  {% endif %}
+{% endblock %}

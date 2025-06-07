@@ -1,0 +1,73 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Bytecode cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+env/
+.venv/
+.env/
+
+# Django-related
+*.log
+*.pot
+*.pyc
+db.sqlite3
+media/
+staticfiles/
+*.sqlite3
+local_settings.py
+
+# If using dotenv for secrets
+.env
+.env.*
+
+# Pytest / coverage
+.coverage
+htmlcov/
+.tox/
+nosetests.xml
+coverage.xml
+*.cover
+.cache
+
+# MyPy / Pylint / Ruff / Bandit
+.mypy_cache/
+.pytype/
+.dmypy.json
+.pytest_cache/
+pylint-report.txt
+
+# VS Code / JetBrains / Sublime / etc
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Node (if using for front-end)
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Zip/temp
+*.zip
+*.tar.gz
+*.tgz
+*.bak
+*.tmp

@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Paciente(models.Model):
+    id = models.AutoField(primary_key=True) #ID autoincremental
     activo = models.BooleanField(default=True)
     nombre = models.CharField(max_length=100)
     apellido = models.CharField(max_length=100)
@@ -16,6 +17,7 @@ class Paciente(models.Model):
         return f"{self.nombre} {self.apellido}"
     
 class Practicante(models.Model):
+    id = models.AutoField(primary_key=True) #ID autoincremental
     activo = models.BooleanField(default=True)
     nombre = models.CharField(max_length=100)
     apellido = models.CharField(max_length=100)
@@ -45,15 +47,16 @@ class StatusProcedimiento(models.TextChoices):
     DESCONOCIDO = 'unknown', 'Desconocido'
     
 class Procedimiento(models.Model):
-    codigo = models.CharField(max_length=10, unique=True) #Codigo basado en SNOMED CT
+    id = models.AutoField(primary_key=True) #ID autoincremental
+    codigo = models.CharField(max_length=10) #Codigo basado en SNOMED CT
     status = models.CharField(max_length=20, choices=StatusProcedimiento.choices, default=StatusProcedimiento.PREPARACION)
     paciente = models.ForeignKey(Paciente, on_delete=models.PROTECT)
     practicante = models.ForeignKey(Practicante, on_delete=models.PROTECT)
-    diente = models.ForeignKey(Diente, on_delete=models.PROTECT)
+    diente = models.ForeignKey(Diente, on_delete=models.PROTECT, blank=True, null=True) #Diente afectado por el procedimiento
     descripcion = models.CharField(max_length=100)
     realizado_el = models.DateField()
     
 
     def __str__(self):
-        return f"{self.paciente.nombre} - {self.diente.display}, {self.realizado_el}"
+        return f"{self.paciente.nombre} - {self.descripcion}, {self.realizado_el}"
     

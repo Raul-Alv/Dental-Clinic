@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block title %}
-   <title>Show Page</title>
+   <title>Crear praciente</title>
 {% endblock %}
 
 {% block content %}
@@ -10,6 +10,7 @@
   {% csrf_token %}
   {{ form.as_p }}
   <button type="submit">Save</button>
+  <button type="button" onclick=window.location.href="{% url 'paciente_detail' i.id %}">Cancel</button>
 </form>
 
 {% if form.errors %}

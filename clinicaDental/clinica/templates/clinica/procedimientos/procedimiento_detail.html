@@ -1,0 +1,57 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+<title>Show Page</title>
+{% endblock %}
+
+{% block content %}
+<h1>Procedimiento {{ procedimiento.codigo }} - </h1>
+
+<p><strong>Codigo:</strong> {{ procedimiento.codigo }}</p>
+<p><strong>Status:</strong> {{ procedimiento.status }}</p>
+<p><strong>Paciente:</strong> {{ procedimiento.paciente }}</p>
+<p><strong>Diente:</strong> {{ procedimiento.diente }}</p>
+<p><strong>Descripcion:</strong> {{ procedimiento.descripcion }}</p>
+<p><strong>Realizado el:</strong> {{ procedimiento.realizado_el }}</p>
+
+<button type="button"
+        class="btn btn-primary"
+        onclick=window.location.href='{% url "procedimiento_update" procedimiento.id %}'>
+  Editar
+</button>
+<!-- Aquí puedes agregar más botones o contenido si lo necesitas -->
+
+<button type="button" class="btn btn-danger" data-bs-toggle="modal"
+  data-bs-target="#confirmDeleteModal{{ procedimiento.id }}">
+  Eliminar
+</button>
+
+<div class="modal fade" id="confirmDeleteModal{{ procedimiento.id }}" tabindex="-1"
+  aria-labelledby="confirmDeleteModalLabel{{ procedimiento.id }}" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmDeleteModalLabel{{ procedimiento.id }}">Confirmar eliminación</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        ¿Está seguro que desea eliminar "<strong>{{ procedimiento.codigo }}</strong>"?
+      </div>
+
+      <div class="modal-footer">
+        <form method="post" action="{% url 'procedimiento_delete' procedimiento.id %}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger">Eliminar</button>
+        </form>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<a href="{% url 'procedimiento_list' %}">← Atrás</a>
+{% endblock %}
