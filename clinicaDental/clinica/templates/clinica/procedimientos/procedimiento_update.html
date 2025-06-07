@@ -10,6 +10,7 @@
   {% csrf_token %}
   {{ form.as_p }}
   <button type="submit">Save</button>
+  <button type="button" onclick=window.location.href="{% url 'procedimiento_detail' i.id %}">Cancel</button>
 </form>
 
 {% if form.errors %}

@@ -19,4 +19,10 @@ urlpatterns = [
     path("paciente/<int:id>/", views.getPaciente, name='paciente_detail'),
     path("paciente/<int:id>/update/", views.paciente_update, name='paciente_update'),
     path("paciente/<int:id>/delete/", views.paciente_delete, name='paciente_delete'),
+
+    path("practicante/crear/", views.crearPracticante, name='practicantes_crear'),
+    path("practicante/", views.practicante_list, name='practicantes_list'),
+    path("practicante/<int:id>/", views.getPracticante, name='practicante_detail'),
+    path("practicante/<int:id>/update/", views.practicante_update, name='practicante_update'),
+    path("practicante/<int:id>/delete/", views.practicante_delete, name='practicante_delete'),
 ]

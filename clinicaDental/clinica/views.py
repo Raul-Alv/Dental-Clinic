@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.db.models import Q
 # Create your views here.
 
-from .forms import ProcedimientoForm, PacienteForm
+from .forms import ProcedimientoForm, PacienteForm, PracticanteForm
 from .models import Procedimiento, Paciente, Practicante, Diente
 from . import rdfConverter
 import json, re
@@ -129,7 +129,7 @@ def crearPaciente(request):
             paciente.id = Paciente.objects.count() + 1
             paciente.activo = True  
             paciente.save()
-            return redirect('procedimiento_list')
+            return redirect('pacientes_list')
     else:
         form = PacienteForm()
     return render(request, 'clinica/pacientes/pacientes_crear.html', {'form': form})
@@ -161,3 +161,44 @@ def paciente_delete(request, id):
         paciente.save()
         return redirect('pacientes_list')
     return render(request, 'clinica/pacientes/pacientes_delete.html', {'paciente': paciente})
+
+def crearPracticante(request):
+    if request.method == 'POST':
+        form = PracticanteForm(request.POST)
+        if form.is_valid():
+            practicante = form.save(commit=False)
+            practicante.id = Practicante.objects.count() + 1
+            practicante.activo = True  
+            practicante.save()
+            return redirect('practicantes_list')
+    else:
+        form = PracticanteForm()
+    return render(request, 'clinica/practicante/practicantes_crear.html', {'form': form})
+
+
+def practicante_list(request):
+    practicantes = Practicante.objects.filter(activo=True)
+    return render(request, 'clinica/practicantes/practicantes_list.html', {'practicantes': practicantes})
+
+def getPracticante(request, id):
+    practicante = get_object_or_404(Practicante, id=id)
+    return render(request, 'clinica/practicantes/practicantes_detail.html', {'practicante': practicante})
+
+def practicante_update(request, id):
+    practicante = get_object_or_404(Practicante, id=id)
+    if request.method == 'POST':
+        form =PracticanteForm(request.POST, instance=practicante)
+        if form.is_valid():
+            form.save()
+            return redirect('practicantes_list')
+    else:
+        form = PracticanteForm(instance=practicante)
+    return render(request, 'clinica/practicantes/practicantes_update.html', {'form': form, 'practicante': practicante})
+
+def practicante_delete(request, id):
+    practicante = get_object_or_404(Practicante, id=id)
+    if request.method == 'POST':
+        practicante.activo = False
+        practicante.save()
+        return redirect('practicantes_list')
+    return render(request, 'clinica/practicantes/practicantes_delete.html', {'practicante': practicante})

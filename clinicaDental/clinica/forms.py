@@ -48,5 +48,25 @@ class PacienteForm(forms.ModelForm):
             'estado_civil': forms.Select(attrs={'placeholder': 'Estado Civil'}), 
         }
 
+class PracticanteForm(forms.ModelForm):
+    class Meta:
+        model = Practicante
+        exclude = ['activo']
+        labels = {
+            'nombre': 'Nombre',
+            'apellido': 'Apellidos',
+            'genero': 'Género',
+            'telefono': 'Teléfono',
+            'cualificacion': 'Culaificación',
+
+            
+        }
+        widgets = {
+            'nombre': forms.TextInput(attrs={'placeholder': 'Juan'}),
+            'apellido': forms.TextInput(attrs={'placeholder': 'Alvarez'}),
+            'genero': forms.Select(attrs={'placeholder': 'Género'}),
+            'telefono': forms.TextInput(attrs={'placeholder': '123456789'}),
+            'cualificacion': forms.TextInput(attrs={'placeholder': 'Dentista'}),
+        }
         
          

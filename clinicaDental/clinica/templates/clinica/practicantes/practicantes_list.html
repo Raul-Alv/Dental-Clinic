@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+   <title>Dentistas</title>
+{% endblock %}
+
+{% block content %}
+<h1>Dentistas</h1>
+<table class="table">
+   <thead>
+     <tr>
+       <th scope="col">Nombre</th>
+     </tr>
+   </thead>
+   <tbody>
+   {% for i in practicantes %}
+     <tr>
+       <td><a href="{% url 'practicante_detail' i.id %}">{{i.nombre}} {{i.apellido}}</a></td>
+     </tr>
+   {% endfor %}
+   </tbody>
+ </table>
+</form>
+{% endblock %}
