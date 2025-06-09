@@ -19,6 +19,12 @@
   Editar
 </button>
 
+<button type="button"
+        class="btn btn-secondary"
+        onclick=window.location.href='{% url "exportar_paciente" paciente.id %}'>
+  Exportar
+</button>
+
 <button type="button" class="btn btn-danger" data-bs-toggle="modal"
   data-bs-target="#confirmDeleteModal{{ paciente.id }}">
   Eliminar

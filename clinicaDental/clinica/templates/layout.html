@@ -17,32 +17,39 @@
        </button>
      
        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Procedimientos
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="nav-link" href="{% url 'procedimiento_list' %}">Lista</a>
-              <a class="nav-link" href="{% url 'procedimiento_crear' %}">Crear</a>
-            </div>
-          </div>
-          <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Pacientes
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="nav-link" href="{% url 'pacientes_list' %}">Lista</a>
-              <a class="nav-link" href="{% url 'pacientes_crear' %}">Crear</a>
-            </div>
-          </div>
-          <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Dentistas
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="nav-link" href="{% url 'practicantes_list' %}">Lista</a>
-              <a class="nav-link" href="{% url 'practicantes_crear' %}">Crear</a>
-            </div>
+          <ul class="navbar-nav mr-auto">
+            <li class="dropdown">
+              <a class="nav-link dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Procedimientos
+              </a>
+              <div class="nav-item dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="nav-link" href="{% url 'procedimiento_list' %}">Lista</a>
+                <a class="nav-link" href="{% url 'procedimiento_crear' %}">Crear</a>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Pacientes
+              </a>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="nav-link" href="{% url 'pacientes_list' %}">Lista</a>
+                <a class="nav-link" href="{% url 'pacientes_crear' %}">Crear</a>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dentistas
+              </a>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="nav-link" href="{% url 'practicantes_list' %}">Lista</a>
+                <a class="nav-link" href="{% url 'practicantes_crear' %}">Crear</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'import_data' %}">Importar</a>
+            </li>
+          </ul>
+        </div>  
      </nav>
 
    {% block content %}

@@ -10,14 +10,15 @@ urlpatterns = [
     path("procedimiento/<int:id>/update/", views.updateProcedimiento, name='procedimiento_update'),
     path("procedimiento/<int:id>/delete/", views.deleteProcedimiento, name='procedimiento_delete'),
     path('procedimiento/export/rdf/', rdfConverter.export_procedimientos_rdf, name='procedimiento_export_rdf'),
-    path("procedimiento/export", views.patient_export_view, name="export_procedures"),
-    path("procedimiento/export/<int:paciente_id>", rdfConverter.export_patient_rdf, name="export_procedures"),
+    #path("procedimiento/export", views.patient_export_view, name="export_procedures"),
 
     path("paciente/crear/", views.crearPaciente, name='pacientes_crear'),
     path("paciente/", views.paciente_list, name='pacientes_list'),
     path("paciente/<int:id>/", views.getPaciente, name='paciente_detail'),
     path("paciente/<int:id>/update/", views.paciente_update, name='paciente_update'),
     path("paciente/<int:id>/delete/", views.paciente_delete, name='paciente_delete'),
+    path("paciente/<int:paciente_id>/export/rdf/", rdfConverter.export_patient_rdf, name='exportar_paciente'),
+
 
     path("practicante/crear/", views.crearPracticante, name='practicantes_crear'),
     path("practicante/", views.practicante_list, name='practicantes_list'),

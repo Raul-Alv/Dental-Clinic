@@ -8,8 +8,8 @@
 <h2>{{ view.title|default:"Form" }}</h2>
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
-  <input type="file" name="json_file">
-  <button type="submit">Import</button>
+  {{ form.as_p }}
+  <button type="submit">Importar</button>
 </form>
 
 {% if form.errors %}

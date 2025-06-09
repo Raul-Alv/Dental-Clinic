@@ -59,10 +59,11 @@ def import_data(request):
         form = RDFUploadForm(request.POST, request.FILES)
         if form.is_valid():
             rdfConverter.import_data(request, form)
+            return redirect('procedimiento_list')
     else:
         form = RDFUploadForm()
 
-    return render(request, 'clinica/import.html')
+    return render(request, 'clinica/import.html', {'form': form })
 
 def patient_export_view(request):
     pacientes = Paciente.objects.all()
