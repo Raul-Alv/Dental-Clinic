@@ -10,7 +10,13 @@
 <p><strong>Genero:</strong> {{ paciente.get_genero_display }}</p>
 <p><strong>Telefono:</strong> {{ paciente.telefono }}</p>
 <p><strong>Fecha de nacimiento:</strong> {{ paciente.fecha_nacimiento }}</p>
-<p><strong>Direccion:</strong> {{ paciente.direccion }}</p>
+<address>
+  <p><strong>Direccion:</strong> {{ paciente.calle }}</p>
+  <p><strong>Ciudad:</strong> {{ paciente.ciudad }}</p>
+  <p><strong>Provincia:</strong> {{ paciente.provincia }}</p>
+  <p><strong>Código Postal:</strong> {{ paciente.codigo_postal }}</p>
+  <p><strong>País:</strong> {{ paciente.pais }}</p>
+</address>
 <p><strong>Estado civil:</strong> {{ paciente.get_estado_civil_display }}</p>
 
 <button type="button"
