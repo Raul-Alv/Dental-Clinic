@@ -60,7 +60,6 @@ class Procedimiento(models.Model):
     descripcion = models.CharField(max_length=100)
     realizado_el = models.DateField()
     
-
     def __str__(self):
         return f"{self.paciente.nombre} - {self.descripcion}, {self.realizado_el}"
     

@@ -372,7 +372,15 @@ def import_data(request, form):
     # 2. Import Procedimientos
     for s in g.subjects(RDF.type, URIRef(FHIR + "Procedure")):
         status = g.value(s, URIRef(FHIR + "status"))
-        code = g.value(s, URIRef(FHIR + "code"))
+
+        body_site = g.value(s, URIRef(FHIR + "bodySite"))
+        coding_node = g.value(body_site, FHIR.coding)
+
+        code = g.value(coding_node, FHIR.code, default="")
+        display = g.value(coding_node, FHIR.display, default="")
+        descripcion = g.value(body_site, FHIR.text, default="")
+        
+        #print(f"Processing Procedure: {s}, Status: {status}, Code: {code}")
         date = g.value(s, URIRef(FHIR + "performedDateTime"))
 
         # Get patient
@@ -390,7 +398,7 @@ def import_data(request, form):
         actor = g.value(practicante, URIRef(FHIR + "actor")) if practicante else None
         reference = g.value(actor, URIRef(FHIR + "reference")) if actor else None
         value = g.value(reference, URIRef(FHIR + "value")) if reference else None
-        print(f"Practitioner URI: {value}")
+        #print(f"Practitioner URI: {value}")
         if value:
             practitioner_id = str(value).split("/")[-1]
             practicante = Practicante.objects.filter(id=practitioner_id).first()
@@ -406,18 +414,22 @@ def import_data(request, form):
         if tooth_code:
             diente = Diente.objects.filter(codigo=str(tooth_code)).first()
 
-        print(f"Importing Procedure: {s}, Status: {status}, Code: {code}, Date: {date}, Patient: {paciente}, Practitioner: {practicante}, Tooth: {diente}")
+        #print(f"Importing Procedure: {s}, Status: {status}, Code: {code}, Date: {date}, Patient: {paciente}, Practitioner: {practicante}, Pract_uri: {practitioner_uri} Tooth: {diente}")
+
+
         # ✅ Create the procedure
         Procedimiento.objects.create(
             id=str(s).split("/")[-1],  # Use the URI as the ID
-            codigo=code.toPython() if code else "UNKNOWN",
+            codigo=code if code else "UNKNOWN",
             status=status.toPython() if status else "unknown",
-            realizado_el=date.toPython() if date else None,
             paciente=paciente,
             practicante=practicante,
+            practicante_externo_uri=practitioner_uri,  # Save the raw URI if needed
             diente=diente,
+            descripcion=descripcion if descripcion else display, 
+            realizado_el=date.toPython() if date else None,
             # optional: you could save `practitioner_uri` or `tooth_code` as raw text fields for traceability
-        )
+        ) 
 
 
     

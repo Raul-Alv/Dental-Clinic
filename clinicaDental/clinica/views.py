@@ -135,7 +135,7 @@ def crearPracticante(request):
             return redirect('practicantes_list')
     else:
         form = PracticanteForm()
-    return render(request, 'clinica/practicante/practicantes_crear.html', {'form': form})
+    return render(request, 'clinica/practicantes/practicantes_crear.html', {'form': form})
 
 
 def practicante_list(request):
