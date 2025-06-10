@@ -344,16 +344,27 @@ def import_data(request, form):
     for s in g.subjects(RDF.type, URIRef(FHIR + "Patient")):
         patient_id = str(s).split("/")[-1]
         name = g.value(s, URIRef(FHIR + "name"))
+        phone = ""
+        for telecom_node in g.objects(s, FHIR.telecom):
+            system = g.value(telecom_node, FHIR.system)
+            if system and str(system) == "phone":
+                phone = g.value(telecom_node, FHIR.value, default="")
+                break
         if not Paciente.objects.filter(id=patient_id).exists():
+            print(f"Importing Patient: {s}, ID: {patient_id}, Name: {name}")
             Paciente.objects.create(
                 id=patient_id,
-                activo=g.value(s, URIRef(FHIR + "active"), default=True),
-                nombre=name,
+                activo=g.value(s, URIRef(FHIR + "active").toPython(), default=True),
+                nombre=g.value(name, URIRef(FHIR + "given"), default=""),
                 apellido=g.value(name, URIRef(FHIR + "family"), default=""),
                 genero=g.value(s, URIRef(FHIR + "gender"), default="O").toPython(),
-                telefono=g.value(g.value(s, URIRef(FHIR + "telecom")), URIRef(FHIR + "value"), default=""),
+                telefono=phone,
                 fecha_nacimiento=g.value(s, URIRef(FHIR + "birthDate"), default=None).toPython() if g.value(s, URIRef(FHIR + "birthDate")) else None,
-                direccion=g.value(s, URIRef(FHIR + "address"), default=""),
+                calle=g.value(g.value(s, URIRef(FHIR + "address")), URIRef(FHIR + "line"), default=""),
+                ciudad=g.value(g.value(s, URIRef(FHIR + "address")), URIRef(FHIR + "city"), default=""),
+                provincia=g.value(g.value(s, URIRef(FHIR + "address")), URIRef(FHIR + "state"), default=""),
+                codigo_postal=g.value(g.value(s, URIRef(FHIR + "address")), URIRef(FHIR + "postalCode"), default=""),
+                pais=g.value(g.value(s, URIRef(FHIR + "address")), URIRef(FHIR + "country"), default=""),
                 estado_civil=g.value(s, URIRef(FHIR + "maritalStatus"), default="S").toPython() if g.value(s, URIRef(FHIR + "maritalStatus")) else "S",
 
             )
