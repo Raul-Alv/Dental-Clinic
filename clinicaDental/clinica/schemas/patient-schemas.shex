@@ -1,0 +1,53 @@
+PREFIX fhir: <http://hl7.org/fhir/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+start = @<Patient>
+
+<Patient> {
+  rdf:type [fhir:Patient] ;
+
+  fhir:identifier @<Identifier>* ;
+  fhir:active xsd:boolean? ;
+  fhir:name @<HumanName>* ;
+  fhir:telecom @<ContactPoint>* ;
+  fhir:gender xsd:string? ;  # male | female | other | unknown
+  fhir:birthDate xsd:date? ;
+
+  fhir:deceased @<Deceased>? ;
+
+  fhir:address @<Address>* ;
+  fhir:maritalStatus @<CodeableConcept>? ;
+}
+
+
+
+<Identifier> { }          # Define as needed
+<HumanName> { }           # Define as needed
+<ContactPoint> { }        # Define as needed
+<Address> { }             # Define as needed
+<CodeableConcept> { }     # Define as needed
+<Attachment> { }          # Define as needed
+<Reference> { }           # Define as needed
+
+<PatientContact> {
+  fhir:relationship @<CodeableConcept>* ;
+  fhir:name @<HumanName>? ;
+  fhir:telecom @<ContactPoint>* ;
+  fhir:address @<Address>? ;
+  fhir:gender xsd:string? ;
+  fhir:organization @<Reference>? ;
+  fhir:period @<Period>? ;
+}
+
+<PatientCommunication> {
+  fhir:language @<CodeableConcept> ;
+  fhir:preferred xsd:boolean? ;
+}
+
+<PatientLink> {
+  fhir:other @<Reference> ;
+  fhir:type xsd:string ;  # replaced-by | replaces | refer | seealso
+}
+
+<Period> { }  # Define as needed

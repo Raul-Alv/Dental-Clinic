@@ -62,25 +62,29 @@ def export_pacientes_rdf(request):
 
         telcom = BNode()
         telephone = BNode()
-        email = BNode()
+
         g.add((pac_uri, FHIR.telecom, telcom))
         g.add((telephone, FHIR.system, Literal("phone")))
         g.add((telephone, FHIR.value, Literal(paciente.telefono)))
         g.add((telcom, FHIR.ContactPoint, telephone))
-
-        '''
-        g.add((email, FHIR.system, Literal("email")))
-        g.add((email, FHIR.value, Literal(paciente.email)))
-        g.add((telcom, FHIR.ContactPoint, email))  
-        '''
         
         g.add((pac_uri, FHIR.gender, Literal(paciente.genero)))
         g.add((pac_uri, FHIR.birthDate, Literal(paciente.fecha_nacimiento, datatype=XSD.date)))
 
+        adress = BNode()
+        g.add((pac_uri, FHIR.address, adress))
+        g.add((adress, FHIR.line, Literal(paciente.calle)))
+        g.add((adress, FHIR.city, Literal(paciente.ciudad)))
+        g.add((adress, FHIR.state, Literal(paciente.provincia)))
+        g.add((adress, FHIR.postalCode, Literal(paciente.codigo_postal)))
+        g.add((adress, FHIR.country, Literal(paciente.pais)))
+
+        g.add((pac_uri, FHIR.maritalStatus, Literal(paciente.estado_civil)))
+
     rdf_data = g.serialize(format="turtle")
 
     response = HttpResponse(rdf_data, content_type="text/turtle")
-    response["Content-Disposition"] = 'attachment; filename="pacients.ttl"'
+    response["Content-Disposition"] = 'attachment; filename="pacient' + paciente.nombre + '.ttl"'
 
     return rdf_data
 
@@ -302,19 +306,24 @@ def export_patient_rdf(request, paciente_id):
     g.add((telephone, FHIR.system, Literal("phone")))
     g.add((telephone, FHIR.value, Literal(paciente.telefono)))
     g.add((telcom, FHIR.ContactPoint, telephone))
-
-    '''
-    g.add((email, FHIR.system, Literal("email")))
-    g.add((email, FHIR.value, Literal(paciente.email)))
-    g.add((telcom, FHIR.ContactPoint, email))  
-    '''
     
     g.add((pac_uri, FHIR.gender, Literal(paciente.genero)))
     g.add((pac_uri, FHIR.birthDate, Literal(paciente.fecha_nacimiento, datatype=XSD.date)))
 
+    adress = BNode()
+    g.add((pac_uri, FHIR.address, adress))
+    g.add((adress, FHIR.line, Literal(paciente.calle)))
+    g.add((adress, FHIR.city, Literal(paciente.ciudad)))
+    g.add((adress, FHIR.state, Literal(paciente.provincia)))
+    g.add((adress, FHIR.postalCode, Literal(paciente.codigo_postal)))
+    g.add((adress, FHIR.country, Literal(paciente.pais)))
+
+    g.add((pac_uri, FHIR.maritalStatus, Literal(paciente.estado_civil)))
+
     rdf_data = g.serialize(format="turtle")
+
     response = HttpResponse(rdf_data, content_type="text/turtle")
-    response["Content-Disposition"] = 'attachment; filename="pacients.ttl"'
+    response["Content-Disposition"] = 'attachment; filename="pacient' + paciente.nombre + '.ttl"'
 
     return response
     

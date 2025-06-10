@@ -1,15 +1,18 @@
 from django.db import models
 
-# Create your models here.
 class Paciente(models.Model):
     id = models.AutoField(primary_key=True) #ID autoincremental
     activo = models.BooleanField(default=True)
     nombre = models.CharField(max_length=100)
     apellido = models.CharField(max_length=100)
-    genero = models.CharField(max_length=10, choices=[('M', 'Masculino'), ('F', 'Femenino'), ('O', 'Otro')], blank=False, default='O')
+    genero = models.CharField(max_length=10, choices=[('M', 'Masculino'), ('F', 'Femenino'), ('O', 'Otro'), ('U', 'Desconocido')], blank=False, default='U')
     telefono = models.CharField(max_length=15, blank=True, null=True)
     fecha_nacimiento = models.DateField()
-    direccion = models.CharField(max_length=255, blank=True, null=True)
+    calle = models.CharField(max_length=255, blank=True, null=True)
+    ciudad = models.CharField(max_length=100, blank=True, null=True)
+    provincia = models.CharField(max_length=100, blank=True, null=True)
+    codigo_postal = models.CharField(max_length=20, blank=True, null=True)
+    pais = models.CharField(max_length=100, blank=True, null=True)
     estado_civil = models.CharField(max_length=10, choices=[('S', 'Soltero'), ('C', 'Casado'), ('D', 'Divorciado')], default='S')
     #contacto = models.CharField(max_length=100, blank=True, null=True)
 

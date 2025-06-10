@@ -34,7 +34,11 @@ class PacienteForm(forms.ModelForm):
             'genero': 'Género',
             'telefono': 'Teléfono',
             'fecha_nacimiento': 'Fecha de Nacimiento',
-            'direccion': 'Dirección',
+            'calle': 'Dirección',
+            'ciudad': 'Ciudad',
+            'provincia': 'Provincia',
+            'pais': 'País',
+            'codigo_postal': 'Código Postal',
             'estado_civil': 'Estado Civil',
             
         }
@@ -44,7 +48,11 @@ class PacienteForm(forms.ModelForm):
             'genero': forms.Select(attrs={'placeholder': 'Género'}),
             'telefono': forms.TextInput(attrs={'placeholder': 'Teléfono'}),
             'fecha_nacimiento': forms.DateInput(attrs={'type': 'date', 'placeholder': 'Fecha de Nacimiento'}),
-            'direccion': forms.TextInput(attrs={'placeholder': 'Dirección'}),
+            'calle': forms.TextInput(attrs={'placeholder': 'Calle, Número'}),
+            'ciudad': forms.TextInput(attrs={'placeholder': 'Ciudad'}), 
+            'provincia': forms.TextInput(attrs={'placeholder': 'Estado/Provincia'}),
+            'pais': forms.TextInput(attrs={'placeholder': 'País'}),
+            'codigo_postal': forms.TextInput(attrs={'placeholder': 'Código Postal'}),
             'estado_civil': forms.Select(attrs={'placeholder': 'Estado Civil'}), 
         }
 
