@@ -223,22 +223,56 @@ def export_teeth_rdf(request):
 
     return rdf_data
 
-def build_patient_rdf(patient_id):
+def build_patient_rdf(request, paciente_id):
     from rdflib import Graph, URIRef, Literal, Namespace, BNode
     from rdflib.namespace import RDF, XSD
     
     EX = Namespace("http://example.org/")
-
+    
     g = Graph()
     g.bind("fhir", FHIR)
     g.bind("ex", EX)
+    
+    paciente = Paciente.objects.get(id=paciente_id)
+    exportar_paciente = request.GET.get("exportar_paciente") == "on"
 
-    paciente = Paciente.objects.get(id=patient_id)
     procedimientos = Procedimiento.objects.select_related("diente", "practicante").filter(paciente=paciente)
 
+    if exportar_paciente:
+        pac_uri = URIRef(FHIR.Patient + "/" + str(paciente.id))
+        g.add((pac_uri, RDF.type, FHIR.Patient))
+
+        g.add((pac_uri, FHIR.active, Literal(paciente.activo)))
+
+        name = BNode()
+        g.add((pac_uri, FHIR.name, name))
+        g.add((name, FHIR.given, Literal(paciente.nombre)))
+        g.add((name, FHIR.family, Literal(paciente.apellido)))
+
+        telcom = BNode()
+        telephone = BNode()
+
+        g.add((pac_uri, FHIR.telecom, telcom))
+        g.add((telephone, FHIR.system, Literal("phone")))
+        g.add((telephone, FHIR.value, Literal(paciente.telefono)))
+        g.add((telcom, FHIR.ContactPoint, telephone))
+        
+        g.add((pac_uri, FHIR.gender, Literal(paciente.genero)))
+        g.add((pac_uri, FHIR.birthDate, Literal(paciente.fecha_nacimiento, datatype=XSD.date)))
+
+        adress = BNode()
+        g.add((pac_uri, FHIR.address, adress))
+        g.add((adress, FHIR.line, Literal(paciente.calle)))
+        g.add((adress, FHIR.city, Literal(paciente.ciudad)))
+        g.add((adress, FHIR.state, Literal(paciente.provincia)))
+        g.add((adress, FHIR.postalCode, Literal(paciente.codigo_postal)))
+        g.add((adress, FHIR.country, Literal(paciente.pais)))
+
+        g.add((pac_uri, FHIR.maritalStatus, Literal(paciente.estado_civil)))
+
     for procedimiento in procedimientos:
-        #print("ID:",str(procedimiento.id))
-        proc_uri = URIRef(FHIR.identifier + "/" + str(procedimiento.id))
+        print("ID:",str(procedimiento.id))
+        proc_uri = URIRef(FHIR.Procedure + "/" + str(procedimiento.id))
 
         g.add((proc_uri, RDF.type, FHIR.Procedure))
 
@@ -277,9 +311,12 @@ def build_patient_rdf(patient_id):
             g.add((bodySite, FHIR.text, Literal(procedimiento.diente.definicion)))
 
             g.add((proc_uri, FHIR.bodySite, bodySite))
-            
 
-    return g
+    rdf_data = g.serialize(format="turtle")
+
+    response = HttpResponse(rdf_data, content_type="text/turtle")
+    response["Content-Disposition"] = 'attachment; filename="pacient-' + paciente.nombre + '-procedures.ttl"'
+    return response
 
 def export_patient_rdf(request, paciente_id):
     g = Graph()
