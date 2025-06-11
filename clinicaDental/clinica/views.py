@@ -1,9 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.db.models import Q
+from rdflib import Graph
 # Create your views here.
 
-from .forms import ProcedimientoForm, PacienteForm, PracticanteForm
+from .forms import ProcedimientoForm, PacienteForm, PracticanteForm, RDFUploadForm
 from .models import Procedimiento, Paciente, Practicante, Diente
 from . import rdfConverter
 import json, re
@@ -54,54 +55,15 @@ def deleteProcedimiento(request, id):
     return render(request, 'clinica/procedimientos/procedimiento_delete.html', {'procedimiento': procedimiento})
 
 def import_data(request):
-    if request.method == 'POST' and request.FILES['json_file']:
-        json_file = request.FILES['json_file']
-        data = json.load(json_file)
-        """ for item in data:
-            diente = Diente(
-                codigo=item['title'],
-                display=item['author'],
-                definition=item['publication_year']
-            )
-            diente.save() """
-        # Extract the HTML table
-        html = data["text"]["div"]
-        soup = BeautifulSoup(html, "html.parser")
+    if request.method == 'POST':
+        form = RDFUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            rdfConverter.import_data(request, form)
+            return redirect('procedimiento_list')
+    else:
+        form = RDFUploadForm()
 
-        # Build a code → description map from the HTML table
-        table_rows = soup.find_all("tr")
-        description_map = {}
-        for row in table_rows[1:]:  # skip header
-            cells = row.find_all("td")
-            if len(cells) >= 3:
-                code = cells[0].text.strip()
-                description = cells[2].text.strip()
-                description_map[code] = description
-        
-        # Extract from compose.include
-        entries = []
-        for system in data.get("compose", {}).get("include", []):
-            for concept in system.get("concept", []):
-                code = concept["code"].strip()
-                display = concept.get("display", "").strip()
-                description = description_map.get(code, "")
-                print(f"Code: {code}, Display: {display}, Description: {description}", end='\n')
-                entries.append({
-                    "code": code,
-                    "display": display,
-                    "description": description
-                })
-        # Save to the database
-        for entry in entries:
-            diente = Diente(
-                codigo=entry['code'],
-                display=entry['display'],
-                definicion=entry['description']
-            )
-            #print(f"Saving Diente: {diente.codigo}, {diente.display}, {diente.definicion}")
-            #diente.save()
-        return redirect('procedimiento_list')
-    return render(request, 'clinica/form.html')
+    return render(request, 'clinica/import.html', {'form': form })
 
 def patient_export_view(request):
     pacientes = Paciente.objects.all()
@@ -173,7 +135,7 @@ def crearPracticante(request):
             return redirect('practicantes_list')
     else:
         form = PracticanteForm()
-    return render(request, 'clinica/practicante/practicantes_crear.html', {'form': form})
+    return render(request, 'clinica/practicantes/practicantes_crear.html', {'form': form})
 
 
 def practicante_list(request):

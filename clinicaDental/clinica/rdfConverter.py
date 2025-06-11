@@ -10,6 +10,13 @@ import shutil
 import zipfile
 from django.http import FileResponse
 
+FHIR = Namespace("http://hl7.org/fhir/")
+
+############################################################
+#                                                          #
+# ------------ Exportación de datos desde RDF ------------ #
+#                                                          #
+############################################################
 def export_all_rdf(request):
    
     temp_dir = tempfile.mkdtemp()
@@ -35,8 +42,6 @@ def export_all_rdf(request):
 def export_pacientes_rdf(request):
     g = Graph()
 
-    FHIR = Namespace("http://hl7.org/fhir/")
-
     g.bind("fhir", FHIR)
 
     pacientes = Paciente.objects.all()
@@ -57,25 +62,29 @@ def export_pacientes_rdf(request):
 
         telcom = BNode()
         telephone = BNode()
-        email = BNode()
+
         g.add((pac_uri, FHIR.telecom, telcom))
         g.add((telephone, FHIR.system, Literal("phone")))
         g.add((telephone, FHIR.value, Literal(paciente.telefono)))
         g.add((telcom, FHIR.ContactPoint, telephone))
-
-        '''
-        g.add((email, FHIR.system, Literal("email")))
-        g.add((email, FHIR.value, Literal(paciente.email)))
-        g.add((telcom, FHIR.ContactPoint, email))  
-        '''
         
         g.add((pac_uri, FHIR.gender, Literal(paciente.genero)))
         g.add((pac_uri, FHIR.birthDate, Literal(paciente.fecha_nacimiento, datatype=XSD.date)))
 
+        adress = BNode()
+        g.add((pac_uri, FHIR.address, adress))
+        g.add((adress, FHIR.line, Literal(paciente.calle)))
+        g.add((adress, FHIR.city, Literal(paciente.ciudad)))
+        g.add((adress, FHIR.state, Literal(paciente.provincia)))
+        g.add((adress, FHIR.postalCode, Literal(paciente.codigo_postal)))
+        g.add((adress, FHIR.country, Literal(paciente.pais)))
+
+        g.add((pac_uri, FHIR.maritalStatus, Literal(paciente.estado_civil)))
+
     rdf_data = g.serialize(format="turtle")
 
-    """ response = HttpResponse(rdf_data, content_type="text/turtle")
-    response["Content-Disposition"] = 'attachment; filename="pacients.ttl"'  """
+    response = HttpResponse(rdf_data, content_type="text/turtle")
+    response["Content-Disposition"] = 'attachment; filename="pacient' + paciente.nombre + '.ttl"'
 
     return rdf_data
 
@@ -86,8 +95,6 @@ def export_procedimientos_rdf(request):
     zip_path = os.path.join(tmp_dir, "export.zip")
 
     g = Graph()
-
-    FHIR = Namespace("http://hl7.org/fhir/")
 
     g.bind("fhir", FHIR)
 
@@ -149,8 +156,6 @@ def export_procedimientos_rdf(request):
 def export_practitioners_rdf(request):
     g = Graph()
 
-    FHIR = Namespace("http://hl7.org/fhir/")
-
     g.bind("fhir", FHIR)
 
     practitioners = Practicante.objects.all()
@@ -185,8 +190,6 @@ def export_practitioners_rdf(request):
 
 def export_teeth_rdf(request):
     g = Graph()
-
-    FHIR = Namespace("http://hl7.org/fhir/")
 
     g.bind("fhir", FHIR)
 
@@ -223,8 +226,7 @@ def export_teeth_rdf(request):
 def build_patient_rdf(patient_id):
     from rdflib import Graph, URIRef, Literal, Namespace, BNode
     from rdflib.namespace import RDF, XSD
-
-    FHIR = Namespace("http://hl7.org/fhir/")
+    
     EX = Namespace("http://example.org/")
 
     g = Graph()
@@ -280,8 +282,154 @@ def build_patient_rdf(patient_id):
     return g
 
 def export_patient_rdf(request, paciente_id):
-    g = build_patient_rdf(paciente_id)
-    tmp = tempfile.NamedTemporaryFile(delete=False, suffix=".ttl")
-    g.serialize(destination=tmp.name, format="turtle")
+    g = Graph()
 
-    return FileResponse(open(tmp.name, "rb"), as_attachment=True, filename=f"paciente_{paciente_id}_procedures.ttl")
+    paciente = Paciente.objects.get(id=paciente_id)
+
+    g.bind("fhir", FHIR)
+
+    pac_uri = URIRef(FHIR.identifier + "/" + str(paciente_id))
+    
+    g.add((pac_uri, RDF.type, FHIR.Patient))
+
+    g.add((pac_uri, FHIR.active, Literal(paciente.activo)))
+
+    name = BNode()
+    g.add((pac_uri, FHIR.name, name))
+    g.add((name, FHIR.given, Literal(paciente.nombre)))
+    g.add((name, FHIR.family, Literal(paciente.apellido)))
+
+    telcom = BNode()
+    telephone = BNode()
+
+    g.add((pac_uri, FHIR.telecom, telcom))
+    g.add((telephone, FHIR.system, Literal("phone")))
+    g.add((telephone, FHIR.value, Literal(paciente.telefono)))
+    g.add((telcom, FHIR.ContactPoint, telephone))
+    
+    g.add((pac_uri, FHIR.gender, Literal(paciente.genero)))
+    g.add((pac_uri, FHIR.birthDate, Literal(paciente.fecha_nacimiento, datatype=XSD.date)))
+
+    adress = BNode()
+    g.add((pac_uri, FHIR.address, adress))
+    g.add((adress, FHIR.line, Literal(paciente.calle)))
+    g.add((adress, FHIR.city, Literal(paciente.ciudad)))
+    g.add((adress, FHIR.state, Literal(paciente.provincia)))
+    g.add((adress, FHIR.postalCode, Literal(paciente.codigo_postal)))
+    g.add((adress, FHIR.country, Literal(paciente.pais)))
+
+    g.add((pac_uri, FHIR.maritalStatus, Literal(paciente.estado_civil)))
+
+    rdf_data = g.serialize(format="turtle")
+
+    response = HttpResponse(rdf_data, content_type="text/turtle")
+    response["Content-Disposition"] = 'attachment; filename="pacient' + paciente.nombre + '.ttl"'
+
+    return response
+    
+
+
+############################################################
+#                                                          #
+# ------------ Importación de datos desde RDF ------------ #
+#                                                          #
+############################################################
+def import_data(request, form):
+    rdf_file = form.cleaned_data['rdf_file']
+
+    g = Graph()
+    g.parse(rdf_file, format='turtle')  # or guess format
+
+    # 1. Import Pacientes
+    for s in g.subjects(RDF.type, URIRef(FHIR + "Patient")):
+        patient_id = str(s).split("/")[-1]
+        name = g.value(s, URIRef(FHIR + "name"))
+        phone = ""
+        for telecom_node in g.objects(s, FHIR.telecom):
+            system = g.value(telecom_node, FHIR.system)
+            if system and str(system) == "phone":
+                phone = g.value(telecom_node, FHIR.value, default="")
+                break
+        if not Paciente.objects.filter(id=patient_id).exists():
+            print(f"Importing Patient: {s}, ID: {patient_id}, Name: {name}")
+            Paciente.objects.create(
+                id=patient_id,
+                activo=g.value(s, URIRef(FHIR + "active").toPython(), default=True),
+                nombre=g.value(name, URIRef(FHIR + "given"), default=""),
+                apellido=g.value(name, URIRef(FHIR + "family"), default=""),
+                genero=g.value(s, URIRef(FHIR + "gender"), default="O").toPython(),
+                telefono=phone,
+                fecha_nacimiento=g.value(s, URIRef(FHIR + "birthDate"), default=None).toPython() if g.value(s, URIRef(FHIR + "birthDate")) else None,
+                calle=g.value(g.value(s, URIRef(FHIR + "address")), URIRef(FHIR + "line"), default=""),
+                ciudad=g.value(g.value(s, URIRef(FHIR + "address")), URIRef(FHIR + "city"), default=""),
+                provincia=g.value(g.value(s, URIRef(FHIR + "address")), URIRef(FHIR + "state"), default=""),
+                codigo_postal=g.value(g.value(s, URIRef(FHIR + "address")), URIRef(FHIR + "postalCode"), default=""),
+                pais=g.value(g.value(s, URIRef(FHIR + "address")), URIRef(FHIR + "country"), default=""),
+                estado_civil=g.value(s, URIRef(FHIR + "maritalStatus"), default="S").toPython() if g.value(s, URIRef(FHIR + "maritalStatus")) else "S",
+
+            )
+
+    # 2. Import Procedimientos
+    for s in g.subjects(RDF.type, URIRef(FHIR + "Procedure")):
+        status = g.value(s, URIRef(FHIR + "status"))
+
+        body_site = g.value(s, URIRef(FHIR + "bodySite"))
+        coding_node = g.value(body_site, FHIR.coding)
+
+        code = g.value(coding_node, FHIR.code, default="")
+        display = g.value(coding_node, FHIR.display, default="")
+        descripcion = g.value(body_site, FHIR.text, default="")
+        
+        #print(f"Processing Procedure: {s}, Status: {status}, Code: {code}")
+        date = g.value(s, URIRef(FHIR + "performedDateTime"))
+
+        # Get patient
+        patient_val = g.value(g.value(s, URIRef(FHIR + "subject")), URIRef(FHIR + "value"))
+        paciente = None
+        if patient_val:
+            patient_id = str(patient_val).split("/")[-1]
+            paciente = Paciente.objects.filter(id=patient_id).first()
+
+        # ✅ Get practitioner
+        practicante = None
+        practitioner_uri = None
+
+        practicante = g.value(s, URIRef(FHIR + "performer"))
+        actor = g.value(practicante, URIRef(FHIR + "actor")) if practicante else None
+        reference = g.value(actor, URIRef(FHIR + "reference")) if actor else None
+        value = g.value(reference, URIRef(FHIR + "value")) if reference else None
+        #print(f"Practitioner URI: {value}")
+        if value:
+            practitioner_id = str(value).split("/")[-1]
+            practicante = Practicante.objects.filter(id=practitioner_id).first()
+            if not practicante:
+                practitioner_uri = str(value)  # Save raw reference for later/debug
+
+        # ✅ Get tooth from bodySite
+        diente = None
+        body_site = g.value(s, URIRef(FHIR + "bodySite"))
+        coding = g.value(body_site, URIRef(FHIR + "coding")) if body_site else None
+        tooth_code = g.value(coding, URIRef(FHIR + "code")) if coding else None
+
+        if tooth_code:
+            diente = Diente.objects.filter(codigo=str(tooth_code)).first()
+
+        #print(f"Importing Procedure: {s}, Status: {status}, Code: {code}, Date: {date}, Patient: {paciente}, Practitioner: {practicante}, Pract_uri: {practitioner_uri} Tooth: {diente}")
+
+
+        # ✅ Create the procedure
+        Procedimiento.objects.create(
+            id=str(s).split("/")[-1],  # Use the URI as the ID
+            codigo=code if code else "UNKNOWN",
+            status=status.toPython() if status else "unknown",
+            paciente=paciente,
+            practicante=practicante,
+            practicante_externo_uri=practitioner_uri,  # Save the raw URI if needed
+            diente=diente,
+            descripcion=descripcion if descripcion else display, 
+            realizado_el=date.toPython() if date else None,
+            # optional: you could save `practitioner_uri` or `tooth_code` as raw text fields for traceability
+        ) 
+
+
+    
