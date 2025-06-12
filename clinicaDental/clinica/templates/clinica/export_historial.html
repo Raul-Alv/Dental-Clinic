@@ -2,7 +2,7 @@
 {% block content %}
   <h2>Exportar Procedimientos de un Paciente</h2>
 
-  <form method="get" action="{% url 'export_procedures' %}">
+  <form method="get" action="{% url 'export_historial' %}">
     <label for="paciente">Selecciona un paciente:</label>
     <select name="paciente" id="paciente" class="form-select" onchange="this.form.submit()">
       <option value="">-- Elegir --</option>
@@ -43,7 +43,7 @@
           {% endfor %}
         </tbody>
       </table>
-      <form method="get" action="{% url 'export_procedures' selected_paciente.id %}">
+      <form method="get" action="{% url 'export_historial' selected_paciente.id %}">
         <div class="form-check mb-2">
           <input class="form-check-input" type="checkbox" name="exportar_paciente" id="exportarPaciente">
           <label class="form-check-label" for="exportarPaciente">

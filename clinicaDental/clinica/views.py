@@ -76,7 +76,7 @@ def patient_export_view(request):
         paciente = get_object_or_404(Paciente, id=selected_id)
         procedimientos = Procedimiento.objects.filter(paciente=paciente)
 
-    return render(request, "clinica/export_procedures.html", {
+    return render(request, "clinica/export_historial.html", {
         "pacientes": pacientes,
         "procedimientos": procedimientos,
         "selected_paciente": paciente
