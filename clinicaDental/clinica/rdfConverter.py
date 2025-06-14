@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.conf import settings
 from .models import Procedimiento, Paciente, Practicante, Diente
 
+
 import os
 import tempfile
 import shutil
@@ -14,7 +15,7 @@ FHIR = Namespace("http://hl7.org/fhir/")
 
 ############################################################
 #                                                          #
-# ------------ Exportación de datos desde RDF ------------ #
+# ~~~~~~~~~~~~ Exportación de datos desde RDF ~~~~~~~~~~~~ #
 #                                                          #
 ############################################################
 def export_all_rdf(request):
@@ -39,6 +40,22 @@ def export_all_rdf(request):
     finally:
         shutil.rmtree(temp_dir)
 
+
+####################################################
+## Exportación de datos de un paciente específico ##
+####################################################
+def export_patient_rdf(request, paciente_id):
+    g = Graph()
+    paciente = Paciente.objects.get(id=paciente_id)
+    g.bind("fhir", FHIR)
+
+    patient_rdf_graph(g, paciente)
+
+    return export_file(g, "paciente_" + paciente.nombre + ".ttl")
+
+#####################################
+## Exportación todos los pacientes ##
+#####################################
 def export_pacientes_rdf(request):
     g = Graph()
 
@@ -47,53 +64,26 @@ def export_pacientes_rdf(request):
     pacientes = Paciente.objects.all()
 
     for paciente in pacientes:
-        #print("ID:",str(paciente.id))
-        pac_uri = URIRef(FHIR.identifier + "/" + str(paciente.id))
-        print(pac_uri)
-        
-        g.add((pac_uri, RDF.type, FHIR.Patient))
+        patient_rdf_graph(g, paciente)
 
-        g.add((pac_uri, FHIR.active, Literal(paciente.activo)))
+    return export_file(g, "pacient' + paciente.nombre + '.ttl")
 
-        name = BNode()
-        g.add((pac_uri, FHIR.name, name))
-        g.add((name, FHIR.given, Literal(paciente.nombre)))
-        g.add((name, FHIR.family, Literal(paciente.apellido)))
+#########################################################
+## Exportación de datos de un procedimiento específico ##
+#########################################################
+def export_procedimiento_rdf(request, procedimiento_id):
+    g = Graph()
+    procedimiento = Procedimiento.objects.get(id=procedimiento_id)
+    g.bind("fhir", FHIR)
 
-        telcom = BNode()
-        telephone = BNode()
+    procedimiento_rdf_graph(g, procedimiento)
 
-        g.add((pac_uri, FHIR.telecom, telcom))
-        g.add((telephone, FHIR.system, Literal("phone")))
-        g.add((telephone, FHIR.value, Literal(paciente.telefono)))
-        g.add((telcom, FHIR.ContactPoint, telephone))
-        
-        g.add((pac_uri, FHIR.gender, Literal(paciente.genero)))
-        g.add((pac_uri, FHIR.birthDate, Literal(paciente.fecha_nacimiento, datatype=XSD.date)))
-
-        adress = BNode()
-        g.add((pac_uri, FHIR.address, adress))
-        g.add((adress, FHIR.line, Literal(paciente.calle)))
-        g.add((adress, FHIR.city, Literal(paciente.ciudad)))
-        g.add((adress, FHIR.state, Literal(paciente.provincia)))
-        g.add((adress, FHIR.postalCode, Literal(paciente.codigo_postal)))
-        g.add((adress, FHIR.country, Literal(paciente.pais)))
-
-        g.add((pac_uri, FHIR.maritalStatus, Literal(paciente.estado_civil)))
-
-    rdf_data = g.serialize(format="turtle")
-
-    response = HttpResponse(rdf_data, content_type="text/turtle")
-    response["Content-Disposition"] = 'attachment; filename="pacient' + paciente.nombre + '.ttl"'
-
-    return rdf_data
-
+    return export_file(g, "procedimiento_" + procedimiento.codigo + ".ttl")
+    
+##########################################
+## Exportación todos los procedimientos ##
+##########################################
 def export_procedimientos_rdf(request):
-    tmp_dir = tempfile.mkdtemp()
-    rdf_file = os.path.join(tmp_dir, "procedures.ttl")
-    shex_file = os.path.join(tmp_dir, "procedure-schemas.shex")
-    zip_path = os.path.join(tmp_dir, "export.zip")
-
     g = Graph()
 
     g.bind("fhir", FHIR)
@@ -101,57 +91,12 @@ def export_procedimientos_rdf(request):
     procedimientos = Procedimiento.objects.all()
 
     for procedimiento in procedimientos:
+        procedimiento_rdf_graph(g, procedimiento)
         #print("ID:",str(procedimiento.id))
-        proc_uri = URIRef(FHIR.identifier + "/" + str(procedimiento.id))
-
-        g.add((proc_uri, RDF.type, FHIR.Procedure))
-
-        g.add((proc_uri, FHIR.Procedure.status, Literal(procedimiento.status)))
-
-        procCode = BNode()
-        code = BNode()
-        g.add((code, FHIR.system, Literal("http://ada.org/cdt")))
-        g.add((code, FHIR.code, Literal(procedimiento.codigo)))
-        g.add((code, FHIR.display, Literal(procedimiento.descripcion)))
-        g.add((procCode, FHIR.coding, code))
-        g.add((proc_uri, FHIR.code, procCode))
-
-        pacient_reference = BNode()
-        g.add((pacient_reference, FHIR.value, Literal(f"Patient/{procedimiento.paciente.id}")))
-        g.add((proc_uri, FHIR.subject, pacient_reference))
-
-        g.add((proc_uri, FHIR.performedDateTime, Literal(procedimiento.realizado_el, datatype=XSD.date)))
-
-        actor = BNode()
-        actor_reference = BNode()
-        performer = BNode()
-        g.add((actor_reference, FHIR.value, Literal(f"Practitioner/{procedimiento.practicante.id}")))
-        g.add((actor, FHIR.reference, actor_reference))
-        g.add((performer, FHIR.actor, actor))
-        g.add((proc_uri, FHIR.performer, performer))
 
         #g.add((proc_uri, FHIR.bodySite, Literal(procedimiento.diente)))
         
-    rdf_data = g.serialize(format="turtle")
-
-    """ shex_path = os.path.join(settings.BASE_DIR, "clinicaDental", "schemas", "procedure-schemas.shex")
-    shutil.copy(shex_path, shex_file)
-
-     # 3. Create zip
-    with zipfile.ZipFile(zip_path, "w") as zipf:
-        zipf.write(rdf_file, "procedures.ttl")
-        zipf.write(shex_file, "procedure-schema.shex")
-
-    # 4. Serve the zip
-    with open(zip_path, "rb") as f:
-        response = HttpResponse(f.read(), content_type="application/zip")
-        response["Content-Disposition"] = 'attachment; filename="fhir_procedure_export.zip"'
-        return response
-
-    response = HttpResponse(rdf_data, content_type="text/turtle")
-    response["Content-Disposition"] = 'attachment; filename="procedures.ttl"'  """
-
-    return rdf_data
+    return export_file(g, "procedimientos_all.ttl")
 
 def export_practitioners_rdf(request):
     g = Graph()
@@ -189,6 +134,7 @@ def export_practitioners_rdf(request):
     return response
 
 def export_teeth_rdf(request):
+
     g = Graph()
 
     g.bind("fhir", FHIR)
@@ -223,73 +169,40 @@ def export_teeth_rdf(request):
 
     return rdf_data
 
-def build_patient_rdf(patient_id):
-    from rdflib import Graph, URIRef, Literal, Namespace, BNode
-    from rdflib.namespace import RDF, XSD
-    
-    EX = Namespace("http://example.org/")
+############################################################
+#                                                          #
+# ~~~~~~~~~~~~~~~~~ Funciones auxiliares ~~~~~~~~~~~~~~~~~ #
+#                                                          #
+############################################################
 
+####################################################################################################
+## Exportación de datos de un paciente específico con sus procedimientos asociados en formato RDF ##
+####################################################################################################
+def build_patient_rdf(request, paciente_id):
+    EX = Namespace("http://example.org/")
+    
     g = Graph()
     g.bind("fhir", FHIR)
     g.bind("ex", EX)
+    
+    paciente = Paciente.objects.get(id=paciente_id)
+    exportar_paciente = request.GET.get("exportar_paciente") == "on"
 
-    paciente = Paciente.objects.get(id=patient_id)
     procedimientos = Procedimiento.objects.select_related("diente", "practicante").filter(paciente=paciente)
 
+    if exportar_paciente:
+        patient_rdf_graph(g, paciente)
+
     for procedimiento in procedimientos:
-        #print("ID:",str(procedimiento.id))
-        proc_uri = URIRef(FHIR.identifier + "/" + str(procedimiento.id))
+        procedimiento_rdf_graph(g, procedimiento)
 
-        g.add((proc_uri, RDF.type, FHIR.Procedure))
+    return export_file(g, "pacient-" + paciente.nombre + "-procedures.ttl")
 
-        g.add((proc_uri, FHIR.status, Literal(procedimiento.status)))
-
-        procCode = BNode()
-        code = BNode()
-        g.add((code, FHIR.system, Literal("http://ada.org/cdt")))
-        g.add((code, FHIR.code, Literal(procedimiento.codigo)))
-        g.add((procCode, FHIR.text, Literal(procedimiento.descripcion)))
-        g.add((procCode, FHIR.coding, code))
-        g.add((proc_uri, FHIR.code, procCode))
-
-        pacient_reference = BNode()
-        g.add((pacient_reference, FHIR.value, Literal(f"Patient/{procedimiento.paciente.id}")))
-        g.add((proc_uri, FHIR.subject, pacient_reference))
-
-        g.add((proc_uri, FHIR.performedDateTime, Literal(procedimiento.realizado_el, datatype=XSD.date)))
-
-        actor = BNode()
-        actor_reference = BNode()
-        performer = BNode()
-        g.add((actor_reference, FHIR.value, Literal(f"Practitioner/{procedimiento.practicante.id}")))
-        g.add((actor, FHIR.reference, actor_reference))
-        g.add((performer, FHIR.actor, actor))
-        g.add((proc_uri, FHIR.performer, performer))
-        if procedimiento.diente:
-            bodySite = BNode()
-            coding = BNode()
-
-            g.add((coding, FHIR.system, Literal("http://ada.org/snodent")))
-            g.add((coding, FHIR.code, Literal(procedimiento.diente.codigo)))
-            g.add((coding, FHIR.display, Literal(procedimiento.diente.display)))
-
-            g.add((bodySite, FHIR.coding, coding))
-            g.add((bodySite, FHIR.text, Literal(procedimiento.diente.definicion)))
-
-            g.add((proc_uri, FHIR.bodySite, bodySite))
-            
-
-    return g
-
-def export_patient_rdf(request, paciente_id):
-    g = Graph()
-
-    paciente = Paciente.objects.get(id=paciente_id)
-
-    g.bind("fhir", FHIR)
-
-    pac_uri = URIRef(FHIR.identifier + "/" + str(paciente_id))
-    
+########################################################################################
+## Función para crear el grafo RDF de un paciente específico con sus datos personales ##
+########################################################################################
+def patient_rdf_graph(g, paciente):
+    pac_uri = URIRef(FHIR.Patient + "/" + str(paciente.id))
     g.add((pac_uri, RDF.type, FHIR.Patient))
 
     g.add((pac_uri, FHIR.active, Literal(paciente.activo)))
@@ -320,18 +233,62 @@ def export_patient_rdf(request, paciente_id):
 
     g.add((pac_uri, FHIR.maritalStatus, Literal(paciente.estado_civil)))
 
+####################################################################
+## Función para crear el grafo RDF de un procedimiento específico ##
+####################################################################
+def procedimiento_rdf_graph(g, procedimiento):
+    proc_uri = URIRef(FHIR.Procedure + "/" + str(procedimiento.id))
+
+    g.add((proc_uri, RDF.type, FHIR.Procedure))
+
+    g.add((proc_uri, FHIR.status, Literal(procedimiento.status)))
+
+    procCode = BNode()
+    code = BNode()
+    g.add((code, FHIR.system, Literal("http://ada.org/cdt")))
+    g.add((code, FHIR.code, Literal(procedimiento.codigo)))
+    g.add((procCode, FHIR.text, Literal(procedimiento.descripcion)))
+    g.add((procCode, FHIR.coding, code))
+    g.add((proc_uri, FHIR.code, procCode))
+
+    pacient_reference = BNode()
+    g.add((pacient_reference, FHIR.value, Literal(f"Patient/{procedimiento.paciente.id}")))
+    g.add((proc_uri, FHIR.subject, pacient_reference))
+
+    g.add((proc_uri, FHIR.performedDateTime, Literal(procedimiento.realizado_el, datatype=XSD.date)))
+
+    actor = BNode()
+    actor_reference = BNode()
+    performer = BNode()
+    g.add((actor_reference, FHIR.value, Literal(f"Practitioner/{procedimiento.practicante.id}")))
+    g.add((actor, FHIR.reference, actor_reference))
+    g.add((performer, FHIR.actor, actor))
+    g.add((proc_uri, FHIR.performer, performer))
+    if procedimiento.diente:
+        bodySite = BNode()
+        coding = BNode()
+
+        g.add((coding, FHIR.system, Literal("http://ada.org/snodent")))
+        g.add((coding, FHIR.code, Literal(procedimiento.diente.codigo)))
+        g.add((coding, FHIR.display, Literal(procedimiento.diente.display)))
+
+        g.add((bodySite, FHIR.coding, coding))
+        g.add((bodySite, FHIR.text, Literal(procedimiento.diente.definicion)))
+
+        g.add((proc_uri, FHIR.bodySite, bodySite))
+
+####################################
+## Función para exportar un grafo ##
+####################################
+def export_file(g, filename):
     rdf_data = g.serialize(format="turtle")
-
     response = HttpResponse(rdf_data, content_type="text/turtle")
-    response["Content-Disposition"] = 'attachment; filename="pacient' + paciente.nombre + '.ttl"'
-
+    response["Content-Disposition"] = f'attachment; filename="{filename}"'
     return response
-    
-
 
 ############################################################
 #                                                          #
-# ------------ Importación de datos desde RDF ------------ #
+# ~~~~~~~~~~~~ Importación de datos desde RDF ~~~~~~~~~~~~ #
 #                                                          #
 ############################################################
 def import_data(request, form):

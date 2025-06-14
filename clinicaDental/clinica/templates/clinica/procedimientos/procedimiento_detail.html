@@ -19,7 +19,13 @@
         onclick=window.location.href='{% url "procedimiento_update" procedimiento.id %}'>
   Editar
 </button>
-<!-- Aquí puedes agregar más botones o contenido si lo necesitas -->
+
+<button type="button"
+        class="btn btn-secondary"
+        onclick=window.location.href='{% url "export_procedure_rdf" procedimiento.id %}'>
+  Exportar
+</button>
+
 
 <button type="button" class="btn btn-danger" data-bs-toggle="modal"
   data-bs-target="#confirmDeleteModal{{ procedimiento.id }}">
