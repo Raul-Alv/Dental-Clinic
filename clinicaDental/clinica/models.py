@@ -1,4 +1,5 @@
 from django.db import models
+import re
 
 class Paciente(models.Model):
     id = models.AutoField(primary_key=True) #ID autoincremental
@@ -35,9 +36,48 @@ class Diente(models.Model):
     codigo = models.CharField(max_length=7, unique=True) #Codigo basado en ADA SNOMED 
     display = models.CharField(max_length=100)
     definicion = models.CharField(max_length=100)
+    designacion_universal = models.PositiveSmallIntegerField(null=True, blank=True) #Diente universal (1-32)
+    designacion_iso = models.PositiveSmallIntegerField(null=True, blank=True) #Diente ISO (11-48)
 
     def __str__(self):
         return f"{self.display}"
+    
+    @classmethod
+    def from_definicion_string(cls, definicion):
+        """
+        Parsea un string tipo:
+          "Diente incisivo central inferior derecho permanente; \
+           designación universal 25; designación ISO 41"
+        y devuelve kwargs para crear la instancia.
+        """
+        
+
+        text = definicion or ''
+        parts = [p.strip() for p in text.split(';')]
+        #print(f"Parsing definition: {text} -> Parts: {parts}")
+        # Si hay al menos 3 secciones, extraemos
+        #print(f"Parts found: {len(parts)} -> {parts}")
+        if len(parts) >= 3:
+            # 1) hasta el primer ';'
+            defin = parts[0]
+            print(f"Parsed definition: {defin}")
+            # 2) número de designación universal
+            m_u = re.search(r'(\d+)', parts[1])
+            # 3) número de designación iso
+            m_i = re.search(r'(\d+)', parts[2])
+            #print(f"Parsed definition: {defin}, Universal: {m_u.group(1) if m_u else None}, ISO: {m_i.group(1) if m_i else None}")
+            return {
+                'definicion': defin,
+                'designacion_universal': int(m_u.group(1)) if m_u else None,
+                'designacion_iso': int(m_i.group(1))    if m_i else None,
+            }
+
+        # Fallback: lo guardamos todo en 'definicion'
+        return {
+            'definicion': text,
+            'designacion_universal': None,
+            'designacion_iso': None,
+        }
     
 class StatusProcedimiento(models.TextChoices):
     PREPARACION = 'preparation', 'Preparación'

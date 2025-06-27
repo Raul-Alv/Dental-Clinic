@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'crispy_bootstrap5',
-    'widget_tweaks',  # For additional form field tweaks in templates
+    'widget_tweaks',
+    'import_export',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
