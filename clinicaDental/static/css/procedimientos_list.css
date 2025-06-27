@@ -1,0 +1,110 @@
+/* ========== Contenedor principal ========== */
+.procedimientos-page {
+    display: flex;
+    height: 100vh;
+
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+/* Columna de contenido */
+.procedimientos-main {
+    flex: 1;
+    padding: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    overflow-y: auto;     
+    box-sizing: border-box;
+}
+
+/* Sidebar de exportar */
+.procedimientos-sidebar {
+    width: 250px;
+    margin-left: auto;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    padding: 3rem;
+    background-color: #f5f5f5;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: box-shadow .3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Encabezado con flecha de vuelta */
+.procedimientos-back {
+    font-size: 1rem;
+    margin-bottom: .5rem;
+}
+
+.procedimientos-back a {
+    text-decoration: none;
+    color: var(--text-base);
+    font-weight: bold;
+}
+
+/* Título principal */
+.procedimientos-header {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--brand-secondary);
+}
+
+/* Cada elemento de la lista */
+.procedimiento-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 1rem 0;
+    border-bottom: 1px solid #007bff;
+    text-decoration: none;
+    /* quita subrayado */
+    color: inherit;
+    /* hereda color de texto */
+    cursor: pointer;
+    /* puntero al pasar por encima */
+    transition: background-color .2s ease-in-out;
+}
+
+.procedimiento-item:last-child {
+    border-bottom: none;
+}
+
+.procedimiento-item:hover .procedimiento-desc,
+.procedimiento-item:hover .procedimiento-meta {
+    color: #0044cc;
+}
+
+/* Estado hover: fondo y, opcionalmente, color de texto */
+.procedimiento-item:hover {
+    background-color: #e6f0ff;
+    /* azul muy suave de fondo */
+}
+
+/* Descripción a la izquierda */
+.procedimiento-desc {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+/* Datos de la derecha */
+.procedimiento-meta {
+    text-align: right;
+}
+
+.procedimiento-codigo {
+    font-size: .9rem;
+    color: #666;
+    margin-bottom: .25rem;
+}
+
+.procedimiento-fecha {
+    font-size: 1rem;
+}
+
+/* Botón exportar en sidebar */
+.btn-exportar {
+    width: 100%;
+}

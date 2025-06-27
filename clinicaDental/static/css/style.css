@@ -1,0 +1,148 @@
+/* ========== Variables de color ========== */
+:root {
+  --brand-primary: #0066cc;
+  --brand-secondary: #004d99;
+  --brand-accent: #ffcc00;
+  --bg-light: #f5f7fa;
+  --text-base: #333;
+}
+
+/* ========== Resets y tipografía ========== */
+body {
+  background-color: var(--bg-light);
+  color: var(--text-base);
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* ========== Navbar ========== */
+.navbar {
+  background-color: var(--brand-secondary) !important;
+}
+.navbar .navbar-brand,
+.navbar .nav-link {
+  color: white !important;
+  font-weight: 600;
+}
+.navbar .nav-link:hover,
+.navbar .nav-link:focus {
+  color: var(--brand-accent) !important;
+}
+
+/* ========== Botones personalizados ========== */
+.btn-primary {
+  background-color: var(--brand-primary);
+  border-color: var(--brand-primary);
+  border-radius: 4px;
+}
+.btn-primary:hover {
+  background-color: var(--brand-secondary);
+  border-color: var(--brand-secondary);
+}
+.btn-success {
+  background-color: var(--brand-accent);
+  border-color: var(--brand-accent);
+}
+
+/* ========== Tablas mejoradas ========== */
+.table {
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+.table thead {
+  background-color: #e9ecef;
+}
+.table tbody tr:hover {
+  background-color: #f1f5f9;
+}
+
+/* ========== Formularios ========== */
+.form-control {
+  border: none;
+  border-bottom: 1px solid var(--text-base);
+  border-radius: 0;
+  background-color: transparent;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.form-control:focus {
+  outline: none;
+  box-shadow: none;
+  border-bottom: 2px solid var(--brand-primary);
+  background-color: transparent;
+}
+
+/* Floating label tweak */
+.form-floating > label {
+  padding-left: .25rem;
+  padding-right: .25rem;
+}
+
+/* ========== Encabezados ========== */
+h1, h2, h4 {
+  color: var(--brand-secondary);
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* ========== Modales ========== */
+.modal-content {
+  border-radius: 6px;
+}
+
+/* ========== Utilidades extras ========== */
+.text-primary {
+  color: var(--brand-primary) !important;
+}
+.mt-2 { margin-top: .5rem !important; }
+.mb-2 { margin-bottom: .5rem !important; }
+.p-3  { padding: 1rem !important; }
+
+/* Ocultar completamente el input */
+#id_rdf_file {
+  display: none;
+}
+
+/* Zona de subida de ficheros */
+.file-drop-zone {
+  display: block;           /* full width */
+  border: 2px dashed var(--brand-primary);
+  border-radius: 6px;
+  padding: 2rem;
+  text-align: center;
+  color: var(--text-base);
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.file-drop-zone.dragover {
+  background-color: rgba(0, 102, 204, 0.1);
+}
+
+/* Lista de ficheros seleccionados */
+.file-list {
+  margin-top: 1rem;
+}
+.file-list .list-group-item {
+  background-color: transparent;
+  border: 1px solid var(--bg-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Botón de acento */
+.btn-accent {
+  background-color: var(--brand-accent);
+  color: #333;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+}
+.btn-accent:hover {
+  background-color: var(--brand-secondary);
+  color: #fff;
+}

@@ -1,16 +1,21 @@
 {% extends 'layout.html' %}
-
+{% load widget_tweaks %}
+{% load static %}
 {% block title %}
-<title>Crear dentista</title>
+  <title>Crear dentista</title>
 {% endblock %}
 
 {% block content %}
-<h2>{{ view.title|default:"Form" }}</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Save</button>
-</form>
+<h2>{{ title|default:"Form" }}</h2>
+<div class="card shadow-sm">
+    <div class="card-body p-4">
+      <form method="post" class="needs-validation" novalidate>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+      </form>
+    </div>
+</div>
 
 {% if form.errors %}
   <div class="alert alert-danger">

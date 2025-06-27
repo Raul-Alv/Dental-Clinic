@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'crispy_bootstrap5',
+    'widget_tweaks',  # For additional form field tweaks in templates
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
@@ -70,6 +71,21 @@ TEMPLATES = [
         },
     },
 ]
+
+# URL virtual donde servirás tus ficheros estáticos
+STATIC_URL = '/static/'
+
+ # Directorios adicionales donde Django buscará estáticos en desarrollo
+STATICFILES_DIRS = [
+     BASE_DIR / 'static',      # tu carpeta project_root/static/
+]
+
+ # (para desplegar) carpeta donde collectstatic copiará todos los estáticos
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+ # Opcional: habilitar compresión y cacheo con WhiteNoise
+ # Requiere instalar django-whitenoise (pip install whitenoise)
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 WSGI_APPLICATION = 'clinicaSite.wsgi.application'
 

@@ -1,38 +1,50 @@
 {% extends 'layout.html' %}
+{% load split_filters %}
 
 {% block title %}
-   <title>Show Page</title>
+   <title>Lista de procedimientos</title>
 {% endblock %}
 
 {% block content %}
-<h1>Procedimientos</h1>
-<table class="table">
-   <thead>
-     <tr>
-       <th scope="col">Codigo</th>
-       <th scope="col">Status</th>
-       <th scope="col">Paciente</th>
-       <th scope="col">Diente</th>
-       <th scope="col">Descripcion</th>
-       <th scope="col">Realizado el</th>
-     </tr>
-   </thead>
-   <tbody>
-   {% for i in procedimientos %}
-     <tr>
-       <td><a href="{% url 'procedimiento_detail' i.id %}">{{i.codigo}}</a></td>
-       <td>{{i.status}}</td>
-       <td>{{i.paciente}}</td>
-       <td>{{i.diente}}</td>
-       <td>{{i.descripcion}}</td>
-       <td>{{i.realizado_el}}</td>
 
-     </tr>
-   {% endfor %}
-   </tbody>
- </table>
- <form method="get" action="{% url 'procedimiento_export_rdf' %}">
-  {% csrf_token%}
-  <button type="submit" class="btn btn-info">Exportar</button>
-</form>
+<!-- Columna principal -->
+<div class="procedimientos-page">
+  <div class="procedimientos-main">
+    <h1 class="procedimientos-header">{{title}}</h1>
+
+    {% if procedimientos %}
+      {% for proc in procedimientos %}
+        <a href="{% url 'procedimiento_detail' proc.id %}" class="procedimiento-item">
+          <!-- Descripción -->
+          <div class="procedimiento-desc">
+            {{ proc.descripcion|split:";"|first }}
+          </div>
+          <!-- Datos -->
+          <div class="procedimiento-meta">
+            {# Aquí pones el campo que necesites, e.g. el DNI o código del paciente/practicante #}
+            <div class="procedimiento-codigo">
+              {{ proc.codigo |  default:"—" }}
+            </div>
+            <div class="procedimiento-fecha">
+              {{ proc.realizado_el|date:"d-m-Y" }}
+            </div>
+          </div>
+        </a>
+      {% endfor %}
+    {% else %}
+      <p>No hay procedimientos registrados.</p>
+    {% endif %}
+  </div>
+
+  <!-- Sidebar de exportar -->
+  <aside class="procedimientos-sidebar">
+    <form method="get" action="{% url 'procedimiento_export_rdf' %}">
+      {% csrf_token%}
+      <button type="submit" class="btn btn-primary btn-exportar">
+        Exportar
+      </button>
+    </form>
+  </aside>
+</div>
+
 {% endblock %}

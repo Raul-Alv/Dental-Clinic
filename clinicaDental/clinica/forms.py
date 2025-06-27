@@ -15,13 +15,13 @@ class ProcedimientoForm(forms.ModelForm):
             'realizado_el': 'Fecha de Realización',
         }
         widgets = {
-            'codigo': forms.TextInput(attrs={'placeholder': 'Código del Procedimiento'}),
-            'status': forms.Select(attrs={'placeholder': 'Estado del Procedimiento'}),
-            'paciente': forms.Select(attrs={'placeholder': 'Seleccionar Paciente'}),
-            'practicante': forms.Select(attrs={'placeholder': 'Seleccionar Practicante'}),
-            'diente': forms.Select(attrs={'placeholder': 'Seleccionar Diente'}),
-            'descripcion': forms.Textarea(attrs={'placeholder': 'Descripción del Procedimiento'}),
-            'realizado_el': forms.DateInput(attrs={'type': 'date', 'placeholder': 'Fecha de Realización'}),
+            'codigo': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Ej. PROC-001'}),
+            'status': forms.Select(attrs={'class': 'form-control','placeholder': 'Ej. Pendiente'}),
+            'paciente': forms.Select(attrs={'class': 'form-control','placeholder': 'Ej. Seleccionar Paciente'}),
+            'practicante': forms.Select(attrs={'class': 'form-control','placeholder': 'Ej. Seleccionar Practicante'}),
+            'diente': forms.Select(attrs={'class': 'form-control','placeholder': 'Ej. Seleccionar Diente'}),
+            'descripcion': forms.Textarea(attrs={'class': 'form-control','placeholder': 'Descripción del Procedimiento'}),
+            'realizado_el': forms.DateInput(attrs={'class': 'form-control','type': 'date', 'placeholder': 'Ej. Fecha de Realización'}),
         }
 
 class PacienteForm(forms.ModelForm):
@@ -43,17 +43,17 @@ class PacienteForm(forms.ModelForm):
             
         }
         widgets = {
-            'nombre': forms.TextInput(attrs={'placeholder': 'Nombre del Paciente'}),
-            'apellido': forms.TextInput(attrs={'placeholder': 'Apellido del Paciente'}),
-            'genero': forms.Select(attrs={'placeholder': 'Género'}),
-            'telefono': forms.TextInput(attrs={'placeholder': 'Teléfono'}),
-            'fecha_nacimiento': forms.DateInput(attrs={'type': 'date', 'placeholder': 'Fecha de Nacimiento'}),
-            'calle': forms.TextInput(attrs={'placeholder': 'Calle, Número'}),
-            'ciudad': forms.TextInput(attrs={'placeholder': 'Ciudad'}), 
-            'provincia': forms.TextInput(attrs={'placeholder': 'Estado/Provincia'}),
-            'pais': forms.TextInput(attrs={'placeholder': 'País'}),
-            'codigo_postal': forms.TextInput(attrs={'placeholder': 'Código Postal'}),
-            'estado_civil': forms.Select(attrs={'placeholder': 'Estado Civil'}), 
+            'nombre': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Ej. Juan'}),
+            'apellido': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Ej. Alvarez'}),
+            'genero': forms.Select(attrs={'class': 'form-control','placeholder': 'Género'}),
+            'telefono': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Ej. 123456789'}),
+            'fecha_nacimiento': forms.DateInput(attrs={'class': 'form-control','type': 'date', 'placeholder': 'Fecha de Nacimiento'}),
+            'calle': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Ej. Calle Uría 12'}),
+            'ciudad': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Ej. Oviedo'}), 
+            'provincia': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Ej. Asturias'}),
+            'pais': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Ej. España'}),
+            'codigo_postal': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Ej. 33001'}),
+            'estado_civil': forms.Select(attrs={'class': 'form-control','placeholder': 'Estado Civil'}), 
         }
 
 class PracticanteForm(forms.ModelForm):
@@ -70,13 +70,16 @@ class PracticanteForm(forms.ModelForm):
             
         }
         widgets = {
-            'nombre': forms.TextInput(attrs={'placeholder': 'Juan'}),
-            'apellido': forms.TextInput(attrs={'placeholder': 'Alvarez'}),
-            'genero': forms.Select(attrs={'placeholder': 'Género'}),
-            'telefono': forms.TextInput(attrs={'placeholder': '123456789'}),
-            'cualificacion': forms.TextInput(attrs={'placeholder': 'Dentista'}),
+            'nombre': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Ej. Juan'}),
+            'apellido': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Ej. Alvarez'}),
+            'genero': forms.Select(attrs={'class': 'form-control','placeholder': 'Género'}),
+            'telefono': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Ej. 123456789'}),
+            'cualificacion': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Ej. Licenciado en Odontología'}),
         }
 
 class RDFUploadForm(forms.Form):
-    rdf_file = forms.FileField(label="Archivo RDF")
+    rdf_file = forms.FileField(
+        label="Archivo RDF",
+        widget=forms.ClearableFileInput(attrs={'hidden': True, 'id': 'id_rdf_file'})
+    )
          

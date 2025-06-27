@@ -303,9 +303,13 @@ def import_data(request, form):
         name = g.value(s, URIRef(FHIR + "name"))
         phone = ""
         for telecom_node in g.objects(s, FHIR.telecom):
-            system = g.value(telecom_node, FHIR.system)
-            if system and str(system) == "phone":
-                phone = g.value(telecom_node, FHIR.value, default="")
+            
+            point = g.value(telecom_node, FHIR.ContactPoint)
+            system = g.value(point, FHIR.system)
+            print(f"Telecom Node: {telecom_node}, System: {system}")
+            if system and str(system).lower() == "phone":
+                phone = g.value(point, FHIR.value, default="")
+                print(f"Found phone: {phone} for patient {patient_id}")
                 break
         if not Paciente.objects.filter(id=patient_id).exists():
             print(f"Importing Patient: {s}, ID: {patient_id}, Name: {name}")
