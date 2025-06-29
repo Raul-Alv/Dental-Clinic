@@ -88,11 +88,18 @@ class StatusProcedimiento(models.TextChoices):
     COMPLETADO = 'completed', 'Completado'
     CON_ERRORES = 'entered-in-error', 'Con Errores'
     DESCONOCIDO = 'unknown', 'Desconocido'
+
+class ProcedimientoCatalogo(models.Model):
+    codigo = models.CharField(max_length=20, unique=True) #Codigo basado en SNOMED CT
+    text = models.CharField(max_length=100, blank=True) #Texto descriptivo del procedimiento
+
+    def __str__(self):
+        return self.text
     
 class Procedimiento(models.Model):
     id = models.AutoField(primary_key=True) #ID autoincremental
-    codigo = models.CharField(max_length=10) #Codigo basado en SNOMED CT
     status = models.CharField(max_length=20, choices=StatusProcedimiento.choices, default=StatusProcedimiento.PREPARACION)
+    codigo = models.ForeignKey(ProcedimientoCatalogo, on_delete=models.PROTECT) #Codigo del procedimiento basado en SNOMED CT
     paciente = models.ForeignKey(Paciente, on_delete=models.PROTECT)
     practicante = models.ForeignKey(Practicante, on_delete=models.PROTECT)
     practicante_externo_uri = models.URLField(blank=True, null=True) #URI del practicante externo si aplica
@@ -101,5 +108,7 @@ class Procedimiento(models.Model):
     realizado_el = models.DateField()
     
     def __str__(self):
-        return f"{self.paciente.nombre} - {self.descripcion}, {self.realizado_el}"
+        return f"{self.codigo.text} - {self.paciente.nombre}, {self.realizado_el}"
+    
+
     

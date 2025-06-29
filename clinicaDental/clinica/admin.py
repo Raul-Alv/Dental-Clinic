@@ -1,7 +1,9 @@
 from django.contrib import admin
 from import_export import resources, fields
 from import_export.admin import ImportExportModelAdmin
-from .models import Paciente, Practicante, Diente, Procedimiento
+from import_export.widgets import CharWidget
+from .models import Paciente, Practicante, Diente, Procedimiento, ProcedimientoCatalogo
+from import_export.formats.base_formats import CSV
 
 # 1. Resource para Diente
 class DienteResource(resources.ModelResource):  
@@ -44,6 +46,28 @@ class DienteAdmin(ImportExportModelAdmin):
     list_display = ('definicion', 'designacion_universal', 'designacion_iso')
     search_fields = ('definicion',)
 
+
+class ProcedimientoCatalogoResource(resources.ModelResource):
+    codigo = fields.Field(attribute='codigo', column_name='codigo', widget=CharWidget())
+    text   = fields.Field(attribute='text',   column_name='text',   widget=CharWidget())
+
+    class Meta:
+        model            = ProcedimientoCatalogo
+        import_id_fields = ('codigo',)
+        fields           = ('codigo','text',)
+    
+    @classmethod
+    def get_import_formats(cls):
+        """
+        Solo CSV (descarta XLS, JSON, etc.)
+        """
+        return [CSV()]
+
+@admin.register(ProcedimientoCatalogo)
+class CatalogoAdmin(ImportExportModelAdmin):
+    resource_class = ProcedimientoCatalogoResource
+    list_display   = ('codigo','text')
+    search_fields  = ('codigo','text')
 
 # 3. Registro genérico para los demás modelos
 admin.site.register(Paciente)

@@ -17,13 +17,13 @@
         <a href="{% url 'procedimiento_detail' proc.id %}" class="procedimiento-item">
           <!-- Descripción -->
           <div class="procedimiento-desc">
-            {{ proc.descripcion|split:";"|first }}
+            {{ proc.codigo.text|split:";"|first }}
           </div>
           <!-- Datos -->
           <div class="procedimiento-meta">
             {# Aquí pones el campo que necesites, e.g. el DNI o código del paciente/practicante #}
             <div class="procedimiento-codigo">
-              {{ proc.codigo |  default:"—" }}
+              {{ proc.codigo.codigo |  default:"—" }}
             </div>
             <div class="procedimiento-fecha">
               {{ proc.realizado_el|date:"d-m-Y" }}
