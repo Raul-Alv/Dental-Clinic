@@ -7,55 +7,58 @@ start = @<PatientShape>
 
 <PatientShape> {
   rdf:type             		   [ fhir:Patient ] ;
-  fhir:Patient.active          xsd:boolean ;                      # true/false
+  fhir:Patient.active          @<ValueBooleanShape> ;                      # true/false
   fhir:Patient.name            @<HumanNameShape>+ ;               # al menos uno
-  fhir:Patient.gender          [ "male" "female" "other" "unknown" ] ;
-  fhir:Patient.birthDate       xsd:date ;
-  fhir:Patient.maritalStatus   [ "S" "C" "D" "unmarried" ]? ;     # acepta "unmarried"
+  fhir:Patient.gender          @<GenderShape> ;
+  fhir:Patient.birthDate       @<ValueDateShape> ;
+  fhir:Patient.maritalStatus   @<MaritalStatusShape>;     
   fhir:Patient.telecom         @<TelecomShape>* ;                 # cero o más
   fhir:Patient.address         @<AddressShape>* ;                 # cero o más
 }
 
 <TelecomShape> {
-  fhir:ContactPoint @<ContactPointShape> ;
+  fhir:ContactPoint.system @<ValueStringShape> ;
+  fhir:ContactPoint.value  @<ValueStringShape> ;
+  fhir:index               xsd:integer      ;
 }
 
 <HumanNameShape> {
-  fhir:HumanName.family  xsd:string ;
-  fhir:HumanName.given   xsd:string+
+  fhir:HumanName.family  @<ValueStringShape> ;
+  fhir:HumanName.given   @<ValueStringShape>+
 }
 
 <ContactPointShape> {
-  fhir:system [ "phone" "email" "url" "fax" "pager" "other" ] ;
-  fhir:value  xsd:string
+  fhir:system @<ContactSystemShape> ;
+  fhir:value  @<ValueStringShape>
 }
 
 <AddressShape> {
-  fhir:Address.line       xsd:string+ ;
-  fhir:Address.city       xsd:string ;
-  fhir:Address.state      xsd:string ;
-  fhir:Address.postalCode xsd:string ;
-  fhir:Address.country    xsd:string
+  fhir:Address.line       @<ValueStringShape>+ ;
+  fhir:Address.city       @<ValueStringShape> ;
+  fhir:Address.state      @<ValueStringShape> ;
+  fhir:Address.postalCode @<ValueStringShape> ;
+  fhir:Address.country    @<ValueStringShape>
 }
 
 # Forma que valida Procedimientos
 <ProcedureShape> {
   a                       [ fhir:Procedure ] ;
+  fhir:Procedure.bodySite		 	@<CodeableConceptShape>+ ;
   fhir:Procedure.code               @<CodeableConceptShape> ;
-  fhir:Procedure.performedDateTime  xsd:date ;
+  fhir:Procedure.performedDateTime  @<ValueDateShape> ;
   fhir:Procedure.performer          @<PerformerShape> ;
-  fhir:Procedure.status             xsd:string ;
+  fhir:Procedure.status             @<ValueStringShape> ;
   fhir:Procedure.subject            @<ReferenceWrapperShape> ;
 }
 
 <CodeableConceptShape> {
   fhir:CodeableConcept.coding             @<CodingShape>+ ;
-  fhir:CodeableConcept.text               xsd:string ;
+  fhir:CodeableConcept.text               @<ValueStringShape>* ;
 }
 
 <CodingShape> {
-  fhir:Coding.code               xsd:string ;
-  fhir:Coding.system             xsd:anyURI ;
+  fhir:Coding.code               @<ValueStringShape> ;
+  fhir:Coding.system             @<ValueURIShape> ;
 }
 
 <PerformerShape> {
@@ -68,4 +71,32 @@ start = @<PatientShape>
 
 <ReferenceShape> {
   fhir:value              xsd:string ;
+}
+
+<ValueBooleanShape> {
+  fhir:value xsd:boolean ;
+}
+
+<ValueStringShape> {
+  fhir:value xsd:string ;
+}
+
+<ValueDateShape> {
+  fhir:value xsd:date ;
+}
+
+<ValueURIShape> {
+  fhir:value xsd:anyURI ;
+}
+
+<GenderShape> {
+	fhir:value [ "male" "female" "other" "unknown" ] ;
+}
+
+<MaritalStatusShape> {
+	fhir:value [ "A" "D" "M" "U" "W" "UNK" ]? ;
+}
+
+<ContactSystemShape> {
+	fhir:value [ "phone" "email" "url" "fax" "pager" "other" ] ;
 }

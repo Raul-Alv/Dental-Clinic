@@ -205,33 +205,74 @@ def patient_rdf_graph(g, paciente):
     pac_uri = URIRef(FHIR.Patient + "/" + str(paciente.id))
     g.add((pac_uri, RDF.type, FHIR.Patient))
 
-    g.add((pac_uri, FHIR.active, Literal(paciente.activo)))
+    # active → [ fhir:value true ]
+    active_node = BNode()
+    g.add((pac_uri, FHIR["Patient.active"], active_node))
+    g.add((active_node, FHIR["value"], Literal(paciente.activo, datatype=XSD.boolean)))
 
+    # name → HumanName.family + HumanName.given, cada uno con [ fhir:value … ]
     name = BNode()
-    g.add((pac_uri, FHIR.name, name))
-    g.add((name, FHIR.given, Literal(paciente.nombre)))
-    g.add((name, FHIR.family, Literal(paciente.apellido)))
+    family = BNode()
+    given = BNode()
+    g.add((pac_uri, FHIR["Patient.name"], name))
+    g.add((name, FHIR["HumanName.family"], family))
+    g.add((family, FHIR["value"], Literal(paciente.apellido)))
+    g.add((name, FHIR["HumanName.given"], given))
+    g.add((given, FHIR["value"], Literal(paciente.nombre)))
 
-    telcom = BNode()
-    telephone = BNode()
+    # telecom → índice + ContactPoint.system + ContactPoint.value
+    telecom = BNode()
+    idx = BNode()
+    system = BNode()
+    value = BNode()
+    g.add((pac_uri, FHIR["Patient.telecom"], telecom))
+    # fhir:index 0
+    g.add((telecom, FHIR["index"], Literal(0)))
+    # fhir:ContactPoint.system [ fhir:value "phone" ]
+    g.add((telecom, FHIR["ContactPoint.system"], system))
+    g.add((system, FHIR["value"], Literal("phone")))
+    # fhir:ContactPoint.value [ fhir:value número ]
+    g.add((telecom, FHIR["ContactPoint.value"], value))
+    g.add((value, FHIR["value"], Literal(paciente.telefono)))
 
-    g.add((pac_uri, FHIR.telecom, telcom))
-    g.add((telephone, FHIR.system, Literal("phone")))
-    g.add((telephone, FHIR.value, Literal(paciente.telefono)))
-    g.add((telcom, FHIR.ContactPoint, telephone))
-    
-    g.add((pac_uri, FHIR.gender, Literal(paciente.genero)))
-    g.add((pac_uri, FHIR.birthDate, Literal(paciente.fecha_nacimiento, datatype=XSD.date)))
+    # gender → [ fhir:value "female" ]
+    gender_node = BNode()
+    g.add((pac_uri, FHIR["Patient.gender"], gender_node))
+    g.add((gender_node, FHIR["value"], Literal(paciente.genero)))
 
-    adress = BNode()
-    g.add((pac_uri, FHIR.address, adress))
-    g.add((adress, FHIR.line, Literal(paciente.calle)))
-    g.add((adress, FHIR.city, Literal(paciente.ciudad)))
-    g.add((adress, FHIR.state, Literal(paciente.provincia)))
-    g.add((adress, FHIR.postalCode, Literal(paciente.codigo_postal)))
-    g.add((adress, FHIR.country, Literal(paciente.pais)))
+    # birthDate → [ fhir:value "YYYY-MM-DD"^^xsd:date ]
+    bd_node = BNode()
+    g.add((pac_uri, FHIR["Patient.birthDate"], bd_node))
+    g.add((bd_node, FHIR["value"], Literal(paciente.fecha_nacimiento, datatype=XSD.date)))
 
-    g.add((pac_uri, FHIR.maritalStatus, Literal(paciente.estado_civil)))
+    # maritalStatus → [ fhir:value "C" ]
+    ms_node = BNode()
+    g.add((pac_uri, FHIR["Patient.maritalStatus"], ms_node))
+    g.add((ms_node, FHIR["value"], Literal(paciente.estado_civil)))
+
+    # address → Address.line, city, state, postalCode, country
+    address = BNode()
+    g.add((pac_uri, FHIR["Patient.address"], address))
+
+    line = BNode()
+    g.add((address, FHIR["Address.line"], line))
+    g.add((line, FHIR["value"], Literal(paciente.calle)))
+
+    city = BNode()
+    g.add((address, FHIR["Address.city"], city))
+    g.add((city, FHIR["value"], Literal(paciente.ciudad)))
+
+    state = BNode()
+    g.add((address, FHIR["Address.state"], state))
+    g.add((state, FHIR["value"], Literal(paciente.provincia)))
+
+    postal = BNode()
+    g.add((address, FHIR["Address.postalCode"], postal))
+    g.add((postal, FHIR["value"], Literal(paciente.codigo_postal)))
+
+    country = BNode()
+    g.add((address, FHIR["Address.country"], country))
+    g.add((country, FHIR["value"], Literal(paciente.pais)))
 
 ####################################################################
 ## Función para crear el grafo RDF de un procedimiento específico ##
@@ -241,41 +282,75 @@ def procedimiento_rdf_graph(g, procedimiento):
 
     g.add((proc_uri, RDF.type, FHIR.Procedure))
 
-    g.add((proc_uri, FHIR.status, Literal(procedimiento.status)))
+     # status → [ fhir:value "…" ]
+    status_node = BNode()
+    g.add((proc_uri, FHIR["Procedure.status"], status_node))
+    g.add((status_node, FHIR["value"], Literal(procedimiento.status)))
 
-    procCode = BNode()
-    code = BNode()
-    g.add((code, FHIR.system, Literal("http://ada.org/cdt")))
-    g.add((code, FHIR.code, Literal(procedimiento.codigo)))
-    g.add((procCode, FHIR.text, Literal(procedimiento.descripcion)))
-    g.add((procCode, FHIR.coding, code))
-    g.add((proc_uri, FHIR.code, procCode))
+    # code → CodeableConcept
+    proc_code_cc = BNode()
+    g.add((proc_uri, FHIR["Procedure.code"], proc_code_cc))
 
-    pacient_reference = BNode()
-    g.add((pacient_reference, FHIR.value, Literal(f"Patient/{procedimiento.paciente.id}")))
-    g.add((proc_uri, FHIR.subject, pacient_reference))
+    #   coding → [ Coding.code [ fhir:value … ]; Coding.system [ fhir:value … ] ]
+    coding = BNode()
+    g.add((proc_code_cc, FHIR["CodeableConcept.coding"], coding))
 
-    g.add((proc_uri, FHIR.performedDateTime, Literal(procedimiento.realizado_el, datatype=XSD.date)))
+    code_val = BNode()
+    g.add((coding, FHIR["Coding.code"], code_val))
+    g.add((code_val, FHIR["value"], Literal(procedimiento.codigo.codigo)))
 
+    system_val = BNode()
+    g.add((coding, FHIR["Coding.system"], system_val))
+    g.add((system_val, FHIR["value"], Literal("http://ada.org/cdt", datatype=XSD.anyURI)))
+
+    #   text → [ fhir:value … ]
+    text_val = BNode()
+    g.add((proc_code_cc, FHIR["CodeableConcept.text"], text_val))
+    g.add((text_val, FHIR["value"], Literal(procedimiento.codigo.text)))
+
+    # performedDateTime → [ fhir:value "YYYY-MM-DD"^^xsd:date ]
+    date_val = BNode()
+    g.add((proc_uri, FHIR["Procedure.performedDateTime"], date_val))
+    g.add((date_val, FHIR["value"], Literal(procedimiento.realizado_el, datatype=XSD.date)))
+
+    # subject → Reference.reference → [ fhir:value "Patient/X" ]
+    subject = BNode()
+    ref_subj = BNode()
+    g.add((proc_uri, FHIR["Procedure.subject"], subject))
+    g.add((subject, FHIR["Reference.reference"], ref_subj))
+    g.add((ref_subj, FHIR["value"], Literal(f"Patient/{procedimiento.paciente.id}")))
+
+    # performer → Procedure.performer.actor → Reference.reference → [ fhir:value "Practitioner/Y" ]
+    perf = BNode()
     actor = BNode()
-    actor_reference = BNode()
-    performer = BNode()
-    g.add((actor_reference, FHIR.value, Literal(f"Practitioner/{procedimiento.practicante.id}")))
-    g.add((actor, FHIR.reference, actor_reference))
-    g.add((performer, FHIR.actor, actor))
-    g.add((proc_uri, FHIR.performer, performer))
+    ref_actor = BNode()
+    g.add((proc_uri, FHIR["Procedure.performer"], perf))
+    g.add((perf, FHIR["Procedure.performer.actor"], actor))
+    g.add((actor, FHIR["Reference.reference"], ref_actor))
+    g.add((ref_actor, FHIR["value"], Literal(f"Practitioner/{procedimiento.practicante.id}")))
+
+    # bodySite (si hay diente): igual patrón con wrappers de fhir:value
     if procedimiento.diente:
-        bodySite = BNode()
-        coding = BNode()
+        bs = BNode()
+        coding_bs = BNode()
+        g.add((proc_uri, FHIR["Procedure.bodySite"], bs))
+        g.add((bs, FHIR["CodeableConcept.coding"], coding_bs))
 
-        g.add((coding, FHIR.system, Literal("http://ada.org/snodent")))
-        g.add((coding, FHIR.code, Literal(procedimiento.diente.codigo)))
-        g.add((coding, FHIR.display, Literal(procedimiento.diente.display)))
+        code_bs_val = BNode()
+        g.add((coding_bs, FHIR["Coding.code"], code_bs_val))
+        g.add((code_bs_val, FHIR["value"], Literal(procedimiento.diente.codigo)))
 
-        g.add((bodySite, FHIR.coding, coding))
-        g.add((bodySite, FHIR.text, Literal(procedimiento.diente.definicion)))
+        sys_bs_val = BNode()
+        g.add((coding_bs, FHIR["Coding.system"], sys_bs_val))
+        g.add((sys_bs_val, FHIR["value"], Literal("http://ada.org/snodent", datatype=XSD.anyURI)))
 
-        g.add((proc_uri, FHIR.bodySite, bodySite))
+        disp_bs_val = BNode()
+        g.add((coding_bs, FHIR["Coding.display"], disp_bs_val))
+        g.add((disp_bs_val, FHIR["value"], Literal(procedimiento.diente.display)))
+
+"""     text_bs_val = BNode()
+        g.add((bs, FHIR["CodeableConcept.text"], text_bs_val))
+        g.add((text_bs_val, FHIR["value"], Literal(procedimiento.diente.definicion))) """
 
 ####################################
 ## Función para exportar un grafo ##

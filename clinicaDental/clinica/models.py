@@ -6,7 +6,7 @@ class Paciente(models.Model):
     activo = models.BooleanField(default=True)
     nombre = models.CharField(max_length=100)
     apellido = models.CharField(max_length=100)
-    genero = models.CharField(max_length=10, choices=[('M', 'Masculino'), ('F', 'Femenino'), ('O', 'Otro'), ('U', 'Desconocido')], blank=False, default='U')
+    genero = models.CharField(max_length=10, choices=[('male', 'Masculino'), ('female', 'Femenino'), ('other', 'Otro'), ('unknown', 'Desconocido')], blank=False, default='U')
     telefono = models.CharField(max_length=15, blank=True, null=True)
     fecha_nacimiento = models.DateField()
     calle = models.CharField(max_length=255, blank=True, null=True)
@@ -14,7 +14,7 @@ class Paciente(models.Model):
     provincia = models.CharField(max_length=100, blank=True, null=True)
     codigo_postal = models.CharField(max_length=20, blank=True, null=True)
     pais = models.CharField(max_length=100, blank=True, null=True)
-    estado_civil = models.CharField(max_length=10, choices=[('S', 'Soltero'), ('C', 'Casado'), ('D', 'Divorciado')], default='S')
+    estado_civil = models.CharField(max_length=10, choices=[('A', 'Anulado'), ('D', 'Divorciado'), ('M', 'Casado'), ('U', 'Soltero'), ('W', 'Viudo/a'), ('UNK', 'Desconocido')], default='U')
     #contacto = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
