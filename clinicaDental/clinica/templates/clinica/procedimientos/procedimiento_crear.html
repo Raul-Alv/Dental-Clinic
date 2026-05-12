@@ -1,40 +1,71 @@
 {% extends 'layout.html' %}
-{% load widget_tweaks %}
 {% load static %}
+
 {% block title %}
-   <title>Show Page</title>
+  <title>Crear Procedimiento | Dental Clinic</title>
+{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/form_page.css' %}">
 {% endblock %}
 
 {% block content %}
-<h2>{{ title|default:"Form" }}</h2>
-<div class="card shadow-sm">
-    <div class="card-body p-4">
-      <form method="post" class="needs-validation" novalidate>
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Save</button>
-      </form>
+  <section class="page-header page-header--split">
+    <div>
+      <span class="page-kicker">Nuevo procedimiento</span>
+      <h1>{{ title }}</h1>
+      <p>Registra un nuevo acto clinico con campos mejor organizados y visualmente mas claros.</p>
     </div>
-</div>
+    <a href="{% url 'procedimiento_list' %}" class="btn btn-outline-secondary">Cancelar</a>
+  </section>
 
-{% if form.errors %}
-  <div class="alert alert-danger">
-    <strong>Error!</strong> Please correct the errors below.
-  </div>
-{% endif %}
+  <section class="section-card form-card">
+    {% if form.errors %}
+      <div class="alert alert-danger">Revisa los campos marcados antes de guardar.</div>
+    {% endif %}
 
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const select = document.getElementById('id_codigo');
-    const codeInput = document.getElementById('id_codigo_text');
-    function updateCode() {
-      const opt = select.options[select.selectedIndex];
-      codeInput.value = opt.getAttribute('data-code') || '';
-    }
-    select.addEventListener('change', updateCode);
-    updateCode();
-  });
-</script>
+    <form method="post" class="styled-form">
+      {% csrf_token %}
+      <div class="form-grid">
+        {% for field in form %}
+          <div class="form-field{% if field.name == 'descripcion' %} form-field--full{% endif %}">
+            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+            {{ field }}
+            {% if field.help_text %}
+              <p class="form-help">{{ field.help_text }}</p>
+            {% endif %}
+            {% for error in field.errors %}
+              <p class="form-error">{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endfor %}
+      </div>
 
+      <div class="action-group">
+        <button type="submit" class="btn btn-primary">Guardar procedimiento</button>
+        <a href="{% url 'procedimiento_list' %}" class="btn btn-outline-secondary">Volver</a>
+      </div>
+    </form>
+  </section>
 {% endblock %}
 
+{% block extra_js %}
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const select = document.getElementById('id_codigo');
+      const codeInput = document.getElementById('id_codigo_text');
+
+      if (!select || !codeInput) {
+        return;
+      }
+
+      function updateCode() {
+        const option = select.options[select.selectedIndex];
+        codeInput.value = option ? option.getAttribute('data-code') || '' : '';
+      }
+
+      select.addEventListener('change', updateCode);
+      updateCode();
+    });
+  </script>
+{% endblock %}

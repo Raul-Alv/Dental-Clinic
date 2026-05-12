@@ -1,52 +1,74 @@
 {% extends 'layout.html' %}
+{% load static %}
 
 {% block title %}
-<title>Detalles de dentista</title>
+  <title>Detalle del Dentista | Dental Clinic</title>
+{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/detail_page.css' %}">
 {% endblock %}
 
 {% block content %}
-<h1>{{ dentista.nombre }} {{ dentista.apellido  }}</h1>
+  <section class="page-header page-header--split">
+    <div>
+      <span class="page-kicker">Equipo clinico</span>
+      <h1>{{ practicante.nombre }} {{ practicante.apellido }}</h1>
+      <p>Datos profesionales y de contacto del dentista asociado a la clinica.</p>
+    </div>
+    <div class="action-group">
+      <a href="{% url 'practicante_update' practicante.id %}" class="btn btn-primary">Editar perfil</a>
+      <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+        data-bs-target="#confirmDeleteModal{{ practicante.id }}">
+        Desactivar
+      </button>
+    </div>
+  </section>
 
-<p><strong>Genero:</strong> {{ practicante.get_genero_display }}</p>
-<p><strong>Telefono:</strong> {{ practicante.telefono }}</p>
-<p><strong>Cualificación:</strong> {{ practicante.cualificacion }}</p>
-
-<button type="button"
-        class="btn btn-primary"
-        onclick=window.location.href='{% url "practicante_update" practicante.id %}'>
-  Editar
-</button>
-
-<button type="button" class="btn btn-danger" data-bs-toggle="modal"
-  data-bs-target="#confirmDeleteModal{{ practicante.id }}">
-  Eliminar
-</button>
-
-<div class="modal fade" id="confirmDeleteModal{{ practicante.id }}" tabindex="-1"
-  aria-labelledby="confirmDeleteModalLabel{{ practicante.id }}" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-
-      <div class="modal-header">
-        <h5 class="modal-title" id="confirmDeleteModalLabel{{ practicante.id }}">Confirmar eliminación</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  <div class="detail-layout">
+    <section class="section-card detail-summary">
+      <span class="page-kicker">Resumen profesional</span>
+      <h2>Ficha del dentista</h2>
+      <div class="detail-summary__grid">
+        <div>
+          <span>Genero</span>
+          <strong>{{ practicante.get_genero_display }}</strong>
+        </div>
+        <div>
+          <span>Telefono</span>
+          <strong>{{ practicante.telefono|default:"Sin telefono" }}</strong>
+        </div>
+        <div>
+          <span>Cualificacion</span>
+          <strong>{{ practicante.cualificacion|default:"Sin especificar" }}</strong>
+        </div>
       </div>
+    </section>
 
-      <div class="modal-body">
-        ¿Está seguro que desea eliminar a"<strong>{{ practicante.nombre }} {{ practicante.apellido  }}</strong>"?
+    <a href="{% url 'practicantes_list' %}" class="text-link">Volver al listado de dentistas</a>
+  </div>
+
+  <div class="modal fade" id="confirmDeleteModal{{ practicante.id }}" tabindex="-1"
+    aria-labelledby="confirmDeleteModalLabel{{ practicante.id }}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmDeleteModalLabel{{ practicante.id }}">Confirmar desactivacion</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          ¿Estas seguro de desactivar a <strong>{{ practicante.nombre }} {{ practicante.apellido }}</strong>?
+        </div>
+
+        <div class="modal-footer">
+          <form method="post" action="{% url 'practicante_delete' practicante.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Desactivar</button>
+          </form>
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+        </div>
       </div>
-
-      <div class="modal-footer">
-        <form method="post" action="{% url 'practicante_delete' practicante.id %}">
-          {% csrf_token %}
-          <button type="submit" class="btn btn-danger">Eliminar</button>
-        </form>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-      </div>
-
     </div>
   </div>
-</div>
-
-<a href="{% url 'practicantes_list' %}">← Atrás</a>
 {% endblock %}

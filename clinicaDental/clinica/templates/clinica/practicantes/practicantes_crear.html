@@ -1,26 +1,50 @@
 {% extends 'layout.html' %}
-{% load widget_tweaks %}
 {% load static %}
+
 {% block title %}
-  <title>Crear dentista</title>
+  <title>Crear Dentista | Dental Clinic</title>
+{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/form_page.css' %}">
 {% endblock %}
 
 {% block content %}
-<h2>{{ title|default:"Form" }}</h2>
-<div class="card shadow-sm">
-    <div class="card-body p-4">
-      <form method="post" class="needs-validation" novalidate>
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Save</button>
-      </form>
+  <section class="page-header page-header--split">
+    <div>
+      <span class="page-kicker">Equipo clinico</span>
+      <h1>{{ title }}</h1>
+      <p>Da de alta al profesional con un formulario mas claro y visualmente consistente.</p>
     </div>
-</div>
+    <a href="{% url 'practicantes_list' %}" class="btn btn-outline-secondary">Cancelar</a>
+  </section>
 
-{% if form.errors %}
-  <div class="alert alert-danger">
-    <strong>Error!</strong> Please correct the errors below.
-  </div>
-{% endif %}
+  <section class="section-card form-card">
+    {% if form.errors %}
+      <div class="alert alert-danger">Revisa los campos marcados antes de guardar.</div>
+    {% endif %}
 
+    <form method="post" class="styled-form">
+      {% csrf_token %}
+      <div class="form-grid">
+        {% for field in form %}
+          <div class="form-field">
+            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+            {{ field }}
+            {% if field.help_text %}
+              <p class="form-help">{{ field.help_text }}</p>
+            {% endif %}
+            {% for error in field.errors %}
+              <p class="form-error">{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endfor %}
+      </div>
+
+      <div class="action-group">
+        <button type="submit" class="btn btn-primary">Guardar dentista</button>
+        <a href="{% url 'practicantes_list' %}" class="btn btn-outline-secondary">Volver</a>
+      </div>
+    </form>
+  </section>
 {% endblock %}

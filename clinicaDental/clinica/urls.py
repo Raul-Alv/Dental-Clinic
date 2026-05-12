@@ -1,9 +1,11 @@
 from django.urls import path
+from django.views.generic import RedirectView
 from . import views, rdfConverter
 
 
 urlpatterns = [
-    path("", views.index, name='index'),
+    path("", views.dashboard, name='dashboard'),
+    path("panel/", RedirectView.as_view(pattern_name="dashboard", permanent=False)),
     path("procedimiento/", views.procedimiento_list, name='procedimiento_list'),
     path("procedimiento/crear/", views.crearProcedimiento, name='procedimiento_crear'),
     path("procedimiento/<int:id>/", views.getProcedimiento, name='procedimiento_detail'),

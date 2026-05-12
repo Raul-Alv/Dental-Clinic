@@ -1,5 +1,4 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse
 from django.db.models import Q
 from rdflib import Graph
 # Create your views here.
@@ -10,8 +9,25 @@ from . import rdfConverter
 import json, re
 from bs4 import BeautifulSoup
 
-def index(request):
-    return HttpResponse("Hello, world. You're at the clinica index.")
+def _clinic_overview():
+    procedimientos_activos = Procedimiento.objects.filter(
+        Q(paciente__activo=True),
+        Q(practicante__activo=True),
+    ).select_related('codigo', 'paciente', 'practicante').order_by('-realizado_el')
+
+    return {
+        'pacientes_count': Paciente.objects.filter(activo=True).count(),
+        'practicantes_count': Practicante.objects.filter(activo=True).count(),
+        'procedimientos_count': procedimientos_activos.count(),
+        'recent_procedimientos': procedimientos_activos[:3],
+    }
+
+def dashboard(request):
+    context = {
+        'title': 'Panel Clinico | Dental Clinic',
+        **_clinic_overview(),
+    }
+    return render(request, 'clinica/index.html', context)
 
 def crearProcedimiento(request):
     if request.method == 'POST':
@@ -27,7 +43,9 @@ def crearProcedimiento(request):
 
 def procedimiento_list(request):
     procedimientos = Procedimiento.objects.filter(
-        Q(paciente__activo=True), Q(practicante__activo=True))
+        Q(paciente__activo=True),
+        Q(practicante__activo=True),
+    ).select_related('codigo', 'paciente', 'practicante', 'diente')
     return render(request, 'clinica/procedimientos/procedimiento_list.html', {'procedimientos': procedimientos, 'title': 'Lista de Procedimientos'})
 
 def getProcedimiento(request, id):
@@ -74,7 +92,7 @@ def patient_export_view(request):
 
     if selected_id:
         paciente = get_object_or_404(Paciente, id=selected_id)
-        procedimientos = Procedimiento.objects.filter(paciente=paciente)
+        procedimientos = Procedimiento.objects.filter(paciente=paciente).select_related('codigo', 'diente')
 
     return render(request, "clinica/export_historial.html", {
         "pacientes": pacientes,

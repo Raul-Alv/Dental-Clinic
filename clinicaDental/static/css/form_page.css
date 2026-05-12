@@ -1,0 +1,42 @@
+.form-card {
+  overflow: hidden;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem 1.15rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.form-field--full {
+  grid-column: 1 / -1;
+}
+
+.form-help {
+  margin: 0.55rem 0 0;
+  color: var(--color-muted);
+  font-size: 0.92rem;
+}
+
+.form-error {
+  margin: 0.4rem 0 0;
+  color: #882d39;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.form-card .action-group {
+  margin-top: 1.4rem;
+}
+
+@media (max-width: 767px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}

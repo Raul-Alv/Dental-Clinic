@@ -1,63 +1,89 @@
 {% extends 'layout.html' %}
+{% load static split_filters %}
 
 {% block title %}
-<title>Show Page</title>
+  <title>Detalle del Procedimiento | Dental Clinic</title>
+{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/detail_page.css' %}">
 {% endblock %}
 
 {% block content %}
-<h1>Procedimiento {{ procedimiento.codigo }} - </h1>
+  <section class="page-header page-header--split">
+    <div>
+      <span class="page-kicker">Procedimiento clinico</span>
+      <h1>{{ procedimiento.codigo.text|split:";"|first }}</h1>
+      <p>Ficha completa del acto clinico con trazabilidad del paciente, profesional y fecha.</p>
+    </div>
+    <div class="action-group">
+      <a href="{% url 'procedimiento_update' procedimiento.id %}" class="btn btn-primary">Editar</a>
+      <a href="{% url 'export_procedure_rdf' procedimiento.id %}" class="btn btn-outline-secondary">Exportar RDF</a>
+      <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+        data-bs-target="#confirmDeleteModal{{ procedimiento.id }}">
+        Eliminar
+      </button>
+    </div>
+  </section>
 
-<p><strong>Codigo:</strong> {{ procedimiento.codigo }}</p>
-<p><strong>Status:</strong> {{ procedimiento.status }}</p>
-<p><strong>Paciente:</strong> {{ procedimiento.paciente }}</p>
-<p><strong>Diente:</strong> {{ procedimiento.diente }}</p>
-<p><strong>Descripcion:</strong> {{ procedimiento.descripcion }}</p>
-<p><strong>Realizado el:</strong> {{ procedimiento.realizado_el }}</p>
-
-<button type="button"
-        class="btn btn-primary"
-        onclick=window.location.href='{% url "procedimiento_update" procedimiento.id %}'>
-  Editar
-</button>
-
-<button type="button"
-        class="btn btn-secondary"
-        onclick=window.location.href='{% url "export_procedure_rdf" procedimiento.id %}'>
-  Exportar
-</button>
-
-
-<button type="button" class="btn btn-danger" data-bs-toggle="modal"
-  data-bs-target="#confirmDeleteModal{{ procedimiento.id }}">
-  Eliminar
-</button>
-
-<div class="modal fade" id="confirmDeleteModal{{ procedimiento.id }}" tabindex="-1"
-  aria-labelledby="confirmDeleteModalLabel{{ procedimiento.id }}" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-
-      <div class="modal-header">
-        <h5 class="modal-title" id="confirmDeleteModalLabel{{ procedimiento.id }}">Confirmar eliminación</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  <div class="detail-layout">
+    <section class="section-card detail-summary">
+      <div class="detail-summary__row">
+        <span class="status-pill status-pill--{{ procedimiento.status }}">
+          {{ procedimiento.get_status_display }}
+        </span>
+        <span class="soft-badge">Codigo {{ procedimiento.codigo.codigo }}</span>
       </div>
+      <h2>Resumen del procedimiento</h2>
+      <p>{{ procedimiento.descripcion|default:"Sin descripcion adicional." }}</p>
+    </section>
 
-      <div class="modal-body">
-        ¿Está seguro que desea eliminar "<strong>{{ procedimiento.codigo }}</strong>"?
+    <section class="section-card">
+      <h2>Informacion clinica</h2>
+      <dl class="detail-grid">
+        <div>
+          <dt>Paciente</dt>
+          <dd>{{ procedimiento.paciente }}</dd>
+        </div>
+        <div>
+          <dt>Dentista</dt>
+          <dd>{{ procedimiento.practicante }}</dd>
+        </div>
+        <div>
+          <dt>Diente</dt>
+          <dd>{{ procedimiento.diente|default:"No especificado" }}</dd>
+        </div>
+        <div>
+          <dt>Fecha</dt>
+          <dd>{{ procedimiento.realizado_el|date:"d/m/Y" }}</dd>
+        </div>
+      </dl>
+    </section>
+
+    <a href="{% url 'procedimiento_list' %}" class="text-link">Volver al listado de procedimientos</a>
+  </div>
+
+  <div class="modal fade" id="confirmDeleteModal{{ procedimiento.id }}" tabindex="-1"
+    aria-labelledby="confirmDeleteModalLabel{{ procedimiento.id }}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmDeleteModalLabel{{ procedimiento.id }}">Confirmar eliminacion</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          ¿Estas seguro de eliminar <strong>{{ procedimiento.codigo }}</strong>?
+        </div>
+
+        <div class="modal-footer">
+          <form method="post" action="{% url 'procedimiento_delete' procedimiento.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Eliminar</button>
+          </form>
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+        </div>
       </div>
-
-      <div class="modal-footer">
-        <form method="post" action="{% url 'procedimiento_delete' procedimiento.id %}">
-          {% csrf_token %}
-          <button type="submit" class="btn btn-danger">Eliminar</button>
-        </form>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-      </div>
-
     </div>
   </div>
-</div>
-
-
-<a href="{% url 'procedimiento_list' %}">← Atrás</a>
 {% endblock %}

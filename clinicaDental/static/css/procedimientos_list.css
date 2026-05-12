@@ -1,110 +1,104 @@
-/* ========== Contenedor principal ========== */
-.procedimientos-page {
-    display: flex;
-    height: 100vh;
-
-    align-items: flex-start;
-    gap: 1rem;
+.procedures-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 20rem;
+  gap: 1rem;
+  align-items: start;
 }
 
-/* Columna de contenido */
-.procedimientos-main {
-    flex: 1;
-    padding: 1rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    overflow-y: auto;     
-    box-sizing: border-box;
+.procedures-feed__list {
+  display: grid;
+  gap: 1rem;
 }
 
-/* Sidebar de exportar */
-.procedimientos-sidebar {
-    width: 250px;
-    margin-left: auto;
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    padding: 3rem;
-    background-color: #f5f5f5;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: box-shadow .3s ease-in-out;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.procedure-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(17rem, 0.85fr);
+  gap: 1.25rem;
+  padding: 1.4rem;
+  border: 1px solid rgba(15, 93, 103, 0.1);
+  border-radius: 1.6rem;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(237, 247, 246, 0.86));
+  text-decoration: none;
+  transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
 }
 
-/* Encabezado con flecha de vuelta */
-.procedimientos-back {
-    font-size: 1rem;
-    margin-bottom: .5rem;
+.procedure-card:hover,
+.procedure-card:focus {
+  transform: translateY(-3px);
+  border-color: rgba(15, 93, 103, 0.22);
+  box-shadow: 0 16px 34px rgba(15, 93, 103, 0.14);
 }
 
-.procedimientos-back a {
-    text-decoration: none;
-    color: var(--text-base);
-    font-weight: bold;
+.procedure-card__main h2 {
+  margin: 0.55rem 0 0.6rem;
+  color: var(--color-primary-dark);
+  font-family: var(--font-display);
+  font-size: 1.65rem;
 }
 
-/* Título principal */
-.procedimientos-header {
-    font-size: 2.5rem;
-    margin-bottom: 1.5rem;
-    color: var(--brand-secondary);
+.procedure-card__main p {
+  margin: 0;
+  max-width: 40rem;
 }
 
-/* Cada elemento de la lista */
-.procedimiento-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 1rem 0;
-    border-bottom: 1px solid #007bff;
-    text-decoration: none;
-    /* quita subrayado */
-    color: inherit;
-    /* hereda color de texto */
-    cursor: pointer;
-    /* puntero al pasar por encima */
-    transition: background-color .2s ease-in-out;
+.procedure-card__meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
 }
 
-.procedimiento-item:last-child {
-    border-bottom: none;
+.procedure-card__meta div {
+  padding: 0.95rem 1rem;
+  border: 1px solid rgba(15, 93, 103, 0.08);
+  border-radius: 1.15rem;
+  background: rgba(255, 255, 255, 0.76);
 }
 
-.procedimiento-item:hover .procedimiento-desc,
-.procedimiento-item:hover .procedimiento-meta {
-    color: #0044cc;
+.procedure-card__meta span {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: var(--color-muted);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-/* Estado hover: fondo y, opcionalmente, color de texto */
-.procedimiento-item:hover {
-    background-color: #e6f0ff;
-    /* azul muy suave de fondo */
+.procedure-card__meta strong {
+  color: var(--color-primary-dark);
 }
 
-/* Descripción a la izquierda */
-.procedimiento-desc {
-    font-size: 1.25rem;
-    font-weight: bold;
+.procedures-sidebar {
+  position: sticky;
+  top: 1.2rem;
+  background: linear-gradient(180deg, rgba(241, 251, 250, 0.96), rgba(255, 255, 255, 0.96));
 }
 
-/* Datos de la derecha */
-.procedimiento-meta {
-    text-align: right;
+.procedures-sidebar h2 {
+  margin: 0.35rem 0 1rem;
 }
 
-.procedimiento-codigo {
-    font-size: .9rem;
-    color: #666;
-    margin-bottom: .25rem;
+.procedures-sidebar p {
+  margin-bottom: 1.25rem;
 }
 
-.procedimiento-fecha {
-    font-size: 1rem;
+@media (max-width: 991px) {
+  .procedures-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .procedures-sidebar {
+    position: static;
+  }
 }
 
-/* Botón exportar en sidebar */
-.btn-exportar {
-    width: 100%;
+@media (max-width: 767px) {
+  .procedure-card {
+    grid-template-columns: 1fr;
+    padding: 1.15rem;
+  }
+
+  .procedure-card__meta {
+    grid-template-columns: 1fr;
+  }
 }

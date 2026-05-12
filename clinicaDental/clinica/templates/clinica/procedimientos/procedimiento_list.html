@@ -1,50 +1,81 @@
 {% extends 'layout.html' %}
-{% load split_filters %}
+{% load static split_filters %}
 
 {% block title %}
-   <title>Lista de procedimientos</title>
+  <title>Procedimientos | Dental Clinic</title>
+{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/procedimientos_list.css' %}">
 {% endblock %}
 
 {% block content %}
+  <section class="page-header page-header--split">
+    <div>
+      <span class="page-kicker">Procedimientos</span>
+      <h1>{{ title }}</h1>
+      <p>Vista priorizada para revisar descripcion, estado clinico y responsables de cada acto.</p>
+    </div>
+    <div class="page-header__actions">
+      <span class="soft-badge">{{ procedimientos|length }} registros</span>
+      <a href="{% url 'procedimiento_crear' %}" class="btn btn-primary">Nuevo procedimiento</a>
+    </div>
+  </section>
 
-<!-- Columna principal -->
-<div class="procedimientos-page">
-  <div class="procedimientos-main">
-    <h1 class="procedimientos-header">{{title}}</h1>
+  <div class="procedures-layout">
+    <section class="section-card procedures-feed">
+      {% if procedimientos %}
+        <div class="procedures-feed__list">
+          {% for proc in procedimientos %}
+            <a href="{% url 'procedimiento_detail' proc.id %}" class="procedure-card">
+              <div class="procedure-card__main">
+                <span class="status-pill status-pill--{{ proc.status }}">
+                  {{ proc.get_status_display }}
+                </span>
+                <h2>{{ proc.codigo.text|split:";"|first }}</h2>
+                <p>{{ proc.descripcion|default:"Sin descripcion adicional." }}</p>
+              </div>
 
-    {% if procedimientos %}
-      {% for proc in procedimientos %}
-        <a href="{% url 'procedimiento_detail' proc.id %}" class="procedimiento-item">
-          <!-- Descripción -->
-          <div class="procedimiento-desc">
-            {{ proc.codigo.text|split:";"|first }}
-          </div>
-          <!-- Datos -->
-          <div class="procedimiento-meta">
-            {# Aquí pones el campo que necesites, e.g. el DNI o código del paciente/practicante #}
-            <div class="procedimiento-codigo">
-              {{ proc.codigo.codigo |  default:"—" }}
-            </div>
-            <div class="procedimiento-fecha">
-              {{ proc.realizado_el|date:"d-m-Y" }}
-            </div>
-          </div>
-        </a>
-      {% endfor %}
-    {% else %}
-      <p>No hay procedimientos registrados.</p>
-    {% endif %}
+              <div class="procedure-card__meta">
+                <div>
+                  <span>Codigo</span>
+                  <strong>{{ proc.codigo.codigo|default:"No disponible" }}</strong>
+                </div>
+                <div>
+                  <span>Paciente</span>
+                  <strong>{{ proc.paciente }}</strong>
+                </div>
+                <div>
+                  <span>Dentista</span>
+                  <strong>{{ proc.practicante }}</strong>
+                </div>
+                <div>
+                  <span>Fecha</span>
+                  <strong>{{ proc.realizado_el|date:"d/m/Y" }}</strong>
+                </div>
+              </div>
+            </a>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="empty-state">
+          <h2>No hay procedimientos registrados</h2>
+          <p>Cuando empieces a documentar actividad clinica, esta vista funcionara como panel rapido.</p>
+        </div>
+      {% endif %}
+    </section>
+
+    <aside class="section-card procedures-sidebar">
+      <span class="page-kicker">Intercambio de datos</span>
+      <h2>Exportacion RDF</h2>
+      <p>
+        Genera una exportacion global de procedimientos para interoperabilidad o trazabilidad
+        externa.
+      </p>
+      <form method="get" action="{% url 'procedimiento_export_rdf' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary w-100">Exportar procedimientos</button>
+      </form>
+    </aside>
   </div>
-
-  <!-- Sidebar de exportar -->
-  <aside class="procedimientos-sidebar">
-    <form method="get" action="{% url 'procedimiento_export_rdf' %}">
-      {% csrf_token%}
-      <button type="submit" class="btn btn-primary btn-exportar">
-        Exportar
-      </button>
-    </form>
-  </aside>
-</div>
-
 {% endblock %}

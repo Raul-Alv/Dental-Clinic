@@ -1,0 +1,76 @@
+.export-layout {
+  display: grid;
+  grid-template-columns: minmax(18rem, 22rem) minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.export-panel {
+  position: sticky;
+  top: 1.2rem;
+}
+
+.export-patient-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.export-patient-meta div {
+  padding: 1rem 1.1rem;
+  border: 1px solid rgba(15, 93, 103, 0.08);
+  border-radius: 1.2rem;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.export-patient-meta span {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: var(--color-muted);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.export-patient-meta strong {
+  color: var(--color-primary-dark);
+}
+
+.export-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-top: 1rem;
+  margin-top: 1rem;
+  border-top: 1px solid rgba(15, 93, 103, 0.08);
+}
+
+.export-empty {
+  min-height: 18rem;
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 991px) {
+  .export-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .export-panel {
+    position: static;
+  }
+}
+
+@media (max-width: 767px) {
+  .export-patient-meta {
+    grid-template-columns: 1fr;
+  }
+
+  .export-actions {
+    align-items: flex-start;
+  }
+}

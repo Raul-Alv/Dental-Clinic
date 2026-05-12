@@ -1,53 +1,59 @@
 {% extends 'layout.html' %}
+{% load static %}
 
 {% block title %}
-   <title>Importar archivos RDF</title>
+  <title>Importar RDF | Dental Clinic</title>
+{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/import_page.css' %}">
 {% endblock %}
 
 {% block content %}
-<div class="container mt-5"></div>
-  <h2>{{ title | default:"Form" }}</h2>
-  <div class="card shadow-sm">
-    <div class="card-body p-4">
+  <section class="page-header">
+    <span class="page-kicker">Interoperabilidad</span>
+    <h1>{{ title }}</h1>
+    <p>Sube archivos RDF dentro de una experiencia de importacion mas clara y guiada.</p>
+  </section>
+
+  <div class="import-layout">
+    <section class="section-card import-card">
+      {% if form.errors %}
+        <div class="alert alert-danger">Selecciona un archivo valido antes de continuar.</div>
+      {% endif %}
+
       <form id="upload-form"
             method="post"
             enctype="multipart/form-data"
-            class="needs-validation"
-            novalidate>
+            class="styled-form">
         {% csrf_token %}
-        
-      <div class="mb-3">
-        <label for="id_rdf_file" class="form-label">
-          {{ form.rdf_file.label }}
-        </label>
-        <label id="file-drop-zone" class="file-drop-zone" for="id_rdf_file">
-            <p>Arrastra y suelta aquí o haz clic para escoger</p>
-        </label>
-          <!-- Input REAL, pero oculto -->
+
+        <div class="form-field">
+          <label for="id_rdf_file" class="form-label">{{ form.rdf_file.label }}</label>
+          <label id="file-drop-zone" class="file-drop-zone" for="id_rdf_file">
+            <span class="file-drop-zone__eyebrow">Zona de carga</span>
+            <p>Arrastra el archivo aqui o haz clic para seleccionarlo desde tu equipo.</p>
+          </label>
           {{ form.rdf_file }}
-        <div class="invalid-feedback">
-          Por favor selecciona un archivo antes de continuar.
+          <p class="form-help">Usa este espacio para importar datos clinicos en formato RDF.</p>
         </div>
-      </div>
 
-        <!-- Lista de ficheros seleccionados -->
-      <ul id="file-list" class="list-group file-list"></ul>
+        <ul id="file-list" class="list-group file-list"></ul>
 
-      <!-- Botón de envío -->
-      <div class="mt-4 text-end">
-        <button type="submit" class="btn btn-accent">
-          Importar
-        </button>
-      </div>
-    </form>
+        <div class="action-group">
+          <button type="submit" class="btn btn-primary">Importar archivo</button>
+        </div>
+      </form>
+    </section>
+
+    <aside class="section-card import-sidebar">
+      <span class="page-kicker">Antes de empezar</span>
+      <h2>Recomendaciones</h2>
+      <ul class="clean-list">
+        <li>Comprueba que el archivo corresponde al modelo RDF esperado por la aplicacion.</li>
+        <li>Importa un fichero cada vez para revisar mejor los resultados posteriores.</li>
+        <li>Despues de la carga puedes verificar los datos desde procedimientos y pacientes.</li>
+      </ul>
+    </aside>
   </div>
-</div>
-
-
-{% if form.errors %}
-  <div class="alert alert-danger">
-    <strong>Error!</strong> Please correct the errors below.
-  </div>
-{% endif %}
-
 {% endblock %}
