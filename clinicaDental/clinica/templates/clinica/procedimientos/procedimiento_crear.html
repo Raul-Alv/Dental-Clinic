@@ -14,9 +14,8 @@
     <div>
       <span class="page-kicker">Nuevo procedimiento</span>
       <h1>{{ title }}</h1>
-      <p>Registra un nuevo acto clinico con campos mejor organizados y visualmente mas claros.</p>
     </div>
-    <a href="{% url 'procedimiento_list' %}" class="btn btn-outline-secondary">Cancelar</a>
+    <a href="{% url 'paciente_detail' paciente.id %}" class="btn btn-outline-secondary">Cancelar</a>
   </section>
 
   <section class="section-card form-card">
@@ -26,6 +25,7 @@
 
     <form method="post" class="styled-form">
       {% csrf_token %}
+      <input type="hidden" name="paciente_context" value="{{ paciente.id }}">
       <div class="form-grid">
         {% for field in form %}
           <div class="form-field{% if field.name == 'descripcion' %} form-field--full{% endif %}">
@@ -43,7 +43,7 @@
 
       <div class="action-group">
         <button type="submit" class="btn btn-primary">Guardar procedimiento</button>
-        <a href="{% url 'procedimiento_list' %}" class="btn btn-outline-secondary">Volver</a>
+        <a href="{% url 'paciente_detail' paciente.id %}" class="btn btn-outline-secondary">Volver</a>
       </div>
     </form>
   </section>

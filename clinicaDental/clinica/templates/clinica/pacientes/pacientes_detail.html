@@ -1,5 +1,5 @@
 {% extends 'layout.html' %}
-{% load static %}
+{% load static split_filters %}
 
 {% block title %}
   <title>Detalle del Paciente | Dental Clinic</title>
@@ -14,9 +14,9 @@
     <div>
       <span class="page-kicker">Paciente</span>
       <h1>{{ paciente.nombre }} {{ paciente.apellido }}</h1>
-      <p>Ficha clinica con datos personales, contacto y direccion completa.</p>
     </div>
     <div class="action-group">
+      <a href="{% url 'procedimiento_crear' %}?paciente={{ paciente.id }}" class="btn btn-primary">Anadir procedimiento</a>
       <a href="{% url 'paciente_update' paciente.id %}" class="btn btn-primary">Editar ficha</a>
       <a href="{% url 'exportar_paciente' paciente.id %}" class="btn btn-outline-secondary">Exportar RDF</a>
       <button type="button" class="btn btn-danger" data-bs-toggle="modal"
@@ -76,6 +76,65 @@
       </dl>
     </section>
 
+    <section class="section-card">
+      <div class="section-card__header">
+        <div>
+          <span class="page-kicker">Historial</span>
+          <h2>Procedimientos del paciente</h2>
+        </div>
+        <span class="soft-badge">{{ procedimientos|length }} registros</span>
+      </div>
+
+      {% if procedimientos %}
+        <div class="table-shell">
+          <table class="table align-middle">
+            <thead>
+              <tr>
+                <th scope="col">Procedimiento</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Dentista</th>
+                <th scope="col">Diente</th>
+                <th scope="col">Fecha</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for proc in procedimientos %}
+                <tr
+                  class="is-navigable"
+                  data-href="{% url 'procedimiento_detail' proc.id %}"
+                  tabindex="0"
+                  role="link"
+                  aria-label="Abrir procedimiento {{ proc.codigo.text|split:';'|first }}"
+                  onclick="window.location.href='{% url 'procedimiento_detail' proc.id %}'"
+                  onkeydown="if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); window.location.href='{% url 'procedimiento_detail' proc.id %}'; }"
+                >
+                  <td>
+                    <a href="{% url 'procedimiento_detail' proc.id %}" class="text-link">
+                      {{ proc.codigo.text|split:";"|first }}
+                    </a>
+                    <span class="d-block text-body-secondary small">Codigo {{ proc.codigo.codigo }}</span>
+                  </td>
+                  <td>
+                    <span class="status-pill status-pill--{{ proc.status }}">
+                      {{ proc.get_status_display }}
+                    </span>
+                  </td>
+                  <td>{{ proc.practicante }}</td>
+                  <td>{{ proc.diente|default:"No especificado" }}</td>
+                  <td>{{ proc.realizado_el|date:"d/m/Y" }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <div class="empty-state">
+          <h2>Este paciente todavia no tiene procedimientos</h2>
+          <p>Cuando registres el primero aparecera aqui junto al resto de su historial clinico.</p>
+        </div>
+      {% endif %}
+    </section>
+
     <a href="{% url 'pacientes_list' %}" class="text-link">Volver al listado de pacientes</a>
   </div>
 
@@ -89,7 +148,7 @@
         </div>
 
         <div class="modal-body">
-          ¿Estas seguro de desactivar a <strong>{{ paciente.nombre }} {{ paciente.apellido }}</strong>?
+          Estas seguro de desactivar a <strong>{{ paciente.nombre }} {{ paciente.apellido }}</strong>?
         </div>
 
         <div class="modal-footer">

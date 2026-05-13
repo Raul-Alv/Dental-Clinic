@@ -14,7 +14,6 @@
     <div>
       <span class="page-kicker">Procedimiento clinico</span>
       <h1>{{ procedimiento.codigo.text|split:";"|first }}</h1>
-      <p>Ficha completa del acto clinico con trazabilidad del paciente, profesional y fecha.</p>
     </div>
     <div class="action-group">
       <a href="{% url 'procedimiento_update' procedimiento.id %}" class="btn btn-primary">Editar</a>
@@ -43,7 +42,9 @@
       <dl class="detail-grid">
         <div>
           <dt>Paciente</dt>
-          <dd>{{ procedimiento.paciente }}</dd>
+          <dd>
+            <a href="{% url 'paciente_detail' paciente.id %}" class="text-link">{{ procedimiento.paciente }}</a>
+          </dd>
         </div>
         <div>
           <dt>Dentista</dt>
@@ -60,7 +61,7 @@
       </dl>
     </section>
 
-    <a href="{% url 'procedimiento_list' %}" class="text-link">Volver al listado de procedimientos</a>
+    <a href="{% url 'paciente_detail' paciente.id %}" class="text-link">Volver a la ficha del paciente</a>
   </div>
 
   <div class="modal fade" id="confirmDeleteModal{{ procedimiento.id }}" tabindex="-1"
@@ -73,7 +74,7 @@
         </div>
 
         <div class="modal-body">
-          ¿Estas seguro de eliminar <strong>{{ procedimiento.codigo }}</strong>?
+          Estas seguro de eliminar <strong>{{ procedimiento.codigo }}</strong>?
         </div>
 
         <div class="modal-footer">

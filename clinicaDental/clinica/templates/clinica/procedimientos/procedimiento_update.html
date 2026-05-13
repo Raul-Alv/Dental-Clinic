@@ -14,9 +14,8 @@
     <div>
       <span class="page-kicker">Edicion</span>
       <h1>{{ title }}</h1>
-      <p>Refina la informacion del procedimiento con una presentacion mas clara por bloques.</p>
     </div>
-    <a href="{% url 'procedimiento_detail' procedimiento.id %}" class="btn btn-outline-secondary">Cancelar</a>
+    <a href="{% url 'paciente_detail' paciente.id %}" class="btn btn-outline-secondary">Cancelar</a>
   </section>
 
   <section class="section-card form-card">
@@ -43,7 +42,7 @@
 
       <div class="action-group">
         <button type="submit" class="btn btn-primary">Guardar cambios</button>
-        <a href="{% url 'procedimiento_detail' procedimiento.id %}" class="btn btn-outline-secondary">Volver al detalle</a>
+        <a href="{% url 'paciente_detail' paciente.id %}" class="btn btn-outline-secondary">Volver al paciente</a>
       </div>
     </form>
   </section>

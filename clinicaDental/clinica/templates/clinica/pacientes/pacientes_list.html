@@ -14,7 +14,6 @@
     <div>
       <span class="page-kicker">Pacientes</span>
       <h1>{{ title }}</h1>
-      <p>Directorio activo con acceso rapido a la ficha personal y administrativa.</p>
     </div>
     <div class="page-header__actions">
       <span class="soft-badge">{{ pacientes|length }} activos</span>
@@ -36,7 +35,15 @@
           </thead>
           <tbody>
             {% for i in pacientes %}
-              <tr>
+              <tr
+                class="is-navigable"
+                data-href="{% url 'paciente_detail' i.id %}"
+                tabindex="0"
+                role="link"
+                aria-label="Abrir ficha del paciente {{ i.nombre }} {{ i.apellido }}"
+                onclick="window.location.href='{% url 'paciente_detail' i.id %}'"
+                onkeydown="if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); window.location.href='{% url 'paciente_detail' i.id %}'; }"
+              >
                 <td>
                   <a href="{% url 'paciente_detail' i.id %}" class="record-link">
                     <span class="record-avatar">{{ i.nombre|first }}{{ i.apellido|first }}</span>

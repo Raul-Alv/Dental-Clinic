@@ -27,6 +27,64 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 5000);
   });
 
+  const getEventElement = (event) => {
+    if (event.target instanceof Element) {
+      return event.target;
+    }
+
+    return event.target && event.target.parentElement ? event.target.parentElement : null;
+  };
+
+  const navigateToRow = (row) => {
+    const target = row.dataset.href;
+    if (!target) {
+      return;
+    }
+
+    window.location.href = target;
+  };
+
+  document.addEventListener('click', (event) => {
+    const element = getEventElement(event);
+    if (!element) {
+      return;
+    }
+
+    const row = element.closest('[data-href].is-navigable');
+    if (!row) {
+      return;
+    }
+
+    if (element.closest('a, button, input, select, textarea, label')) {
+      return;
+    }
+
+    navigateToRow(row);
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Enter' && event.key !== ' ') {
+      return;
+    }
+
+    const element = getEventElement(event);
+    if (!element) {
+      return;
+    }
+
+    const row = element.closest('[data-href].is-navigable');
+    if (!row) {
+      return;
+    }
+
+    if (element.closest('a, button, input, select, textarea, label')) {
+      return;
+    }
+
+    event.preventDefault();
+    navigateToRow(row);
+  });
+
   const fileInput = document.getElementById('id_rdf_file');
   const dropZone = document.getElementById('file-drop-zone');
   const fileList = document.getElementById('file-list');

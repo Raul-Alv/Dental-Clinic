@@ -60,9 +60,6 @@
                 <a class="nav-link" data-nav-link href="{% url 'dashboard' %}">Panel</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" data-nav-link href="{% url 'procedimiento_list' %}">Procedimientos</a>
-              </li>
-              <li class="nav-item">
                 <a class="nav-link" data-nav-link href="{% url 'pacientes_list' %}">Pacientes</a>
               </li>
               <li class="nav-item">
@@ -79,7 +76,6 @@
             <div class="clinic-actions">
               {% block header_actions %}
                 <a class="btn btn-outline-secondary" href="{% url 'pacientes_crear' %}">Nuevo paciente</a>
-                <a class="btn btn-primary" href="{% url 'procedimiento_crear' %}">Nuevo procedimiento</a>
               {% endblock %}
             </div>
           </div>
