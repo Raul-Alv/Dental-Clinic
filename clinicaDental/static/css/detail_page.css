@@ -22,6 +22,10 @@
   margin-top: 1rem;
 }
 
+.detail-summary__grid--triple {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 .detail-summary__grid div,
 .detail-grid div {
   padding: 1rem 1.1rem;

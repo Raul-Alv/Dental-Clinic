@@ -14,8 +14,24 @@
   min-width: 0;
 }
 
+.form-label--required {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.22rem;
+}
+
+.required-indicator {
+  color: #c62828;
+  font-weight: 800;
+}
+
 .form-field--full {
   grid-column: 1 / -1;
+}
+
+.form-field--error .form-control {
+  border-color: #c62828;
+  box-shadow: 0 0 0 0.18rem rgba(198, 40, 40, 0.12);
 }
 
 .form-help {
@@ -25,10 +41,10 @@
 }
 
 .form-error {
-  margin: 0.4rem 0 0;
-  color: #882d39;
-  font-size: 0.9rem;
-  font-weight: 700;
+  margin: 0.35rem 0 0;
+  color: #c62828;
+  font-size: 0.82rem;
+  font-weight: 600;
 }
 
 .form-card .action-group {

@@ -16,7 +16,7 @@
       <h1>{{ paciente.nombre }} {{ paciente.apellido }}</h1>
     </div>
     <div class="action-group">
-      <a href="{% url 'procedimiento_crear' %}?paciente={{ paciente.id }}" class="btn btn-primary">Anadir procedimiento</a>
+      <a href="{% url 'procedimiento_crear' %}?paciente={{ paciente.id }}" class="btn btn-primary">Añadir procedimiento</a>
       <a href="{% url 'paciente_update' paciente.id %}" class="btn btn-primary">Editar ficha</a>
       <a href="{% url 'exportar_paciente' paciente.id %}" class="btn btn-outline-secondary">Exportar RDF</a>
       <button type="button" class="btn btn-danger" data-bs-toggle="modal"
@@ -33,7 +33,7 @@
       <div class="detail-summary__grid">
         <div>
           <span>Genero</span>
-          <strong>{{ paciente.get_genero_display }}</strong>
+          <strong>{{ paciente.genero_label }}</strong>
         </div>
         <div>
           <span>Telefono</span>
@@ -45,7 +45,7 @@
         </div>
         <div>
           <span>Estado civil</span>
-          <strong>{{ paciente.get_estado_civil_display }}</strong>
+          <strong>{{ paciente.estado_civil_label }}</strong>
         </div>
       </div>
     </section>

@@ -18,7 +18,17 @@
   <div class="import-layout">
     <section class="section-card import-card">
       {% if form.errors %}
-        <div class="alert alert-danger">Selecciona un archivo valido antes de continuar.</div>
+        <div class="alert alert-danger">Revisa los dos archivos y las validaciones ShEx antes de continuar.</div>
+      {% endif %}
+
+      {% if form.non_field_errors %}
+        <div class="alert alert-danger">
+          <ul class="mb-0">
+            {% for error in form.non_field_errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        </div>
       {% endif %}
 
       <form id="upload-form"
@@ -27,20 +37,38 @@
             class="styled-form">
         {% csrf_token %}
 
-        <div class="form-field">
+        <div class="form-field" data-file-upload>
           <label for="id_rdf_file" class="form-label">{{ form.rdf_file.label }}</label>
-          <label id="file-drop-zone" class="file-drop-zone" for="id_rdf_file">
+          <label class="file-drop-zone" for="id_rdf_file" data-file-drop-zone>
             <span class="file-drop-zone__eyebrow">Zona de carga</span>
-            <p>Arrastra el archivo aqui o haz clic para seleccionarlo desde tu equipo.</p>
+            <p>Arrastra aqui el RDF en Turtle o haz clic para seleccionarlo.</p>
           </label>
           {{ form.rdf_file }}
-          <p class="form-help">Usa este espacio para importar datos clinicos en formato RDF.</p>
+          {% for error in form.rdf_file.errors %}
+            <div class="text-danger small mt-2">{{ error }}</div>
+          {% endfor %}
+          <p class="form-help">Sube el grafo RDF de datos clinicos en formato HL7 FHIR RDF.</p>
         </div>
 
-        <ul id="file-list" class="list-group file-list"></ul>
+        <ul class="list-group file-list" data-file-list></ul>
+
+        <div class="form-field" data-file-upload>
+          <label for="id_shex_file" class="form-label">{{ form.shex_file.label }}</label>
+          <label class="file-drop-zone" for="id_shex_file" data-file-drop-zone>
+            <span class="file-drop-zone__eyebrow">Zona de carga</span>
+            <p>Arrastra aqui el esquema ShEx o haz clic para seleccionarlo.</p>
+          </label>
+          {{ form.shex_file }}
+          {% for error in form.shex_file.errors %}
+            <div class="text-danger small mt-2">{{ error }}</div>
+          {% endfor %}
+          <p class="form-help">Este segundo fichero se usara para contrastar el RDF antes de importar.</p>
+        </div>
+
+        <ul class="list-group file-list" data-file-list></ul>
 
         <div class="action-group">
-          <button type="submit" class="btn btn-primary">Importar archivo</button>
+          <button type="submit" class="btn btn-primary">Validar e importar archivos</button>
         </div>
       </form>
     </section>
@@ -49,9 +77,9 @@
       <span class="page-kicker">Antes de empezar</span>
       <h2>Recomendaciones</h2>
       <ul class="clean-list">
-        <li>Comprueba que el archivo corresponde al modelo RDF esperado por la aplicacion.</li>
-        <li>Importa un fichero cada vez para revisar mejor los resultados posteriores.</li>
-        <li>Despues de la carga puedes verificar los datos desde procedimientos y pacientes.</li>
+        <li>La importacion necesita dos archivos: el RDF y su esquema ShEx asociado.</li>
+        <li>El sistema valida ambos contra el perfil HL7 FHIR esperado antes de guardar nada.</li>
+        <li>Si el historial solo trae procedimientos, el paciente referenciado debe existir ya o venir incluido en el RDF.</li>
       </ul>
     </aside>
   </div>

@@ -1,4 +1,4 @@
-#id_rdf_file {
+.import-card input[type="file"][hidden] {
   display: none;
 }
 

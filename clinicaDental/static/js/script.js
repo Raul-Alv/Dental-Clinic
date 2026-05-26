@@ -85,79 +85,82 @@ document.addEventListener('DOMContentLoaded', () => {
     navigateToRow(row);
   });
 
-  const fileInput = document.getElementById('id_rdf_file');
-  const dropZone = document.getElementById('file-drop-zone');
-  const fileList = document.getElementById('file-list');
-  const dropZoneCopy = dropZone ? dropZone.querySelector('p') : null;
+  document.querySelectorAll('[data-file-upload]').forEach((uploadField) => {
+    const fileInput = uploadField.querySelector('input[type="file"]');
+    const dropZone = uploadField.querySelector('[data-file-drop-zone]');
+    const fileList = uploadField.nextElementSibling && uploadField.nextElementSibling.matches('[data-file-list]')
+      ? uploadField.nextElementSibling
+      : uploadField.querySelector('[data-file-list]');
+    const dropZoneCopy = dropZone ? dropZone.querySelector('p') : null;
 
-  if (!fileInput || !dropZone || !fileList) {
-    return;
-  }
-
-  const emptyMessage = 'Arrastra el archivo aqui o haz clic para seleccionarlo desde tu equipo.';
-
-  const syncDropZoneState = (filesCount) => {
-    const hasFiles = filesCount > 0;
-
-    dropZone.classList.toggle('is-filled', hasFiles);
-    if (dropZoneCopy) {
-      dropZoneCopy.textContent = hasFiles
-        ? `${filesCount} archivo(s) listo(s) para importar.`
-        : emptyMessage;
-    }
-  };
-
-  dropZone.addEventListener('click', () => fileInput.click());
-
-  dropZone.addEventListener('dragover', (event) => {
-    event.preventDefault();
-    dropZone.classList.add('dragover');
-  });
-
-  dropZone.addEventListener('dragleave', () => {
-    dropZone.classList.remove('dragover');
-  });
-
-  dropZone.addEventListener('drop', (event) => {
-    event.preventDefault();
-    dropZone.classList.remove('dragover');
-    fileInput.files = event.dataTransfer.files;
-    updateFileList();
-  });
-
-  fileInput.addEventListener('change', updateFileList);
-
-  function updateFileList() {
-    fileList.innerHTML = '';
-    const files = fileInput.files;
-
-    syncDropZoneState(files.length);
-
-    if (!files.length) {
+    if (!fileInput || !dropZone || !fileList) {
       return;
     }
 
-    Array.from(files).forEach((file) => {
-      const item = document.createElement('li');
-      item.className = 'list-group-item d-flex justify-content-between align-items-center';
+    const emptyMessage = dropZoneCopy ? dropZoneCopy.textContent : '';
 
-      const name = document.createElement('span');
-      name.textContent = file.name;
+    const syncDropZoneState = (filesCount) => {
+      const hasFiles = filesCount > 0;
 
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.className = 'btn btn-sm btn-outline-danger';
-      button.textContent = 'Quitar';
-      button.addEventListener('click', () => {
-        fileInput.value = '';
-        fileList.innerHTML = '';
-        syncDropZoneState(0);
+      dropZone.classList.toggle('is-filled', hasFiles);
+      if (dropZoneCopy) {
+        dropZoneCopy.textContent = hasFiles
+          ? `${filesCount} archivo(s) listo(s) para importar.`
+          : emptyMessage;
+      }
+    };
+
+    const updateFileList = () => {
+      fileList.innerHTML = '';
+      const files = fileInput.files;
+
+      syncDropZoneState(files.length);
+
+      if (!files.length) {
+        return;
+      }
+
+      Array.from(files).forEach((file) => {
+        const item = document.createElement('li');
+        item.className = 'list-group-item d-flex justify-content-between align-items-center';
+
+        const name = document.createElement('span');
+        name.textContent = file.name;
+
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'btn btn-sm btn-outline-danger';
+        button.textContent = 'Quitar';
+        button.addEventListener('click', () => {
+          fileInput.value = '';
+          fileList.innerHTML = '';
+          syncDropZoneState(0);
+        });
+
+        item.append(name, button);
+        fileList.appendChild(item);
       });
+    };
 
-      item.append(name, button);
-      fileList.appendChild(item);
+    dropZone.addEventListener('click', () => fileInput.click());
+
+    dropZone.addEventListener('dragover', (event) => {
+      event.preventDefault();
+      dropZone.classList.add('dragover');
     });
-  }
 
-  syncDropZoneState(0);
+    dropZone.addEventListener('dragleave', () => {
+      dropZone.classList.remove('dragover');
+    });
+
+    dropZone.addEventListener('drop', (event) => {
+      event.preventDefault();
+      dropZone.classList.remove('dragover');
+      fileInput.files = event.dataTransfer.files;
+      updateFileList();
+    });
+
+    fileInput.addEventListener('change', updateFileList);
+    syncDropZoneState(0);
+  });
 });

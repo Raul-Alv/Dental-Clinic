@@ -1,4 +1,5 @@
 from django.db.models import Q
+from django.core.exceptions import ValidationError
 from django.shortcuts import get_object_or_404, redirect, render
 
 from . import rdfConverter
@@ -114,8 +115,13 @@ def import_data(request):
     if request.method == "POST":
         form = RDFUploadForm(request.POST, request.FILES)
         if form.is_valid():
-            rdfConverter.import_data(request, form)
-            return redirect("pacientes_list")
+            try:
+                rdfConverter.import_data(form)
+            except ValidationError as exc:
+                for error in exc.messages:
+                    form.add_error(None, error)
+            else:
+                return redirect("pacientes_list")
     else:
         form = RDFUploadForm()
 

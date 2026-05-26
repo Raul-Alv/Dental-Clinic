@@ -2,11 +2,69 @@ from django.db import models
 import re
 
 class Paciente(models.Model):
+    GENERO_CHOICES = [
+        ("male", "Masculino"),
+        ("female", "Femenino"),
+        ("other", "Otro"),
+        ("unknown", "Desconocido"),
+    ]
+    ESTADO_CIVIL_CHOICES = [
+        ("A", "Anulado"),
+        ("D", "Divorciado"),
+        ("M", "Casado"),
+        ("U", "Soltero"),
+        ("W", "Viudo/a"),
+        ("UNK", "Desconocido"),
+    ]
+    GENERO_NORMALIZATION = {
+        "m": "male",
+        "male": "male",
+        "masculino": "male",
+        "f": "female",
+        "female": "female",
+        "femenino": "female",
+        "o": "other",
+        "other": "other",
+        "otro": "other",
+        "u": "unknown",
+        "unk": "unknown",
+        "unknown": "unknown",
+        "desconocido": "unknown",
+    }
+    ESTADO_CIVIL_NORMALIZATION = {
+        "a": "A",
+        "annulled": "A",
+        "anulado": "A",
+        "anulada": "A",
+        "d": "D",
+        "divorced": "D",
+        "divorciado": "D",
+        "divorciada": "D",
+        "c": "M",
+        "m": "M",
+        "married": "M",
+        "casado": "M",
+        "casada": "M",
+        "s": "U",
+        "u": "U",
+        "single": "U",
+        "soltero": "U",
+        "soltera": "U",
+        "w": "W",
+        "v": "W",
+        "widowed": "W",
+        "viudo": "W",
+        "viuda": "W",
+        "unk": "UNK",
+        "unknown": "UNK",
+        "desconocido": "UNK",
+    }
+
     id = models.AutoField(primary_key=True) #ID autoincremental
     activo = models.BooleanField(default=True)
     nombre = models.CharField(max_length=100)
     apellido = models.CharField(max_length=100)
-    genero = models.CharField(max_length=10, choices=[('male', 'Masculino'), ('female', 'Femenino'), ('other', 'Otro'), ('unknown', 'Desconocido')], blank=False, default='U')
+    genero = models.CharField(max_length=10, choices=GENERO_CHOICES, blank=False, default='unknown')
     telefono = models.CharField(max_length=15, blank=True, null=True)
     fecha_nacimiento = models.DateField()
     calle = models.CharField(max_length=255, blank=True, null=True)
@@ -14,8 +72,33 @@ class Paciente(models.Model):
     provincia = models.CharField(max_length=100, blank=True, null=True)
     codigo_postal = models.CharField(max_length=20, blank=True, null=True)
     pais = models.CharField(max_length=100, blank=True, null=True)
-    estado_civil = models.CharField(max_length=10, choices=[('A', 'Anulado'), ('D', 'Divorciado'), ('M', 'Casado'), ('U', 'Soltero'), ('W', 'Viudo/a'), ('UNK', 'Desconocido')], default='U')
+    estado_civil = models.CharField(max_length=10, choices=ESTADO_CIVIL_CHOICES, default='UNK')
     #contacto = models.CharField(max_length=100, blank=True, null=True)
+
+    @classmethod
+    def normalizar_genero(cls, value):
+        raw_value = str(value or "").strip().lower()
+        return cls.GENERO_NORMALIZATION.get(raw_value, "unknown")
+
+    @classmethod
+    def normalizar_estado_civil(cls, value):
+        raw_value = str(value or "").strip().lower()
+        return cls.ESTADO_CIVIL_NORMALIZATION.get(raw_value, "UNK")
+
+    @property
+    def genero_label(self):
+        genero_normalizado = self.normalizar_genero(self.genero)
+        return dict(self.GENERO_CHOICES).get(genero_normalizado, "Desconocido")
+
+    @property
+    def estado_civil_label(self):
+        estado_civil_normalizado = self.normalizar_estado_civil(self.estado_civil)
+        return dict(self.ESTADO_CIVIL_CHOICES).get(estado_civil_normalizado, "Desconocido")
+
+    def save(self, *args, **kwargs):
+        self.genero = self.normalizar_genero(self.genero)
+        self.estado_civil = self.normalizar_estado_civil(self.estado_civil)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.nombre} {self.apellido}"

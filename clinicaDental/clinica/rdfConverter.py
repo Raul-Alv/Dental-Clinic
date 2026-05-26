@@ -1,471 +1,717 @@
-from rdflib import Graph, URIRef, Literal, Namespace, BNode
-from rdflib.namespace import RDF, FOAF, XSD
-from django.http import HttpResponse
-from django.conf import settings
-from .models import Procedimiento, Paciente, Practicante, Diente
-
-
-import os
-import tempfile
-import shutil
+import io
 import zipfile
-from django.http import FileResponse
 
-FHIR = Namespace("http://hl7.org/fhir/")
+from django.core.exceptions import ValidationError
+from django.db import transaction
+from django.http import HttpResponse
+from django.utils.text import slugify
+from rdflib import BNode, Graph, Literal, URIRef
+from rdflib.namespace import RDF, XSD
 
-############################################################
-#                                                          #
-# ~~~~~~~~~~~~ Exportación de datos desde RDF ~~~~~~~~~~~~ #
-#                                                          #
-############################################################
-def export_all_rdf(request):
-   
-    temp_dir = tempfile.mkdtemp()
+from .models import Diente, Paciente, Practicante, Procedimiento, ProcedimientoCatalogo
+from .shex_fhir import (
+    FHIR,
+    PATIENT_SHAPE,
+    PRACTITIONER_SHAPE,
+    PROCEDURE_SHAPE,
+    build_fhir_schema,
+    detect_focus_nodes,
+    validate_uploaded_schema,
+)
+
+
+FHIR_VALUE = FHIR["value"]
+
+PRACTITIONER_TO_FHIR_GENDER = {
+    "M": "male",
+    "F": "female",
+    "O": "other",
+}
+
+FHIR_TO_PRACTITIONER_GENDER = {
+    "male": "M",
+    "female": "F",
+    "other": "O",
+    "unknown": "O",
+}
+
+
+def _literal_to_python(value, default=None):
+    if value is None:
+        return default
+    return value.toPython() if hasattr(value, "toPython") else value
+
+
+def _add_wrapped_literal(graph, subject, predicate, value, datatype=None):
+    wrapper = BNode()
+    graph.add((subject, predicate, wrapper))
+
+    literal = Literal(value, datatype=datatype) if datatype else Literal(value)
+    graph.add((wrapper, FHIR_VALUE, literal))
+    return wrapper
+
+
+def _wrapped_value(graph, subject, predicate, default=None):
+    if subject is None:
+        return default
+    wrapper = graph.value(subject, predicate)
+    if wrapper is None:
+        return default
+    return _literal_to_python(graph.value(wrapper, FHIR_VALUE), default)
+
+
+def _telecom_value(graph, subject, telecom_predicate, system_name="phone"):
+    for telecom in graph.objects(subject, telecom_predicate):
+        system = _wrapped_value(graph, telecom, FHIR["ContactPoint.system"])
+        if system == system_name:
+            return _wrapped_value(graph, telecom, FHIR["ContactPoint.value"], "")
+    return ""
+
+
+def _reference_value(graph, subject, predicate):
+    if subject is None:
+        return None
+    wrapper = graph.value(subject, predicate)
+    if wrapper is None:
+        return None
+    reference = graph.value(wrapper, FHIR["Reference.reference"])
+    if reference is None:
+        return None
+    return _literal_to_python(graph.value(reference, FHIR_VALUE))
+
+
+def _resource_identifier(value):
+    if value is None:
+        return None
+
+    raw_value = str(value).rstrip("/")
+    if not raw_value:
+        return None
+
+    return raw_value.split("/")[-1]
+
+
+def _numeric_identifier(value):
+    identifier = _resource_identifier(value)
+    if identifier and identifier.isdigit():
+        return int(identifier)
+    return None
+
+
+def _absolute_reference(value):
+    raw_value = str(value or "").strip()
+    return raw_value if "://" in raw_value else None
+
+
+def _read_uploaded_text(uploaded_file, label):
+    raw_content = uploaded_file.read()
+
+    if isinstance(raw_content, str):
+        return raw_content
 
     try:
-        export_pacientes_rdf(temp_dir)
-        """ export_practitioners_rdf(temp_dir)
-        export_teeth_rdf(temp_dir) """
-        export_procedimientos_rdf(temp_dir)
-
-        zip_path = os.path.join(temp_dir, "rdf_exports.zip")
-        with zipfile.ZipFile(zip_path, 'w') as zipf:
-            for filename in os.listdir(temp_dir):
-                if filename.endswith(".ttl"):
-                    file_path = os.path.join(temp_dir, filename)
-                    zipf.write(file_path, arcname=filename)
-
-        return FileResponse(open(zip_path, 'rb'), as_attachment=True, filename="rdf_exports.zip")
-
-    finally:
-        shutil.rmtree(temp_dir)
+        return raw_content.decode("utf-8")
+    except UnicodeDecodeError as exc:
+        raise ValidationError(f"El archivo {label} debe estar codificado en UTF-8.") from exc
 
 
-####################################################
-## Exportación de datos de un paciente específico ##
-####################################################
+def _safe_filename(base_name):
+    normalized = slugify(base_name) or "exportacion-fhir"
+    return normalized
+
+
+def _new_graph():
+    graph = Graph()
+    graph.bind("fhir", FHIR)
+    return graph
+
+
+def _export_bundle(graph, base_name, schema_text):
+    bundle = io.BytesIO()
+    safe_base_name = _safe_filename(base_name)
+
+    with zipfile.ZipFile(bundle, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+        archive.writestr(f"{safe_base_name}.ttl", graph.serialize(format="turtle"))
+        archive.writestr(f"{safe_base_name}.shex", schema_text)
+
+    response = HttpResponse(bundle.getvalue(), content_type="application/zip")
+    response["Content-Disposition"] = f'attachment; filename="{safe_base_name}.zip"'
+    return response
+
+
+def _graph_with_resources(*, pacientes=None, practicantes=None, procedimientos=None):
+    graph = _new_graph()
+
+    for paciente in pacientes or []:
+        patient_rdf_graph(graph, paciente)
+
+    for practicante in practicantes or []:
+        practitioner_rdf_graph(graph, practicante)
+
+    for procedimiento in procedimientos or []:
+        procedimiento_rdf_graph(graph, procedimiento)
+
+    return graph
+
+
+def export_all_rdf(request):
+    pacientes = list(Paciente.objects.all())
+    practicantes = list(Practicante.objects.all())
+    procedimientos = list(
+        Procedimiento.objects.select_related("codigo", "paciente", "practicante", "diente").all()
+    )
+    graph = _graph_with_resources(
+        pacientes=pacientes,
+        practicantes=practicantes,
+        procedimientos=procedimientos,
+    )
+    schema = build_fhir_schema(
+        include_patients=True,
+        include_practitioners=True,
+        include_procedures=True,
+    )
+    return _export_bundle(graph, "exportacion-completa-fhir", schema)
+
+
 def export_patient_rdf(request, paciente_id):
-    g = Graph()
     paciente = Paciente.objects.get(id=paciente_id)
-    g.bind("fhir", FHIR)
+    graph = _graph_with_resources(pacientes=[paciente])
+    schema = build_fhir_schema(include_patients=True)
+    return _export_bundle(graph, f"paciente-{paciente.nombre}-{paciente.apellido}", schema)
 
-    patient_rdf_graph(g, paciente)
 
-    return export_file(g, "paciente_" + paciente.nombre + ".ttl")
-
-#####################################
-## Exportación todos los pacientes ##
-#####################################
 def export_pacientes_rdf(request):
-    g = Graph()
+    pacientes = list(Paciente.objects.all())
+    graph = _graph_with_resources(pacientes=pacientes)
+    schema = build_fhir_schema(include_patients=True)
+    return _export_bundle(graph, "pacientes-fhir", schema)
 
-    g.bind("fhir", FHIR)
 
-    pacientes = Paciente.objects.all()
-
-    for paciente in pacientes:
-        patient_rdf_graph(g, paciente)
-
-    return export_file(g, "pacient' + paciente.nombre + '.ttl")
-
-#########################################################
-## Exportación de datos de un procedimiento específico ##
-#########################################################
 def export_procedimiento_rdf(request, procedimiento_id):
-    g = Graph()
-    procedimiento = Procedimiento.objects.get(id=procedimiento_id)
-    g.bind("fhir", FHIR)
+    procedimiento = Procedimiento.objects.select_related(
+        "codigo",
+        "paciente",
+        "practicante",
+        "diente",
+    ).get(id=procedimiento_id)
 
-    procedimiento_rdf_graph(g, procedimiento)
+    graph = _graph_with_resources(
+        pacientes=[procedimiento.paciente],
+        practicantes=[procedimiento.practicante],
+        procedimientos=[procedimiento],
+    )
+    schema = build_fhir_schema(
+        include_patients=True,
+        include_practitioners=True,
+        include_procedures=True,
+    )
+    return _export_bundle(graph, f"procedimiento-{procedimiento.id}", schema)
 
-    return export_file(g, "procedimiento_" + procedimiento.codigo + ".ttl")
-    
-##########################################
-## Exportación todos los procedimientos ##
-##########################################
+
 def export_procedimientos_rdf(request):
-    g = Graph()
+    procedimientos = list(
+        Procedimiento.objects.select_related("codigo", "paciente", "practicante", "diente").all()
+    )
+    pacientes = list({proc.paciente_id: proc.paciente for proc in procedimientos}.values())
+    practicantes = list({proc.practicante_id: proc.practicante for proc in procedimientos}.values())
 
-    g.bind("fhir", FHIR)
+    graph = _graph_with_resources(
+        pacientes=pacientes,
+        practicantes=practicantes,
+        procedimientos=procedimientos,
+    )
+    schema = build_fhir_schema(
+        include_patients=bool(pacientes),
+        include_practitioners=bool(practicantes),
+        include_procedures=True,
+    )
+    return _export_bundle(graph, "procedimientos-fhir", schema)
 
-    procedimientos = Procedimiento.objects.all()
-
-    for procedimiento in procedimientos:
-        procedimiento_rdf_graph(g, procedimiento)
-        #print("ID:",str(procedimiento.id))
-
-        #g.add((proc_uri, FHIR.bodySite, Literal(procedimiento.diente)))
-        
-    return export_file(g, "procedimientos_all.ttl")
 
 def export_practitioners_rdf(request):
-    g = Graph()
+    practicantes = list(Practicante.objects.all())
+    graph = _graph_with_resources(practicantes=practicantes)
+    schema = build_fhir_schema(include_practitioners=True)
+    return _export_bundle(graph, "practicantes-fhir", schema)
 
-    g.bind("fhir", FHIR)
-
-    practitioners = Practicante.objects.all()
-
-    for practitioner in practitioners:
-        #print("ID:",str(practitioner.id))
-        pract_uri = URIRef(FHIR.identifier + "/" + str(practitioner.id))
-        print(pract_uri)
-        
-        g.add((pract_uri, RDF.type, FHIR.Practitioner))
-
-        g.add((pract_uri, FHIR.active, Literal(practitioner.activo)))
-
-        name = BNode()
-        g.add((pract_uri, FHIR.name, name))
-        g.add((name, FHIR.given, Literal(practitioner.nombre)))
-        g.add((name, FHIR.family, Literal(practitioner.apellido)))
-
-        telcom = BNode()
-        telephone = BNode()
-        g.add((pract_uri, FHIR.telecom, telcom))
-        g.add((telephone, FHIR.system, Literal("phone")))
-        g.add((telephone, FHIR.value, Literal(practitioner.telefono)))
-        g.add((telcom, FHIR.ContactPoint, telephone))
-        
-    rdf_data = g.serialize(format="turtle")
-
-    response = HttpResponse(rdf_data, content_type="text/turtle")
-    response["Content-Disposition"] = 'attachment; filename="practicantes.ttl"' 
-
-    return response
 
 def export_teeth_rdf(request):
+    teeth_graph = _new_graph()
+    for diente in Diente.objects.all():
+        diente_uri = URIRef(FHIR.Tooth + "/" + str(diente.id))
+        teeth_graph.add((diente_uri, RDF.type, FHIR.Tooth))
+        _add_wrapped_literal(teeth_graph, diente_uri, FHIR["Tooth.code"], diente.codigo)
+        _add_wrapped_literal(teeth_graph, diente_uri, FHIR["Tooth.display"], diente.display)
+        _add_wrapped_literal(teeth_graph, diente_uri, FHIR["Tooth.definition"], diente.definicion)
 
-    g = Graph()
+    return teeth_graph.serialize(format="turtle")
 
-    g.bind("fhir", FHIR)
 
-    dientes = Diente.objects.all()
-
-    for diente in dientes:
-        #print("ID:",str(diente.id))
-        diente_uri = URIRef(FHIR.identifier + "/" + str(diente.id))
-        print(diente_uri)
-        
-        g.add((diente_uri, RDF.type, FHIR.Tooth))
-
-        g.add((diente_uri, FHIR.active, Literal(diente.activo)))
-
-        name = BNode()
-        g.add((diente_uri, FHIR.name, name))
-        g.add((name, FHIR.given, Literal(diente.nombre)))
-        g.add((name, FHIR.family, Literal(diente.apellido)))
-
-        telcom = BNode()
-        telephone = BNode()
-        g.add((diente_uri, FHIR.telecom, telcom))
-        g.add((telephone, FHIR.system, Literal("phone")))
-        g.add((telephone, FHIR.value, Literal(diente.telefono)))
-        g.add((telcom, FHIR.ContactPoint, telephone))
-        
-    rdf_data = g.serialize(format="turtle")
-
-    """ response = HttpResponse(rdf_data, content_type="text/turtle")
-    response["Content-Disposition"] = 'attachment; filename="dientes.ttl"'  """
-
-    return rdf_data
-
-############################################################
-#                                                          #
-# ~~~~~~~~~~~~~~~~~ Funciones auxiliares ~~~~~~~~~~~~~~~~~ #
-#                                                          #
-############################################################
-
-####################################################################################################
-## Exportación de datos de un paciente específico con sus procedimientos asociados en formato RDF ##
-####################################################################################################
 def build_patient_rdf(request, paciente_id):
-    EX = Namespace("http://example.org/")
-    
-    g = Graph()
-    g.bind("fhir", FHIR)
-    g.bind("ex", EX)
-    
     paciente = Paciente.objects.get(id=paciente_id)
-    exportar_paciente = request.GET.get("exportar_paciente") == "on"
+    include_patient = request.GET.get("exportar_paciente") == "on"
+    procedimientos = list(
+        Procedimiento.objects.select_related("codigo", "diente", "practicante").filter(paciente=paciente)
+    )
+    practicantes = list({proc.practicante_id: proc.practicante for proc in procedimientos}.values())
+    include_patient = include_patient or not procedimientos
 
-    procedimientos = Procedimiento.objects.select_related("diente", "practicante").filter(paciente=paciente)
+    graph = _graph_with_resources(
+        pacientes=[paciente] if include_patient else [],
+        practicantes=practicantes,
+        procedimientos=procedimientos,
+    )
+    schema = build_fhir_schema(
+        include_patients=include_patient,
+        include_practitioners=bool(practicantes),
+        include_procedures=bool(procedimientos),
+    )
+    return _export_bundle(graph, f"historial-{paciente.nombre}-{paciente.apellido}", schema)
 
-    if exportar_paciente:
-        patient_rdf_graph(g, paciente)
 
-    for procedimiento in procedimientos:
-        procedimiento_rdf_graph(g, procedimiento)
+def patient_rdf_graph(graph, paciente):
+    paciente_uri = URIRef(FHIR.Patient + "/" + str(paciente.id))
+    graph.add((paciente_uri, RDF.type, FHIR.Patient))
 
-    return export_file(g, "pacient-" + paciente.nombre + "-procedures.ttl")
+    _add_wrapped_literal(graph, paciente_uri, FHIR["Patient.active"], paciente.activo, datatype=XSD.boolean)
 
-########################################################################################
-## Función para crear el grafo RDF de un paciente específico con sus datos personales ##
-########################################################################################
-def patient_rdf_graph(g, paciente):
-    pac_uri = URIRef(FHIR.Patient + "/" + str(paciente.id))
-    g.add((pac_uri, RDF.type, FHIR.Patient))
-
-    # active → [ fhir:value true ]
-    active_node = BNode()
-    g.add((pac_uri, FHIR["Patient.active"], active_node))
-    g.add((active_node, FHIR["value"], Literal(paciente.activo, datatype=XSD.boolean)))
-
-    # name → HumanName.family + HumanName.given, cada uno con [ fhir:value … ]
     name = BNode()
-    family = BNode()
-    given = BNode()
-    g.add((pac_uri, FHIR["Patient.name"], name))
-    g.add((name, FHIR["HumanName.family"], family))
-    g.add((family, FHIR["value"], Literal(paciente.apellido)))
-    g.add((name, FHIR["HumanName.given"], given))
-    g.add((given, FHIR["value"], Literal(paciente.nombre)))
+    graph.add((paciente_uri, FHIR["Patient.name"], name))
+    _add_wrapped_literal(graph, name, FHIR["HumanName.family"], paciente.apellido)
+    _add_wrapped_literal(graph, name, FHIR["HumanName.given"], paciente.nombre)
 
-    # telecom → índice + ContactPoint.system + ContactPoint.value
     telecom = BNode()
-    idx = BNode()
-    system = BNode()
-    value = BNode()
-    g.add((pac_uri, FHIR["Patient.telecom"], telecom))
-    # fhir:index 0
-    g.add((telecom, FHIR["index"], Literal(0)))
-    # fhir:ContactPoint.system [ fhir:value "phone" ]
-    g.add((telecom, FHIR["ContactPoint.system"], system))
-    g.add((system, FHIR["value"], Literal("phone")))
-    # fhir:ContactPoint.value [ fhir:value número ]
-    g.add((telecom, FHIR["ContactPoint.value"], value))
-    g.add((value, FHIR["value"], Literal(paciente.telefono)))
+    graph.add((paciente_uri, FHIR["Patient.telecom"], telecom))
+    graph.add((telecom, FHIR["index"], Literal(0)))
+    _add_wrapped_literal(graph, telecom, FHIR["ContactPoint.system"], "phone")
+    _add_wrapped_literal(graph, telecom, FHIR["ContactPoint.value"], paciente.telefono or "")
 
-    # gender → [ fhir:value "female" ]
-    gender_node = BNode()
-    g.add((pac_uri, FHIR["Patient.gender"], gender_node))
-    g.add((gender_node, FHIR["value"], Literal(paciente.genero)))
+    _add_wrapped_literal(graph, paciente_uri, FHIR["Patient.gender"], paciente.genero)
+    _add_wrapped_literal(
+        graph,
+        paciente_uri,
+        FHIR["Patient.birthDate"],
+        paciente.fecha_nacimiento,
+        datatype=XSD.date,
+    )
+    _add_wrapped_literal(graph, paciente_uri, FHIR["Patient.maritalStatus"], paciente.estado_civil)
 
-    # birthDate → [ fhir:value "YYYY-MM-DD"^^xsd:date ]
-    bd_node = BNode()
-    g.add((pac_uri, FHIR["Patient.birthDate"], bd_node))
-    g.add((bd_node, FHIR["value"], Literal(paciente.fecha_nacimiento, datatype=XSD.date)))
-
-    # maritalStatus → [ fhir:value "C" ]
-    ms_node = BNode()
-    g.add((pac_uri, FHIR["Patient.maritalStatus"], ms_node))
-    g.add((ms_node, FHIR["value"], Literal(paciente.estado_civil)))
-
-    # address → Address.line, city, state, postalCode, country
     address = BNode()
-    g.add((pac_uri, FHIR["Patient.address"], address))
+    graph.add((paciente_uri, FHIR["Patient.address"], address))
+    _add_wrapped_literal(graph, address, FHIR["Address.line"], paciente.calle or "")
+    _add_wrapped_literal(graph, address, FHIR["Address.city"], paciente.ciudad or "")
+    _add_wrapped_literal(graph, address, FHIR["Address.state"], paciente.provincia or "")
+    _add_wrapped_literal(graph, address, FHIR["Address.postalCode"], paciente.codigo_postal or "")
+    _add_wrapped_literal(graph, address, FHIR["Address.country"], paciente.pais or "")
 
-    line = BNode()
-    g.add((address, FHIR["Address.line"], line))
-    g.add((line, FHIR["value"], Literal(paciente.calle)))
+    return paciente_uri
 
-    city = BNode()
-    g.add((address, FHIR["Address.city"], city))
-    g.add((city, FHIR["value"], Literal(paciente.ciudad)))
 
-    state = BNode()
-    g.add((address, FHIR["Address.state"], state))
-    g.add((state, FHIR["value"], Literal(paciente.provincia)))
+def practitioner_rdf_graph(graph, practicante):
+    practitioner_uri = URIRef(FHIR.Practitioner + "/" + str(practicante.id))
+    graph.add((practitioner_uri, RDF.type, FHIR.Practitioner))
 
-    postal = BNode()
-    g.add((address, FHIR["Address.postalCode"], postal))
-    g.add((postal, FHIR["value"], Literal(paciente.codigo_postal)))
+    _add_wrapped_literal(graph, practitioner_uri, FHIR["Practitioner.active"], practicante.activo, datatype=XSD.boolean)
 
-    country = BNode()
-    g.add((address, FHIR["Address.country"], country))
-    g.add((country, FHIR["value"], Literal(paciente.pais)))
+    name = BNode()
+    graph.add((practitioner_uri, FHIR["Practitioner.name"], name))
+    _add_wrapped_literal(graph, name, FHIR["HumanName.family"], practicante.apellido)
+    _add_wrapped_literal(graph, name, FHIR["HumanName.given"], practicante.nombre)
 
-####################################################################
-## Función para crear el grafo RDF de un procedimiento específico ##
-####################################################################
-def procedimiento_rdf_graph(g, procedimiento):
-    proc_uri = URIRef(FHIR.Procedure + "/" + str(procedimiento.id))
+    telecom = BNode()
+    graph.add((practitioner_uri, FHIR["Practitioner.telecom"], telecom))
+    graph.add((telecom, FHIR["index"], Literal(0)))
+    _add_wrapped_literal(graph, telecom, FHIR["ContactPoint.system"], "phone")
+    _add_wrapped_literal(graph, telecom, FHIR["ContactPoint.value"], practicante.telefono or "")
 
-    g.add((proc_uri, RDF.type, FHIR.Procedure))
+    _add_wrapped_literal(
+        graph,
+        practitioner_uri,
+        FHIR["Practitioner.gender"],
+        PRACTITIONER_TO_FHIR_GENDER.get(practicante.genero, "unknown"),
+    )
 
-     # status → [ fhir:value "…" ]
-    status_node = BNode()
-    g.add((proc_uri, FHIR["Procedure.status"], status_node))
-    g.add((status_node, FHIR["value"], Literal(procedimiento.status)))
+    qualification = BNode()
+    graph.add((practitioner_uri, FHIR["Practitioner.qualification"], qualification))
+    _add_wrapped_literal(
+        graph,
+        qualification,
+        FHIR["CodeableConcept.text"],
+        practicante.cualificacion or "Importado desde FHIR",
+    )
 
-    # code → CodeableConcept
-    proc_code_cc = BNode()
-    g.add((proc_uri, FHIR["Procedure.code"], proc_code_cc))
+    return practitioner_uri
 
-    #   coding → [ Coding.code [ fhir:value … ]; Coding.system [ fhir:value … ] ]
+
+def procedimiento_rdf_graph(graph, procedimiento):
+    procedure_uri = URIRef(FHIR.Procedure + "/" + str(procedimiento.id))
+    graph.add((procedure_uri, RDF.type, FHIR.Procedure))
+
+    _add_wrapped_literal(graph, procedure_uri, FHIR["Procedure.status"], procedimiento.status)
+
+    codeable_concept = BNode()
+    graph.add((procedure_uri, FHIR["Procedure.code"], codeable_concept))
+
     coding = BNode()
-    g.add((proc_code_cc, FHIR["CodeableConcept.coding"], coding))
+    graph.add((codeable_concept, FHIR["CodeableConcept.coding"], coding))
+    _add_wrapped_literal(graph, coding, FHIR["Coding.code"], procedimiento.codigo.codigo)
+    _add_wrapped_literal(graph, coding, FHIR["Coding.system"], "http://ada.org/cdt", datatype=XSD.anyURI)
+    _add_wrapped_literal(graph, codeable_concept, FHIR["CodeableConcept.text"], procedimiento.codigo.text)
 
-    code_val = BNode()
-    g.add((coding, FHIR["Coding.code"], code_val))
-    g.add((code_val, FHIR["value"], Literal(procedimiento.codigo.codigo)))
+    _add_wrapped_literal(
+        graph,
+        procedure_uri,
+        FHIR["Procedure.performedDateTime"],
+        procedimiento.realizado_el,
+        datatype=XSD.date,
+    )
 
-    system_val = BNode()
-    g.add((coding, FHIR["Coding.system"], system_val))
-    g.add((system_val, FHIR["value"], Literal("http://ada.org/cdt", datatype=XSD.anyURI)))
-
-    #   text → [ fhir:value … ]
-    text_val = BNode()
-    g.add((proc_code_cc, FHIR["CodeableConcept.text"], text_val))
-    g.add((text_val, FHIR["value"], Literal(procedimiento.codigo.text)))
-
-    # performedDateTime → [ fhir:value "YYYY-MM-DD"^^xsd:date ]
-    date_val = BNode()
-    g.add((proc_uri, FHIR["Procedure.performedDateTime"], date_val))
-    g.add((date_val, FHIR["value"], Literal(procedimiento.realizado_el, datatype=XSD.date)))
-
-    # subject → Reference.reference → [ fhir:value "Patient/X" ]
     subject = BNode()
-    ref_subj = BNode()
-    g.add((proc_uri, FHIR["Procedure.subject"], subject))
-    g.add((subject, FHIR["Reference.reference"], ref_subj))
-    g.add((ref_subj, FHIR["value"], Literal(f"Patient/{procedimiento.paciente.id}")))
+    graph.add((procedure_uri, FHIR["Procedure.subject"], subject))
+    _add_wrapped_literal(graph, subject, FHIR["Reference.reference"], f"Patient/{procedimiento.paciente.id}")
 
-    # performer → Procedure.performer.actor → Reference.reference → [ fhir:value "Practitioner/Y" ]
-    perf = BNode()
+    performer = BNode()
     actor = BNode()
-    ref_actor = BNode()
-    g.add((proc_uri, FHIR["Procedure.performer"], perf))
-    g.add((perf, FHIR["Procedure.performer.actor"], actor))
-    g.add((actor, FHIR["Reference.reference"], ref_actor))
-    g.add((ref_actor, FHIR["value"], Literal(f"Practitioner/{procedimiento.practicante.id}")))
+    graph.add((procedure_uri, FHIR["Procedure.performer"], performer))
+    graph.add((performer, FHIR["Procedure.performer.actor"], actor))
+    _add_wrapped_literal(graph, actor, FHIR["Reference.reference"], f"Practitioner/{procedimiento.practicante.id}")
 
-    # bodySite (si hay diente): igual patrón con wrappers de fhir:value
     if procedimiento.diente:
-        bs = BNode()
-        coding_bs = BNode()
-        g.add((proc_uri, FHIR["Procedure.bodySite"], bs))
-        g.add((bs, FHIR["CodeableConcept.coding"], coding_bs))
+        body_site = BNode()
+        coding_body_site = BNode()
+        graph.add((procedure_uri, FHIR["Procedure.bodySite"], body_site))
+        graph.add((body_site, FHIR["CodeableConcept.coding"], coding_body_site))
+        _add_wrapped_literal(graph, coding_body_site, FHIR["Coding.code"], procedimiento.diente.codigo)
+        _add_wrapped_literal(
+            graph,
+            coding_body_site,
+            FHIR["Coding.system"],
+            "http://ada.org/snodent",
+            datatype=XSD.anyURI,
+        )
+        _add_wrapped_literal(graph, coding_body_site, FHIR["Coding.display"], procedimiento.diente.display)
 
-        code_bs_val = BNode()
-        g.add((coding_bs, FHIR["Coding.code"], code_bs_val))
-        g.add((code_bs_val, FHIR["value"], Literal(procedimiento.diente.codigo)))
+        if procedimiento.diente.definicion:
+            _add_wrapped_literal(graph, body_site, FHIR["CodeableConcept.text"], procedimiento.diente.definicion)
 
-        sys_bs_val = BNode()
-        g.add((coding_bs, FHIR["Coding.system"], sys_bs_val))
-        g.add((sys_bs_val, FHIR["value"], Literal("http://ada.org/snodent", datatype=XSD.anyURI)))
+    return procedure_uri
 
-        disp_bs_val = BNode()
-        g.add((coding_bs, FHIR["Coding.display"], disp_bs_val))
-        g.add((disp_bs_val, FHIR["value"], Literal(procedimiento.diente.display)))
 
-"""     text_bs_val = BNode()
-        g.add((bs, FHIR["CodeableConcept.text"], text_bs_val))
-        g.add((text_bs_val, FHIR["value"], Literal(procedimiento.diente.definicion))) """
+def import_data(form):
+    rdf_content = _read_uploaded_text(form.cleaned_data["rdf_file"], "RDF")
+    shex_content = _read_uploaded_text(form.cleaned_data["shex_file"], "ShEx")
 
-####################################
-## Función para exportar un grafo ##
-####################################
-def export_file(g, filename):
-    rdf_data = g.serialize(format="turtle")
-    response = HttpResponse(rdf_data, content_type="text/turtle")
-    response["Content-Disposition"] = f'attachment; filename="{filename}"'
-    return response
+    graph = Graph()
+    try:
+        graph.parse(data=rdf_content, format="turtle")
+    except Exception as exc:
+        raise ValidationError(f"El archivo RDF no se pudo procesar como Turtle valido: {exc}") from exc
 
-############################################################
-#                                                          #
-# ~~~~~~~~~~~~ Importación de datos desde RDF ~~~~~~~~~~~~ #
-#                                                          #
-############################################################
-def import_data(request, form):
-    rdf_file = form.cleaned_data['rdf_file']
+    shex_errors, _, focus_map = validate_uploaded_schema(graph, shex_content)
+    if not focus_map:
+        raise ValidationError("El RDF no contiene recursos FHIR Patient, Practitioner o Procedure compatibles con la importacion.")
+    link_errors = _validate_resource_links(graph)
+    all_errors = shex_errors + link_errors
 
-    g = Graph()
-    g.parse(rdf_file, format='turtle')  # or guess format
+    if all_errors:
+        raise ValidationError(all_errors)
 
-    # 1. Import Pacientes
-    for s in g.subjects(RDF.type, URIRef(FHIR + "Patient")):
-        patient_id = str(s).split("/")[-1]
-        name = g.value(s, URIRef(FHIR + "name"))
-        phone = ""
-        for telecom_node in g.objects(s, FHIR.telecom):
-            
-            point = g.value(telecom_node, FHIR.ContactPoint)
-            system = g.value(point, FHIR.system)
-            print(f"Telecom Node: {telecom_node}, System: {system}")
-            if system and str(system).lower() == "phone":
-                phone = g.value(point, FHIR.value, default="")
-                print(f"Found phone: {phone} for patient {patient_id}")
-                break
-        if not Paciente.objects.filter(id=patient_id).exists():
-            print(f"Importing Patient: {s}, ID: {patient_id}, Name: {name}")
-            Paciente.objects.create(
-                id=patient_id,
-                activo=g.value(s, URIRef(FHIR + "active").toPython(), default=True),
-                nombre=g.value(name, URIRef(FHIR + "given"), default=""),
-                apellido=g.value(name, URIRef(FHIR + "family"), default=""),
-                genero=g.value(s, URIRef(FHIR + "gender"), default="O").toPython(),
-                telefono=phone,
-                fecha_nacimiento=g.value(s, URIRef(FHIR + "birthDate"), default=None).toPython() if g.value(s, URIRef(FHIR + "birthDate")) else None,
-                calle=g.value(g.value(s, URIRef(FHIR + "address")), URIRef(FHIR + "line"), default=""),
-                ciudad=g.value(g.value(s, URIRef(FHIR + "address")), URIRef(FHIR + "city"), default=""),
-                provincia=g.value(g.value(s, URIRef(FHIR + "address")), URIRef(FHIR + "state"), default=""),
-                codigo_postal=g.value(g.value(s, URIRef(FHIR + "address")), URIRef(FHIR + "postalCode"), default=""),
-                pais=g.value(g.value(s, URIRef(FHIR + "address")), URIRef(FHIR + "country"), default=""),
-                estado_civil=g.value(s, URIRef(FHIR + "maritalStatus"), default="S").toPython() if g.value(s, URIRef(FHIR + "maritalStatus")) else "S",
+    return _persist_resources(graph, focus_map)
 
+
+def _validate_resource_links(graph):
+    errors = []
+    focus_map = detect_focus_nodes(graph)
+
+    imported_patient_ids = {
+        _numeric_identifier(subject)
+        for subject in focus_map.get(PATIENT_SHAPE, [])
+        if _numeric_identifier(subject) is not None
+    }
+
+    for procedure_subject in focus_map.get(PROCEDURE_SHAPE, []):
+        procedure_id = _resource_identifier(procedure_subject) or "desconocido"
+        patient_reference = _reference_value(graph, procedure_subject, FHIR["Procedure.subject"])
+        patient_id = _numeric_identifier(patient_reference)
+
+        if patient_id is None:
+            errors.append(
+                f"El procedimiento {procedure_id} referencia un paciente no numerico o no compatible con la aplicacion."
+            )
+            continue
+
+        if patient_id not in imported_patient_ids and not Paciente.objects.filter(id=patient_id).exists():
+            errors.append(
+                f"El procedimiento {procedure_id} referencia al paciente {patient_id}, que no esta en el RDF ni en la base de datos."
             )
 
-    # 2. Import Procedimientos
-    for s in g.subjects(RDF.type, URIRef(FHIR + "Procedure")):
-        status = g.value(s, URIRef(FHIR + "status"))
-
-        body_site = g.value(s, URIRef(FHIR + "bodySite"))
-        coding_node = g.value(body_site, FHIR.coding)
-
-        code = g.value(coding_node, FHIR.code, default="")
-        display = g.value(coding_node, FHIR.display, default="")
-        descripcion = g.value(body_site, FHIR.text, default="")
-        
-        #print(f"Processing Procedure: {s}, Status: {status}, Code: {code}")
-        date = g.value(s, URIRef(FHIR + "performedDateTime"))
-
-        # Get patient
-        patient_val = g.value(g.value(s, URIRef(FHIR + "subject")), URIRef(FHIR + "value"))
-        paciente = None
-        if patient_val:
-            patient_id = str(patient_val).split("/")[-1]
-            paciente = Paciente.objects.filter(id=patient_id).first()
-
-        # ✅ Get practitioner
-        practicante = None
-        practitioner_uri = None
-
-        practicante = g.value(s, URIRef(FHIR + "performer"))
-        actor = g.value(practicante, URIRef(FHIR + "actor")) if practicante else None
-        reference = g.value(actor, URIRef(FHIR + "reference")) if actor else None
-        value = g.value(reference, URIRef(FHIR + "value")) if reference else None
-        #print(f"Practitioner URI: {value}")
-        if value:
-            practitioner_id = str(value).split("/")[-1]
-            practicante = Practicante.objects.filter(id=practitioner_id).first()
-            if not practicante:
-                practitioner_uri = str(value)  # Save raw reference for later/debug
-
-        # ✅ Get tooth from bodySite
-        diente = None
-        body_site = g.value(s, URIRef(FHIR + "bodySite"))
-        coding = g.value(body_site, URIRef(FHIR + "coding")) if body_site else None
-        tooth_code = g.value(coding, URIRef(FHIR + "code")) if coding else None
-
-        if tooth_code:
-            diente = Diente.objects.filter(codigo=str(tooth_code)).first()
-
-        #print(f"Importing Procedure: {s}, Status: {status}, Code: {code}, Date: {date}, Patient: {paciente}, Practitioner: {practicante}, Pract_uri: {practitioner_uri} Tooth: {diente}")
+    return errors
 
 
-        # ✅ Create the procedure
-        Procedimiento.objects.create(
-            id=str(s).split("/")[-1],  # Use the URI as the ID
-            codigo=code if code else "UNKNOWN",
-            status=status.toPython() if status else "unknown",
-            paciente=paciente,
-            practicante=practicante,
-            practicante_externo_uri=practitioner_uri,  # Save the raw URI if needed
-            diente=diente,
-            descripcion=descripcion if descripcion else display, 
-            realizado_el=date.toPython() if date else None,
-            # optional: you could save `practitioner_uri` or `tooth_code` as raw text fields for traceability
-        ) 
+def _persist_resources(graph, focus_map):
+    imported = {
+        "pacientes": {"creados": 0, "actualizados": 0},
+        "practicantes": {"creados": 0, "actualizados": 0},
+        "procedimientos": {"creados": 0, "actualizados": 0},
+    }
+    practitioner_cache = {}
+
+    with transaction.atomic():
+        for patient_subject in focus_map.get(PATIENT_SHAPE, []):
+            patient_id = _numeric_identifier(patient_subject)
+            if patient_id is None:
+                raise ValidationError(
+                    f"El paciente {_resource_identifier(patient_subject) or patient_subject} no tiene un identificador numerico compatible."
+                )
+
+            defaults = {
+                "activo": bool(_wrapped_value(graph, patient_subject, FHIR["Patient.active"], True)),
+                "nombre": _wrapped_value(
+                    graph,
+                    graph.value(patient_subject, FHIR["Patient.name"]),
+                    FHIR["HumanName.given"],
+                    "",
+                ),
+                "apellido": _wrapped_value(
+                    graph,
+                    graph.value(patient_subject, FHIR["Patient.name"]),
+                    FHIR["HumanName.family"],
+                    "",
+                ),
+                "genero": Paciente.normalizar_genero(
+                    _wrapped_value(graph, patient_subject, FHIR["Patient.gender"], "unknown")
+                ),
+                "telefono": _telecom_value(graph, patient_subject, FHIR["Patient.telecom"]),
+                "fecha_nacimiento": _wrapped_value(graph, patient_subject, FHIR["Patient.birthDate"]),
+                "calle": _wrapped_value(
+                    graph,
+                    graph.value(patient_subject, FHIR["Patient.address"]),
+                    FHIR["Address.line"],
+                    "",
+                ),
+                "ciudad": _wrapped_value(
+                    graph,
+                    graph.value(patient_subject, FHIR["Patient.address"]),
+                    FHIR["Address.city"],
+                    "",
+                ),
+                "provincia": _wrapped_value(
+                    graph,
+                    graph.value(patient_subject, FHIR["Patient.address"]),
+                    FHIR["Address.state"],
+                    "",
+                ),
+                "codigo_postal": _wrapped_value(
+                    graph,
+                    graph.value(patient_subject, FHIR["Patient.address"]),
+                    FHIR["Address.postalCode"],
+                    "",
+                ),
+                "pais": _wrapped_value(
+                    graph,
+                    graph.value(patient_subject, FHIR["Patient.address"]),
+                    FHIR["Address.country"],
+                    "",
+                ),
+                "estado_civil": Paciente.normalizar_estado_civil(
+                    _wrapped_value(graph, patient_subject, FHIR["Patient.maritalStatus"], "UNK")
+                ),
+            }
+
+            _, created = Paciente.objects.update_or_create(id=patient_id, defaults=defaults)
+            imported["pacientes"]["creados" if created else "actualizados"] += 1
+
+        for practitioner_subject in focus_map.get(PRACTITIONER_SHAPE, []):
+            practitioner_reference = str(practitioner_subject)
+            practitioner_id = _numeric_identifier(practitioner_subject)
+
+            defaults = {
+                "activo": bool(_wrapped_value(graph, practitioner_subject, FHIR["Practitioner.active"], True)),
+                "nombre": _wrapped_value(
+                    graph,
+                    graph.value(practitioner_subject, FHIR["Practitioner.name"]),
+                    FHIR["HumanName.given"],
+                    "",
+                ),
+                "apellido": _wrapped_value(
+                    graph,
+                    graph.value(practitioner_subject, FHIR["Practitioner.name"]),
+                    FHIR["HumanName.family"],
+                    "",
+                ),
+                "genero": FHIR_TO_PRACTITIONER_GENDER.get(
+                    _wrapped_value(graph, practitioner_subject, FHIR["Practitioner.gender"], "unknown"),
+                    "O",
+                ),
+                "telefono": _telecom_value(graph, practitioner_subject, FHIR["Practitioner.telecom"]),
+                "cualificacion": _wrapped_value(
+                    graph,
+                    graph.value(practitioner_subject, FHIR["Practitioner.qualification"]),
+                    FHIR["CodeableConcept.text"],
+                    "Importado desde FHIR",
+                ),
+            }
+
+            practitioner, created = _upsert_practitioner(
+                practitioner_id=practitioner_id,
+                practitioner_reference=practitioner_reference,
+                defaults=defaults,
+            )
+            practitioner_cache[practitioner_reference] = practitioner
+            practitioner_cache[f"Practitioner/{practitioner.id}"] = practitioner
+            imported["practicantes"]["creados" if created else "actualizados"] += 1
+
+        for procedure_subject in focus_map.get(PROCEDURE_SHAPE, []):
+            procedure_id = _numeric_identifier(procedure_subject)
+            if procedure_id is None:
+                raise ValidationError(
+                    f"El procedimiento {_resource_identifier(procedure_subject) or procedure_subject} no tiene un identificador numerico compatible."
+                )
+
+            patient_reference = _reference_value(graph, procedure_subject, FHIR["Procedure.subject"])
+            patient_id = _numeric_identifier(patient_reference)
+            paciente = Paciente.objects.get(id=patient_id)
+
+            practitioner_reference = _procedure_practitioner_reference(graph, procedure_subject)
+            practicante = _resolve_practitioner_reference(practitioner_reference, practitioner_cache)
+
+            procedure_code = _procedure_code(graph, procedure_subject) or "UNKNOWN"
+            procedure_text = _procedure_text(graph, procedure_subject) or procedure_code
+
+            catalogo, _ = ProcedimientoCatalogo.objects.get_or_create(
+                codigo=procedure_code,
+                defaults={"text": procedure_text},
+            )
+            if procedure_text and catalogo.text != procedure_text:
+                catalogo.text = procedure_text
+                catalogo.save(update_fields=["text"])
+
+            tooth_code = _procedure_tooth_code(graph, procedure_subject)
+            diente = Diente.objects.filter(codigo=tooth_code).first() if tooth_code else None
+
+            defaults = {
+                "status": _wrapped_value(graph, procedure_subject, FHIR["Procedure.status"], "unknown"),
+                "codigo": catalogo,
+                "paciente": paciente,
+                "practicante": practicante,
+                "practicante_externo_uri": _absolute_reference(practitioner_reference),
+                "diente": diente,
+                "descripcion": _procedure_description(graph, procedure_subject, fallback=procedure_text),
+                "realizado_el": _wrapped_value(graph, procedure_subject, FHIR["Procedure.performedDateTime"]),
+            }
+
+            _, created = Procedimiento.objects.update_or_create(id=procedure_id, defaults=defaults)
+            imported["procedimientos"]["creados" if created else "actualizados"] += 1
+
+    return imported
 
 
-    
+def _upsert_practitioner(*, practitioner_id, practitioner_reference, defaults):
+    if practitioner_id is not None:
+        return Practicante.objects.update_or_create(id=practitioner_id, defaults=defaults)
+
+    existing = Practicante.objects.filter(
+        nombre=defaults["nombre"],
+        apellido=defaults["apellido"],
+        telefono=defaults["telefono"],
+    ).first()
+
+    if existing:
+        for field_name, field_value in defaults.items():
+            setattr(existing, field_name, field_value)
+        existing.save()
+        return existing, False
+
+    created = Practicante.objects.create(**defaults)
+    return created, True
+
+
+def _resolve_practitioner_reference(reference_value, practitioner_cache):
+    if not reference_value:
+        raise ValidationError("El procedimiento importado no contiene referencia a un practicante.")
+
+    if reference_value in practitioner_cache:
+        return practitioner_cache[reference_value]
+
+    practitioner_id = _numeric_identifier(reference_value)
+    if practitioner_id is not None:
+        practitioner = Practicante.objects.filter(id=practitioner_id).first()
+        if practitioner:
+            practitioner_cache[reference_value] = practitioner
+            return practitioner
+
+        practitioner = Practicante.objects.create(
+            id=practitioner_id,
+            activo=True,
+            nombre="Profesional",
+            apellido=f"FHIR {practitioner_id}",
+            genero="O",
+            telefono="",
+            cualificacion="Importado desde referencia FHIR",
+        )
+        practitioner_cache[reference_value] = practitioner
+        practitioner_cache[f"Practitioner/{practitioner_id}"] = practitioner
+        return practitioner
+
+    practitioner = Practicante.objects.create(
+        activo=True,
+        nombre="Profesional",
+        apellido="FHIR externo",
+        genero="O",
+        telefono="",
+        cualificacion="Importado desde referencia FHIR",
+    )
+    practitioner_cache[reference_value] = practitioner
+    return practitioner
+
+
+def _procedure_practitioner_reference(graph, procedure_subject):
+    performer = graph.value(procedure_subject, FHIR["Procedure.performer"])
+    if performer is None:
+        return None
+    actor = graph.value(performer, FHIR["Procedure.performer.actor"])
+    if actor is None:
+        return None
+    return _wrapped_value(graph, actor, FHIR["Reference.reference"])
+
+
+def _procedure_code(graph, procedure_subject):
+    codeable_concept = graph.value(procedure_subject, FHIR["Procedure.code"])
+    if codeable_concept is None:
+        return None
+    coding = graph.value(codeable_concept, FHIR["CodeableConcept.coding"])
+    if coding is None:
+        return None
+    return _wrapped_value(graph, coding, FHIR["Coding.code"])
+
+
+def _procedure_text(graph, procedure_subject):
+    codeable_concept = graph.value(procedure_subject, FHIR["Procedure.code"])
+    if codeable_concept is None:
+        return None
+    return _wrapped_value(graph, codeable_concept, FHIR["CodeableConcept.text"])
+
+
+def _procedure_tooth_code(graph, procedure_subject):
+    body_site = graph.value(procedure_subject, FHIR["Procedure.bodySite"])
+    if body_site is None:
+        return None
+    coding = graph.value(body_site, FHIR["CodeableConcept.coding"])
+    if coding is None:
+        return None
+    return _wrapped_value(graph, coding, FHIR["Coding.code"])
+
+
+def _procedure_description(graph, procedure_subject, fallback=""):
+    body_site = graph.value(procedure_subject, FHIR["Procedure.bodySite"])
+    if body_site is not None:
+        description = _wrapped_value(graph, body_site, FHIR["CodeableConcept.text"])
+        if description:
+            return description
+
+        coding = graph.value(body_site, FHIR["CodeableConcept.coding"])
+        display = _wrapped_value(graph, coding, FHIR["Coding.display"]) if coding else None
+        if display:
+            return display
+
+    return fallback or ""

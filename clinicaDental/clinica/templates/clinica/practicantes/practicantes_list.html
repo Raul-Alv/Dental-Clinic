@@ -35,7 +35,13 @@
           </thead>
           <tbody>
             {% for i in practicantes %}
-              <tr>
+              <tr
+                class="is-navigable"
+                data-href="{% url 'practicante_detail' i.id %}"
+                tabindex="0"
+                role="link"
+                aria-label="Abrir ficha del dentista {{ i.nombre }} {{ i.apellido }}"
+              >
                 <td>
                   <a href="{% url 'practicante_detail' i.id %}" class="record-link">
                     <span class="record-avatar">{{ i.nombre|first }}{{ i.apellido|first }}</span>
