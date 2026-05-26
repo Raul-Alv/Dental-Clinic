@@ -1,29 +1,71 @@
 {% extends 'layout.html' %}
+{% load static %}
 
 {% block title %}
-   <title>Show Page</title>
+  <title>Pacientes | Dental Clinic</title>
+{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/records_list.css' %}">
 {% endblock %}
 
 {% block content %}
-<h1>Pacientes</h1>
-<table class="table">
-   <thead>
-     <tr>
-       <th scope="col">Nombre</th>
-       <th scope="col">Genero</th>
-       <th scope="col">Telefono</th>
-     </tr>
-   </thead>
-   <tbody>
-   {% for i in pacientes %}
-     <tr>
-       <td><a href="{% url 'paciente_detail' i.id %}">{{i.nombre}} {{i.apellido}}</a></td>
-       <td>{{i.get_genero_display}}</td>
-       <td>{{i.telefono}}</td>
+  <section class="page-header page-header--split">
+    <div>
+      <span class="page-kicker">Pacientes</span>
+      <h1>{{ title }}</h1>
+    </div>
+    <div class="page-header__actions">
+      <span class="soft-badge">{{ pacientes|length }} activos</span>
+      <a href="{% url 'pacientes_crear' %}" class="btn btn-primary">Nuevo paciente</a>
+    </div>
+  </section>
 
-     </tr>
-   {% endfor %}
-   </tbody>
- </table>
-</form>
+  <section class="section-card">
+    {% if pacientes %}
+      <div class="table-shell">
+        <table class="table align-middle">
+          <thead>
+            <tr>
+              <th scope="col">Paciente</th>
+              <th scope="col">Genero</th>
+              <th scope="col">Telefono</th>
+              <th scope="col">Ciudad</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in pacientes %}
+              <tr
+                class="is-navigable"
+                data-href="{% url 'paciente_detail' i.id %}"
+                tabindex="0"
+                role="link"
+                aria-label="Abrir ficha del paciente {{ i.nombre }} {{ i.apellido }}"
+                onclick="window.location.href='{% url 'paciente_detail' i.id %}'"
+                onkeydown="if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); window.location.href='{% url 'paciente_detail' i.id %}'; }"
+              >
+                <td>
+                  <a href="{% url 'paciente_detail' i.id %}" class="record-link">
+                    <span class="record-avatar">{{ i.nombre|first }}{{ i.apellido|first }}</span>
+                    <span>
+                      <strong>{{ i.nombre }} {{ i.apellido }}</strong>
+                      <small>ID {{ i.id }}</small>
+                    </span>
+                  </a>
+                </td>
+                <td>{{ i.genero_label }}</td>
+                <td>{{ i.telefono|default:"Sin telefono" }}</td>
+                <td>{{ i.ciudad|default:"Sin ciudad" }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="empty-state">
+        <h2>No hay pacientes registrados</h2>
+        <p>Empieza creando la primera ficha para poblar la agenda de la clinica.</p>
+      </div>
+    {% endif %}
+  </section>
 {% endblock %}

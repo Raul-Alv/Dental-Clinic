@@ -1,24 +1,69 @@
 {% extends 'layout.html' %}
+{% load static %}
 
 {% block title %}
-   <title>Dentistas</title>
+  <title>Dentistas | Dental Clinic</title>
+{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/records_list.css' %}">
 {% endblock %}
 
 {% block content %}
-<h1>Dentistas</h1>
-<table class="table">
-   <thead>
-     <tr>
-       <th scope="col">Nombre</th>
-     </tr>
-   </thead>
-   <tbody>
-   {% for i in practicantes %}
-     <tr>
-       <td><a href="{% url 'practicante_detail' i.id %}">{{i.nombre}} {{i.apellido}}</a></td>
-     </tr>
-   {% endfor %}
-   </tbody>
- </table>
-</form>
+  <section class="page-header page-header--split">
+    <div>
+      <span class="page-kicker">Equipo clinico</span>
+      <h1>{{ title }}</h1>
+    </div>
+    <div class="page-header__actions">
+      <span class="soft-badge">{{ practicantes|length }} profesionales</span>
+      <a href="{% url 'practicantes_crear' %}" class="btn btn-primary">Nuevo dentista</a>
+    </div>
+  </section>
+
+  <section class="section-card">
+    {% if practicantes %}
+      <div class="table-shell">
+        <table class="table align-middle">
+          <thead>
+            <tr>
+              <th scope="col">Profesional</th>
+              <th scope="col">Genero</th>
+              <th scope="col">Telefono</th>
+              <th scope="col">Cualificacion</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in practicantes %}
+              <tr
+                class="is-navigable"
+                data-href="{% url 'practicante_detail' i.id %}"
+                tabindex="0"
+                role="link"
+                aria-label="Abrir ficha del dentista {{ i.nombre }} {{ i.apellido }}"
+              >
+                <td>
+                  <a href="{% url 'practicante_detail' i.id %}" class="record-link">
+                    <span class="record-avatar">{{ i.nombre|first }}{{ i.apellido|first }}</span>
+                    <span>
+                      <strong>{{ i.nombre }} {{ i.apellido }}</strong>
+                      <small>ID {{ i.id }}</small>
+                    </span>
+                  </a>
+                </td>
+                <td>{{ i.get_genero_display }}</td>
+                <td>{{ i.telefono|default:"Sin telefono" }}</td>
+                <td>{{ i.cualificacion|default:"Sin especificar" }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="empty-state">
+        <h2>No hay dentistas activos</h2>
+        <p>Agrega al equipo clinico para empezar a asociar procedimientos con profesionales.</p>
+      </div>
+    {% endif %}
+  </section>
 {% endblock %}

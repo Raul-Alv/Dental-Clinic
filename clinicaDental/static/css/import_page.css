@@ -1,0 +1,56 @@
+.import-card input[type="file"][hidden] {
+  display: none;
+}
+
+.import-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 0.8fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.file-drop-zone {
+  display: block;
+  padding: 2.4rem 1.5rem;
+  border: 1.5px dashed rgba(15, 93, 103, 0.24);
+  border-radius: 1.7rem;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(230, 247, 244, 0.76));
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.25s ease, background-color 0.25s ease, transform 0.25s ease;
+}
+
+.file-drop-zone:hover,
+.file-drop-zone.dragover,
+.file-drop-zone.is-filled {
+  border-color: rgba(15, 93, 103, 0.4);
+  background: rgba(130, 216, 207, 0.14);
+  transform: translateY(-2px);
+}
+
+.file-drop-zone__eyebrow {
+  display: inline-flex;
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(15, 93, 103, 0.08);
+  color: var(--color-primary-dark);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.file-drop-zone p {
+  max-width: 22rem;
+  margin: 0.9rem auto 0;
+}
+
+.import-sidebar h2 {
+  margin: 0.35rem 0 1rem;
+}
+
+@media (max-width: 991px) {
+  .import-layout {
+    grid-template-columns: 1fr;
+  }
+}

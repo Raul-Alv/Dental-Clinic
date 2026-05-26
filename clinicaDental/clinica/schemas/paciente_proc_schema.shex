@@ -1,0 +1,102 @@
+PREFIX fhir: <http://hl7.org/fhir/>
+PREFIX xsd:   <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX fhir:  <http://hl7.org/fhir/>
+# Punto de entrada
+start = @<PatientShape>
+
+<PatientShape> {
+  rdf:type             		   [ fhir:Patient ] ;
+  fhir:Patient.active          @<ValueBooleanShape> ;                      # true/false
+  fhir:Patient.name            @<HumanNameShape>+ ;               # al menos uno
+  fhir:Patient.gender          @<GenderShape> ;
+  fhir:Patient.birthDate       @<ValueDateShape> ;
+  fhir:Patient.maritalStatus   @<MaritalStatusShape>;     
+  fhir:Patient.telecom         @<TelecomShape>* ;                 # cero o más
+  fhir:Patient.address         @<AddressShape>* ;                 # cero o más
+}
+
+<TelecomShape> {
+  fhir:ContactPoint.system @<ValueStringShape> ;
+  fhir:ContactPoint.value  @<ValueStringShape> ;
+  fhir:index               xsd:integer      ;
+}
+
+<HumanNameShape> {
+  fhir:HumanName.family  @<ValueStringShape> ;
+  fhir:HumanName.given   @<ValueStringShape>+
+}
+
+<ContactPointShape> {
+  fhir:system @<ContactSystemShape> ;
+  fhir:value  @<ValueStringShape>
+}
+
+<AddressShape> {
+  fhir:Address.line       @<ValueStringShape>+ ;
+  fhir:Address.city       @<ValueStringShape> ;
+  fhir:Address.state      @<ValueStringShape> ;
+  fhir:Address.postalCode @<ValueStringShape> ;
+  fhir:Address.country    @<ValueStringShape>
+}
+
+# Forma que valida Procedimientos
+<ProcedureShape> {
+  a                       [ fhir:Procedure ] ;
+  fhir:Procedure.bodySite		 	@<CodeableConceptShape>+ ;
+  fhir:Procedure.code               @<CodeableConceptShape> ;
+  fhir:Procedure.performedDateTime  @<ValueDateShape> ;
+  fhir:Procedure.performer          @<PerformerShape> ;
+  fhir:Procedure.status             @<ValueStringShape> ;
+  fhir:Procedure.subject            @<ReferenceWrapperShape> ;
+}
+
+<CodeableConceptShape> {
+  fhir:CodeableConcept.coding             @<CodingShape>+ ;
+  fhir:CodeableConcept.text               @<ValueStringShape>* ;
+}
+
+<CodingShape> {
+  fhir:Coding.code               @<ValueStringShape> ;
+  fhir:Coding.system             @<ValueURIShape> ;
+}
+
+<PerformerShape> {
+  fhir:Procedure.performer.actor              @<ReferenceWrapperShape> ;
+}
+
+<ReferenceWrapperShape> {
+  fhir:Reference.reference            @<ReferenceShape>                                    ;
+}
+
+<ReferenceShape> {
+  fhir:value              xsd:string ;
+}
+
+<ValueBooleanShape> {
+  fhir:value xsd:boolean ;
+}
+
+<ValueStringShape> {
+  fhir:value xsd:string ;
+}
+
+<ValueDateShape> {
+  fhir:value xsd:date ;
+}
+
+<ValueURIShape> {
+  fhir:value xsd:anyURI ;
+}
+
+<GenderShape> {
+	fhir:value [ "male" "female" "other" "unknown" ] ;
+}
+
+<MaritalStatusShape> {
+	fhir:value [ "A" "D" "M" "U" "W" "UNK" ]? ;
+}
+
+<ContactSystemShape> {
+	fhir:value [ "phone" "email" "url" "fax" "pager" "other" ] ;
+}

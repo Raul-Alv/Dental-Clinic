@@ -1,21 +1,86 @@
 {% extends 'layout.html' %}
+{% load static %}
 
 {% block title %}
-   <title>Show Page</title>
+  <title>Importar RDF | Dental Clinic</title>
+{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/import_page.css' %}">
 {% endblock %}
 
 {% block content %}
-<h2>{{ view.title|default:"Form" }}</h2>
-<form method="post" enctype="multipart/form-data">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Importar</button>
-</form>
+  <section class="page-header">
+    <span class="page-kicker">Interoperabilidad</span>
+    <h1>{{ title }}</h1>
+  </section>
 
-{% if form.errors %}
-  <div class="alert alert-danger">
-    <strong>Error!</strong> Please correct the errors below.
+  <div class="import-layout">
+    <section class="section-card import-card">
+      {% if form.errors %}
+        <div class="alert alert-danger">Revisa los dos archivos y las validaciones ShEx antes de continuar.</div>
+      {% endif %}
+
+      {% if form.non_field_errors %}
+        <div class="alert alert-danger">
+          <ul class="mb-0">
+            {% for error in form.non_field_errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+
+      <form id="upload-form"
+            method="post"
+            enctype="multipart/form-data"
+            class="styled-form">
+        {% csrf_token %}
+
+        <div class="form-field" data-file-upload>
+          <label for="id_rdf_file" class="form-label">{{ form.rdf_file.label }}</label>
+          <label class="file-drop-zone" for="id_rdf_file" data-file-drop-zone>
+            <span class="file-drop-zone__eyebrow">Zona de carga</span>
+            <p>Arrastra aqui el RDF en Turtle o haz clic para seleccionarlo.</p>
+          </label>
+          {{ form.rdf_file }}
+          {% for error in form.rdf_file.errors %}
+            <div class="text-danger small mt-2">{{ error }}</div>
+          {% endfor %}
+          <p class="form-help">Sube el grafo RDF de datos clinicos en formato HL7 FHIR RDF.</p>
+        </div>
+
+        <ul class="list-group file-list" data-file-list></ul>
+
+        <div class="form-field" data-file-upload>
+          <label for="id_shex_file" class="form-label">{{ form.shex_file.label }}</label>
+          <label class="file-drop-zone" for="id_shex_file" data-file-drop-zone>
+            <span class="file-drop-zone__eyebrow">Zona de carga</span>
+            <p>Arrastra aqui el esquema ShEx o haz clic para seleccionarlo.</p>
+          </label>
+          {{ form.shex_file }}
+          {% for error in form.shex_file.errors %}
+            <div class="text-danger small mt-2">{{ error }}</div>
+          {% endfor %}
+          <p class="form-help">Este segundo fichero se usara para contrastar el RDF antes de importar.</p>
+        </div>
+
+        <ul class="list-group file-list" data-file-list></ul>
+
+        <div class="action-group">
+          <button type="submit" class="btn btn-primary">Validar e importar archivos</button>
+        </div>
+      </form>
+    </section>
+
+    <aside class="section-card import-sidebar">
+      <span class="page-kicker">Antes de empezar</span>
+      <h2>Recomendaciones</h2>
+      <ul class="clean-list">
+        <li>La importacion necesita dos archivos: el RDF y su esquema ShEx asociado.</li>
+        <li>El sistema valida ambos contra el perfil HL7 FHIR esperado antes de guardar nada.</li>
+        <li>Si el historial solo trae procedimientos, el paciente referenciado debe existir ya o venir incluido en el RDF.</li>
+      </ul>
+    </aside>
   </div>
-{% endif %}
-
 {% endblock %}

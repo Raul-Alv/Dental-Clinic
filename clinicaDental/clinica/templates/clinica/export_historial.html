@@ -1,62 +1,112 @@
 {% extends "layout.html" %}
+{% load static %}
+
+{% block title %}
+  <title>Exportar Historial | Dental Clinic</title>
+{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/export_page.css' %}">
+{% endblock %}
+
 {% block content %}
-  <h2>Exportar Procedimientos de un Paciente</h2>
+  <section class="page-header">
+    <span class="page-kicker">Historial clinico</span>
+    <h1>{{ title }}</h1>
+  </section>
 
-  <form method="get" action="{% url 'export_historial' %}">
-    <label for="paciente">Selecciona un paciente:</label>
-    <select name="paciente" id="paciente" class="form-select" onchange="this.form.submit()">
-      <option value="">-- Elegir --</option>
-      {% for p in pacientes %}
-        <option value="{{ p.id }}" {% if p == selected_paciente %}selected{% endif %}>
-          {{ p.nombre }} {{ p.apellido }}
-        </option>
-      {% endfor %}
-    </select>
-  </form>
-
-  {% if selected_paciente %}
-    <hr>
-    <h4>Procedimientos de {{ selected_paciente.nombre }} {{ selected_paciente.apellido }}</h4>
-
-    {% if procedimientos %}
-      <table class="table table-sm">
-        <thead>
-          <tr>
-            <th scope="col">Código</th>
-            <th scope="col">Descripción</th>
-            <th scope="col">Fecha</th>
-            <th scope="col">Diente</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for proc in procedimientos %}
-            <tr>
-              <td>{{ proc.codigo }}</td>
-              <td>{{ proc.descripcion }}</td>
-              <td>{{ proc.realizado_el }}</td>
-              <td>{% if proc.diente %}
-                    {{ proc.diente.codigo }}
-                  {% else %}
-                    —
-                  {% endif %}</td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      <form method="get" action="{% url 'export_historial' selected_paciente.id %}">
-        <div class="form-check mb-2">
-          <input class="form-check-input" type="checkbox" name="exportar_paciente" id="exportarPaciente">
-          <label class="form-check-label" for="exportarPaciente">
-            Exportar paciente
-          </label>
+  <div class="export-layout">
+    <section class="section-card export-panel">
+      <form method="get" action="{% url 'export_historial' %}" class="styled-form">
+        <div class="form-field">
+          <label for="paciente" class="form-label">Selecciona un paciente</label>
+          <select name="paciente" id="paciente" class="form-select" onchange="this.form.submit()">
+            <option value="">Elige un paciente</option>
+            {% for p in pacientes %}
+              <option value="{{ p.id }}" {% if p == selected_paciente %}selected{% endif %}>
+                {{ p.nombre }} {{ p.apellido }}
+              </option>
+            {% endfor %}
+          </select>
+          <p class="form-help">Al cambiar la seleccion se actualiza la previsualizacion del historial.</p>
         </div>
-        <button type="submit" class="btn btn-success">
-          📤 Exportar RDF
-        </button>
       </form>
+    </section>
 
+    {% if selected_paciente %}
+      <section class="section-card export-results">
+        <div class="section-card__header">
+          <div>
+            <span class="page-kicker">Paciente seleccionado</span>
+            <h2>{{ selected_paciente.nombre }} {{ selected_paciente.apellido }}</h2>
+          </div>
+          <span class="soft-badge">{{ procedimientos|length }} procedimientos</span>
+        </div>
+
+        <div class="export-patient-meta">
+          <div>
+            <span>Telefono</span>
+            <strong>{{ selected_paciente.telefono|default:"Sin telefono" }}</strong>
+          </div>
+          <div>
+            <span>Ciudad</span>
+            <strong>{{ selected_paciente.ciudad|default:"No indicada" }}</strong>
+          </div>
+        </div>
+
+        {% if procedimientos %}
+          <div class="table-shell">
+            <table class="table table-sm align-middle">
+              <thead>
+                <tr>
+                  <th scope="col">Codigo</th>
+                  <th scope="col">Descripcion</th>
+                  <th scope="col">Fecha</th>
+                  <th scope="col">Diente</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for proc in procedimientos %}
+                  <tr>
+                    <td>{{ proc.codigo }}</td>
+                    <td>{{ proc.descripcion }}</td>
+                    <td>{{ proc.realizado_el|date:"d/m/Y" }}</td>
+                    <td>
+                      {% if proc.diente %}
+                        {{ proc.diente.codigo }}
+                      {% else %}
+                        No especificado
+                      {% endif %}
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+
+          <form method="get" action="{% url 'export_historial' selected_paciente.id %}" class="export-actions">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="exportar_paciente" id="exportarPaciente">
+              <label class="form-check-label" for="exportarPaciente">
+                Incluir tambien la ficha del paciente en la exportacion
+              </label>
+            </div>
+            <button type="submit" class="btn btn-primary">Exportar historial RDF</button>
+          </form>
+        {% else %}
+          <div class="empty-state">
+            <h2>Este paciente no tiene procedimientos</h2>
+            <p>Puedes seguir exportando la ficha o registrar primero actividad clinica.</p>
+          </div>
+        {% endif %}
+      </section>
     {% else %}
-      <p>No hay procedimientos registrados.</p>
+      <section class="section-card export-empty">
+        <div class="empty-state">
+          <h2>Elige un paciente para empezar</h2>
+          <p>Veras aqui el historial listo para revisar antes de exportarlo a RDF.</p>
+        </div>
+      </section>
     {% endif %}
-  {% endif %}
+  </div>
 {% endblock %}

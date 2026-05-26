@@ -1,0 +1,105 @@
+{% extends 'layout.html' %}
+{% load static split_filters %}
+
+{% block title %}
+  <title>Panel Clinico | Dental Clinic</title>
+{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+  <section class="page-header">
+    <span class="page-kicker">Panel operativo</span>
+    <h1>Resumen rapido de la actividad clinica.</h1>
+  </section>
+
+  <section class="home-hero">
+    <div class="home-hero__content">
+      <span class="page-kicker">Vista general</span>
+      <h1>Todo listo para revisar pacientes, dentistas y procedimientos.</h1>
+      <p>
+        Este panel concentra la informacion mas consultada para que puedas entrar en contexto
+        nada mas abrir la aplicacion.
+      </p>
+      <div class="action-group">
+        <a href="{% url 'pacientes_list' %}" class="btn btn-primary">Ver pacientes</a>
+        <a href="{% url 'pacientes_crear' %}" class="btn btn-outline-secondary">Nuevo paciente</a>
+      </div>
+    </div>
+
+    <div class="home-hero__panel">
+      <div class="home-hero__metric">
+        <span class="home-hero__metric-label">Pacientes activos</span>
+        <strong>{{ pacientes_count }}</strong>
+      </div>
+      <div class="home-hero__metric">
+        <span class="home-hero__metric-label">Dentistas disponibles</span>
+        <strong>{{ practicantes_count }}</strong>
+      </div>
+      <div class="home-hero__metric">
+        <span class="home-hero__metric-label">Procedimientos registrados</span>
+        <strong>{{ procedimientos_count }}</strong>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-grid">
+    <a class="home-card" href="{% url 'pacientes_list' %}">
+      <span class="home-card__icon">01</span>
+      <h2>Pacientes</h2>
+      <p>Consulta fichas, telefono, direccion y acceso rapido a cada historial.</p>
+    </a>
+
+    <a class="home-card" href="{% url 'pacientes_list' %}">
+      <span class="home-card__icon">02</span>
+      <h2>Historial clinico</h2>
+      <p>Entra en un paciente para revisar solo sus procedimientos y registrar nuevos desde ahi.</p>
+    </a>
+
+    <a class="home-card" href="{% url 'practicantes_list' %}">
+      <span class="home-card__icon">03</span>
+      <h2>Equipo clinico</h2>
+      <p>Mantiene el directorio profesional ordenado y visualmente consistente.</p>
+    </a>
+
+    <a class="home-card" href="{% url 'import_data' %}">
+      <span class="home-card__icon">04</span>
+      <h2>Importacion RDF</h2>
+      <p>Sube archivos con una zona clara de arrastre y acciones directas.</p>
+    </a>
+  </section>
+
+  <section class="section-card home-recent">
+    <div class="section-card__header">
+      <div>
+        <span class="page-kicker">Actividad reciente</span>
+        <h2>Ultimos procedimientos</h2>
+      </div>
+      <a href="{% url 'pacientes_list' %}" class="text-link">Ir a pacientes</a>
+    </div>
+
+    {% if recent_procedimientos %}
+      <div class="home-feed">
+        {% for procedimiento in recent_procedimientos %}
+          <a href="{% url 'procedimiento_detail' procedimiento.id %}" class="home-feed__item">
+            <div>
+              <span class="status-pill status-pill--{{ procedimiento.status }}">
+                {{ procedimiento.get_status_display }}
+              </span>
+              <h3>{{ procedimiento.codigo.text|split:";"|first }}</h3>
+              <p>{{ procedimiento.paciente }} con {{ procedimiento.practicante }}</p>
+            </div>
+            <strong>{{ procedimiento.realizado_el|date:"d/m/Y" }}</strong>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty-state">
+        <h3>No hay procedimientos recientes</h3>
+        <p>Cuando registres actividad clinica apareceran aqui los accesos rapidos.</p>
+      </div>
+    {% endif %}
+  </section>
+{% endblock %}

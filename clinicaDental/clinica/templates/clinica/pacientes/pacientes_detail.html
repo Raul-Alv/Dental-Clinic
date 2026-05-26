@@ -1,66 +1,164 @@
 {% extends 'layout.html' %}
+{% load static split_filters %}
 
 {% block title %}
-<title>Show Page</title>
+  <title>Detalle del Paciente | Dental Clinic</title>
+{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/detail_page.css' %}">
 {% endblock %}
 
 {% block content %}
-<h1>{{ paciente.nombre }} {{ paciente.apellido  }}</h1>
+  <section class="page-header page-header--split">
+    <div>
+      <span class="page-kicker">Paciente</span>
+      <h1>{{ paciente.nombre }} {{ paciente.apellido }}</h1>
+    </div>
+    <div class="action-group">
+      <a href="{% url 'procedimiento_crear' %}?paciente={{ paciente.id }}" class="btn btn-primary">Añadir procedimiento</a>
+      <a href="{% url 'paciente_update' paciente.id %}" class="btn btn-primary">Editar ficha</a>
+      <a href="{% url 'exportar_paciente' paciente.id %}" class="btn btn-outline-secondary">Exportar RDF</a>
+      <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+        data-bs-target="#confirmDeleteModal{{ paciente.id }}">
+        Desactivar
+      </button>
+    </div>
+  </section>
 
-<p><strong>Genero:</strong> {{ paciente.get_genero_display }}</p>
-<p><strong>Telefono:</strong> {{ paciente.telefono }}</p>
-<p><strong>Fecha de nacimiento:</strong> {{ paciente.fecha_nacimiento }}</p>
-<address>
-  <p><strong>Direccion:</strong> {{ paciente.calle }}</p>
-  <p><strong>Ciudad:</strong> {{ paciente.ciudad }}</p>
-  <p><strong>Provincia:</strong> {{ paciente.provincia }}</p>
-  <p><strong>Código Postal:</strong> {{ paciente.codigo_postal }}</p>
-  <p><strong>País:</strong> {{ paciente.pais }}</p>
-</address>
-<p><strong>Estado civil:</strong> {{ paciente.get_estado_civil_display }}</p>
+  <div class="detail-layout">
+    <section class="section-card detail-summary">
+      <span class="page-kicker">Resumen</span>
+      <h2>Perfil del paciente</h2>
+      <div class="detail-summary__grid">
+        <div>
+          <span>Genero</span>
+          <strong>{{ paciente.genero_label }}</strong>
+        </div>
+        <div>
+          <span>Telefono</span>
+          <strong>{{ paciente.telefono|default:"Sin telefono" }}</strong>
+        </div>
+        <div>
+          <span>Fecha de nacimiento</span>
+          <strong>{{ paciente.fecha_nacimiento|date:"d/m/Y" }}</strong>
+        </div>
+        <div>
+          <span>Estado civil</span>
+          <strong>{{ paciente.estado_civil_label }}</strong>
+        </div>
+      </div>
+    </section>
 
-<button type="button"
-        class="btn btn-primary"
-        onclick=window.location.href='{% url "paciente_update" paciente.id %}'>
-  Editar
-</button>
+    <section class="section-card">
+      <h2>Direccion</h2>
+      <dl class="detail-grid">
+        <div>
+          <dt>Calle</dt>
+          <dd>{{ paciente.calle|default:"Sin direccion" }}</dd>
+        </div>
+        <div>
+          <dt>Ciudad</dt>
+          <dd>{{ paciente.ciudad|default:"No indicada" }}</dd>
+        </div>
+        <div>
+          <dt>Provincia</dt>
+          <dd>{{ paciente.provincia|default:"No indicada" }}</dd>
+        </div>
+        <div>
+          <dt>Codigo postal</dt>
+          <dd>{{ paciente.codigo_postal|default:"No indicado" }}</dd>
+        </div>
+        <div>
+          <dt>Pais</dt>
+          <dd>{{ paciente.pais|default:"No indicado" }}</dd>
+        </div>
+      </dl>
+    </section>
 
-<button type="button"
-        class="btn btn-secondary"
-        onclick=window.location.href='{% url "exportar_paciente" paciente.id %}'>
-  Exportar
-</button>
-
-<button type="button" class="btn btn-danger" data-bs-toggle="modal"
-  data-bs-target="#confirmDeleteModal{{ paciente.id }}">
-  Eliminar
-</button>
-
-<div class="modal fade" id="confirmDeleteModal{{ paciente.id }}" tabindex="-1"
-  aria-labelledby="confirmDeleteModalLabel{{ paciente.id }}" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-
-      <div class="modal-header">
-        <h5 class="modal-title" id="confirmDeleteModalLabel{{ paciente.id }}">Confirmar eliminación</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <section class="section-card">
+      <div class="section-card__header">
+        <div>
+          <span class="page-kicker">Historial</span>
+          <h2>Procedimientos del paciente</h2>
+        </div>
+        <span class="soft-badge">{{ procedimientos|length }} registros</span>
       </div>
 
-      <div class="modal-body">
-        ¿Está seguro que desea eliminar a"<strong>{{ paciente.nombre }} {{ paciente.apellido  }}</strong>"?
-      </div>
+      {% if procedimientos %}
+        <div class="table-shell">
+          <table class="table align-middle">
+            <thead>
+              <tr>
+                <th scope="col">Procedimiento</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Dentista</th>
+                <th scope="col">Diente</th>
+                <th scope="col">Fecha</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for proc in procedimientos %}
+                <tr
+                  class="is-navigable"
+                  data-href="{% url 'procedimiento_detail' proc.id %}"
+                  tabindex="0"
+                  role="link"
+                  aria-label="Abrir procedimiento {{ proc.codigo.text|split:';'|first }}"
+                  onclick="window.location.href='{% url 'procedimiento_detail' proc.id %}'"
+                  onkeydown="if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); window.location.href='{% url 'procedimiento_detail' proc.id %}'; }"
+                >
+                  <td>
+                    <a href="{% url 'procedimiento_detail' proc.id %}" class="text-link">
+                      {{ proc.codigo.text|split:";"|first }}
+                    </a>
+                    <span class="d-block text-body-secondary small">Codigo {{ proc.codigo.codigo }}</span>
+                  </td>
+                  <td>
+                    <span class="status-pill status-pill--{{ proc.status }}">
+                      {{ proc.get_status_display }}
+                    </span>
+                  </td>
+                  <td>{{ proc.practicante }}</td>
+                  <td>{{ proc.diente|default:"No especificado" }}</td>
+                  <td>{{ proc.realizado_el|date:"d/m/Y" }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <div class="empty-state">
+          <h2>Este paciente todavia no tiene procedimientos</h2>
+          <p>Cuando registres el primero aparecera aqui junto al resto de su historial clinico.</p>
+        </div>
+      {% endif %}
+    </section>
 
-      <div class="modal-footer">
-        <form method="post" action="{% url 'paciente_delete' paciente.id %}">
-          {% csrf_token %}
-          <button type="submit" class="btn btn-danger">Eliminar</button>
-        </form>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-      </div>
+    <a href="{% url 'pacientes_list' %}" class="text-link">Volver al listado de pacientes</a>
+  </div>
 
+  <div class="modal fade" id="confirmDeleteModal{{ paciente.id }}" tabindex="-1"
+    aria-labelledby="confirmDeleteModalLabel{{ paciente.id }}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmDeleteModalLabel{{ paciente.id }}">Confirmar desactivacion</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          Estas seguro de desactivar a <strong>{{ paciente.nombre }} {{ paciente.apellido }}</strong>?
+        </div>
+
+        <div class="modal-footer">
+          <form method="post" action="{% url 'paciente_delete' paciente.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Desactivar</button>
+          </form>
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
     </div>
   </div>
-</div>
-
-<a href="{% url 'pacientes_list' %}">← Atrás</a>
 {% endblock %}

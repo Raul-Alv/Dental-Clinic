@@ -1,22 +1,54 @@
 {% extends 'layout.html' %}
+{% load static %}
 
 {% block title %}
-   <title>Editar dentista</title>
+  <title>Editar Dentista | Dental Clinic</title>
+{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/form_page.css' %}">
 {% endblock %}
 
 {% block content %}
-<h2>{{ view.title|default:"Form" }}</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Save</button>
-  <button type="button" onclick=window.location.href="{% url 'practicante_detail' i.id %}">Cancel</button>
-</form>
+  <section class="page-header page-header--split">
+    <div>
+      <span class="page-kicker">Edicion</span>
+      <h1>{{ title }}</h1>
+    </div>
+    <a href="{% url 'practicante_detail' practicante.id %}" class="btn btn-outline-secondary">Cancelar</a>
+  </section>
 
-{% if form.errors %}
-  <div class="alert alert-danger">
-    <strong>Error!</strong> Please correct the errors below.
-  </div>
-{% endif %}
+  <section class="section-card form-card">
+    {% if form.errors %}
+      <div class="alert alert-danger">Revisa los campos marcados antes de guardar.</div>
+    {% endif %}
 
+    <form method="post" class="styled-form" novalidate>
+      {% csrf_token %}
+      <div class="form-grid">
+        {% for field in form %}
+          <div class="form-field{% if field.errors %} form-field--error{% endif %}">
+            <label for="{{ field.id_for_label }}" class="form-label{% if field.field.required %} form-label--required{% endif %}">
+              {{ field.label }}
+              {% if field.field.required %}
+                <span class="required-indicator" aria-hidden="true">*</span>
+              {% endif %}
+            </label>
+            {{ field }}
+            {% if field.help_text %}
+              <p class="form-help">{{ field.help_text }}</p>
+            {% endif %}
+            {% for error in field.errors %}
+              <p class="form-error">{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endfor %}
+      </div>
+
+      <div class="action-group">
+        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+        <a href="{% url 'practicante_detail' practicante.id %}" class="btn btn-outline-secondary">Volver al perfil</a>
+      </div>
+    </form>
+  </section>
 {% endblock %}
