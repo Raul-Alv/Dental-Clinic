@@ -121,6 +121,24 @@ class PacienteFormTests(TestCase):
 
 
 class PacienteNormalizationTests(TestCase):
+    def test_patient_masks_id_except_last_two_digits(self):
+        paciente = Paciente(id=123456789012)
+
+        self.assertEqual(paciente.id_enmascarado, "**********12")
+
+    def test_patient_generates_social_security_number_as_id(self):
+        paciente = Paciente.objects.create(
+            nombre="Ana",
+            apellido="Lopez",
+            genero="F",
+            telefono="123456789",
+            fecha_nacimiento=date(1990, 1, 1),
+            estado_civil="S",
+        )
+
+        self.assertEqual(len(str(paciente.id)), 12)
+        self.assertTrue(Paciente.es_numero_seguridad_social_valido(paciente.id))
+
     def test_patient_save_normalizes_rdf_codes(self):
         paciente = Paciente.objects.create(
             nombre="Ana",
@@ -353,6 +371,8 @@ class PatientProcedureFlowTests(TestCase):
         response = self.client.get(reverse("pacientes_list"))
 
         self.assertEqual(response.status_code, 200)
+        self.assertContains(response, f"ID {self.paciente.id_enmascarado}")
+        self.assertNotContains(response, f"ID {self.paciente.id}")
         self.assertContains(
             response,
             f'data-href="{reverse("paciente_detail", args=[self.paciente.id])}"',
@@ -632,6 +652,7 @@ class PacienteCrudViewTests(TestCase):
 
         paciente = Paciente.objects.get(nombre="Lucia", apellido="Martin")
         self.assertTrue(paciente.activo)
+        self.assertTrue(Paciente.es_numero_seguridad_social_valido(paciente.id))
         self.assertEqual(paciente.genero, "female")
         self.assertEqual(paciente.estado_civil, "U")
 

@@ -46,7 +46,9 @@
 
     <a href="{% url 'practicantes_list' %}" class="text-link">Volver al listado de dentistas</a>
   </div>
+{% endblock %}
 
+{% block modals %}
   <div class="modal fade" id="confirmDeleteModal{{ practicante.id }}" tabindex="-1"
     aria-labelledby="confirmDeleteModalLabel{{ practicante.id }}" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">

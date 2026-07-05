@@ -63,7 +63,9 @@
 
     <a href="{% url 'paciente_detail' paciente.id %}" class="text-link">Volver a la ficha del paciente</a>
   </div>
+{% endblock %}
 
+{% block modals %}
   <div class="modal fade" id="confirmDeleteModal{{ procedimiento.id }}" tabindex="-1"
     aria-labelledby="confirmDeleteModalLabel{{ procedimiento.id }}" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">

@@ -137,7 +137,9 @@
 
     <a href="{% url 'pacientes_list' %}" class="text-link">Volver al listado de pacientes</a>
   </div>
+{% endblock %}
 
+{% block modals %}
   <div class="modal fade" id="confirmDeleteModal{{ paciente.id }}" tabindex="-1"
     aria-labelledby="confirmDeleteModalLabel{{ paciente.id }}" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">

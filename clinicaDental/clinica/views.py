@@ -156,7 +156,6 @@ def crearPaciente(request):
         form = PacienteForm(request.POST)
         if form.is_valid():
             paciente = form.save(commit=False)
-            paciente.id = Paciente.objects.count() + 1
             paciente.activo = True
             paciente.save()
             return redirect("pacientes_list")
