@@ -44,6 +44,7 @@ _PROCEDURE_SHAPE_DEF = """<ProcedureShape> {
   fhir:Procedure.subject @<ReferenceWrapperShape> ;
   fhir:Procedure.performer @<PerformerShape> ;
   fhir:Procedure.bodySite @<ProcedureBodySiteShape>* ;
+  fhir:Procedure.note @<AnnotationShape>* ;
 }"""
 
 _SHARED_SHAPES = """<HumanNameShape> {
@@ -77,6 +78,10 @@ _SHARED_SHAPES = """<HumanNameShape> {
 <ProcedureBodySiteShape> {
   fhir:CodeableConcept.coding @<BodySiteCodingShape>+ ;
   fhir:CodeableConcept.text @<ValueStringShape>* ;
+}
+
+<AnnotationShape> {
+  fhir:Annotation.text @<ValueStringShape> ;
 }
 
 <ProcedureCodingShape> {

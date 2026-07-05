@@ -195,15 +195,10 @@ def export_procedimiento_rdf(request, procedimiento_id):
         "diente",
     ).get(id=procedimiento_id)
 
-    graph = _graph_with_resources(
-        pacientes=[procedimiento.paciente],
-        practicantes=[procedimiento.practicante],
-        procedimientos=[procedimiento],
-    )
+    graph = _graph_with_resources(procedimientos=[procedimiento])
     schema = build_fhir_schema(
-        include_patients=True,
-        include_practitioners=True,
         include_procedures=True,
+        start_shape=PROCEDURE_SHAPE,
     )
     return _export_bundle(graph, f"procedimiento-{procedimiento.id}", schema)
 
@@ -365,6 +360,11 @@ def procedimiento_rdf_graph(graph, procedimiento):
         procedimiento.realizado_el,
         datatype=XSD.date,
     )
+
+    if procedimiento.descripcion:
+        note = BNode()
+        graph.add((procedure_uri, FHIR["Procedure.note"], note))
+        _add_wrapped_literal(graph, note, FHIR["Annotation.text"], procedimiento.descripcion)
 
     subject = BNode()
     graph.add((procedure_uri, FHIR["Procedure.subject"], subject))
@@ -703,6 +703,11 @@ def _procedure_tooth_code(graph, procedure_subject):
 
 
 def _procedure_description(graph, procedure_subject, fallback=""):
+    for note in graph.objects(procedure_subject, FHIR["Procedure.note"]):
+        note_text = _wrapped_value(graph, note, FHIR["Annotation.text"])
+        if note_text:
+            return note_text
+
     body_site = graph.value(procedure_subject, FHIR["Procedure.bodySite"])
     if body_site is not None:
         description = _wrapped_value(graph, body_site, FHIR["CodeableConcept.text"])

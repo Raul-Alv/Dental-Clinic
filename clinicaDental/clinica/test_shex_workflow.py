@@ -5,8 +5,11 @@ from datetime import date
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
 from django.urls import reverse
+from rdflib import Graph
+from rdflib.namespace import RDF
 
 from .models import Diente, Paciente, Practicante, Procedimiento, ProcedimientoCatalogo
+from .shex_fhir import FHIR
 
 
 class ShexImportExportTests(TestCase):
@@ -79,13 +82,34 @@ class ShexImportExportTests(TestCase):
         self.assertIn("<PatientShape>", schema_text)
         self.assertNotIn("<ProcedureShape>", schema_text)
 
-    def test_exported_procedure_bundle_can_be_imported_back(self):
+    def test_procedure_export_includes_only_procedure_resource_and_schema(self):
+        response = self.client.get(reverse("export_procedure_rdf", args=[self.procedimiento.id]))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response["Content-Type"], "application/zip")
+
+        archive = zipfile.ZipFile(io.BytesIO(response.content))
+        ttl_name = next(name for name in archive.namelist() if name.endswith(".ttl"))
+        shex_name = next(name for name in archive.namelist() if name.endswith(".shex"))
+        ttl_text = archive.read(ttl_name).decode("utf-8")
+        schema_text = archive.read(shex_name).decode("utf-8")
+
+        graph = Graph()
+        graph.parse(data=ttl_text, format="turtle")
+
+        self.assertTrue(list(graph.subjects(RDF.type, FHIR.Procedure)))
+        self.assertFalse(list(graph.subjects(RDF.type, FHIR.Patient)))
+        self.assertFalse(list(graph.subjects(RDF.type, FHIR.Practitioner)))
+        self.assertIn("start = @<ProcedureShape>", schema_text)
+        self.assertIn("<ProcedureShape>", schema_text)
+        self.assertNotIn("<PatientShape>", schema_text)
+        self.assertNotIn("<PractitionerShape>", schema_text)
+
+    def test_exported_procedure_bundle_can_be_imported_for_existing_profile(self):
         response = self.client.get(reverse("export_procedure_rdf", args=[self.procedimiento.id]))
         ttl_bytes, shex_bytes = self._extract_bundle_files(response.content)
 
         Procedimiento.objects.all().delete()
-        Paciente.objects.all().delete()
-        Practicante.objects.all().delete()
         ProcedimientoCatalogo.objects.all().delete()
 
         import_response = self.client.post(
@@ -106,6 +130,7 @@ class ShexImportExportTests(TestCase):
         self.assertEqual(procedimiento.codigo.codigo, "ABC123")
         self.assertEqual(procedimiento.paciente.nombre, "Ana")
         self.assertEqual(procedimiento.practicante.nombre, "Marta")
+        self.assertEqual(procedimiento.descripcion, "Revision y limpieza")
 
     def test_import_rejects_schema_that_is_not_hl7_fhir_compatible(self):
         response = self.client.get(reverse("exportar_paciente", args=[self.paciente.id]))
