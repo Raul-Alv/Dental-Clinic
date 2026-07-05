@@ -175,7 +175,7 @@ class PacienteForm(forms.ModelForm):
             "calle": forms.TextInput(attrs={"class": "form-control", "placeholder": "Ej. Calle Uria 12"}),
             "ciudad": forms.TextInput(attrs={"class": "form-control", "placeholder": "Ej. Oviedo"}),
             "provincia": forms.TextInput(attrs={"class": "form-control", "placeholder": "Ej. Asturias"}),
-            "pais": forms.TextInput(attrs={"class": "form-control", "placeholder": "Ej. Espana"}),
+            "pais": forms.TextInput(attrs={"class": "form-control", "placeholder": "Ej. España"}),
             "codigo_postal": forms.TextInput(attrs={"class": "form-control", "placeholder": "Ej. 33001"}),
             "estado_civil": forms.Select(attrs={"class": "form-control", "placeholder": "Estado Civil"}),
         }
@@ -241,7 +241,7 @@ class PracticanteForm(forms.ModelForm):
             "genero": forms.Select(attrs={"class": "form-control", "placeholder": "Género"}),
             "telefono": forms.TextInput(attrs={"class": "form-control", "placeholder": "Ej. 123456789"}),
             "cualificacion": forms.TextInput(
-                attrs={"class": "form-control", "placeholder": "Ej. Licenciado en Odontologia"}
+                attrs={"class": "form-control", "placeholder": "Ej. Licenciado en Odontología"}
             ),
         }
 
@@ -275,9 +275,9 @@ class RDFUploadForm(forms.Form):
         shex_file = cleaned_data.get("shex_file")
 
         if rdf_file and not rdf_file.name.lower().endswith((".ttl", ".rdf")):
-            self.add_error("rdf_file", "El archivo RDF debe tener extension .ttl o .rdf.")
+            self.add_error("rdf_file", "El archivo RDF debe tener extensión .ttl o .rdf.")
 
         if shex_file and not shex_file.name.lower().endswith((".shex", ".txt")):
-            self.add_error("shex_file", "El archivo ShEx debe tener extension .shex o .txt.")
+            self.add_error("shex_file", "El archivo ShEx debe tener extensión .shex o .txt.")
 
         return cleaned_data
