@@ -1,7 +1,13 @@
-from django.db import models
 import re
+import random
+
+from django.db import models
 
 class Paciente(models.Model):
+    SOCIAL_SECURITY_PROVINCE_CODES = tuple(range(10, 53))
+    SOCIAL_SECURITY_SEQUENCE_MIN = 10_000_000
+    SOCIAL_SECURITY_SEQUENCE_MAX = 99_999_999
+
     GENERO_CHOICES = [
         ("male", "Masculino"),
         ("female", "Femenino"),
@@ -60,7 +66,7 @@ class Paciente(models.Model):
         "desconocido": "UNK",
     }
 
-    id = models.AutoField(primary_key=True) #ID autoincremental
+    id = models.BigIntegerField(primary_key=True, editable=False) # Numero de la Seguridad Social
     activo = models.BooleanField(default=True)
     nombre = models.CharField(max_length=100)
     apellido = models.CharField(max_length=100)
@@ -85,6 +91,51 @@ class Paciente(models.Model):
         raw_value = str(value or "").strip().lower()
         return cls.ESTADO_CIVIL_NORMALIZATION.get(raw_value, "UNK")
 
+    @staticmethod
+    def calcular_control_seguridad_social(codigo_provincia, numero_base):
+        if numero_base < 10_000_000:
+            identificador_base = numero_base + (codigo_provincia * 10_000_000)
+        else:
+            identificador_base = int(f"{codigo_provincia:02d}{numero_base:08d}")
+        return identificador_base % 97
+
+    @classmethod
+    def construir_numero_seguridad_social(cls, codigo_provincia, numero_base):
+        control = cls.calcular_control_seguridad_social(codigo_provincia, numero_base)
+        return int(f"{codigo_provincia:02d}{numero_base:08d}{control:02d}")
+
+    @classmethod
+    def es_numero_seguridad_social_valido(cls, value):
+        raw_value = str(value or "").strip()
+        if len(raw_value) != 12 or not raw_value.isdigit():
+            return False
+
+        codigo_provincia = int(raw_value[:2])
+        numero_base = int(raw_value[2:10])
+        control = int(raw_value[10:])
+
+        if codigo_provincia not in range(1, 53):
+            return False
+
+        return cls.calcular_control_seguridad_social(codigo_provincia, numero_base) == control
+
+    @classmethod
+    def generar_numero_seguridad_social(cls, max_attempts=100):
+        rng = random.SystemRandom()
+
+        for _ in range(max_attempts):
+            codigo_provincia = rng.choice(cls.SOCIAL_SECURITY_PROVINCE_CODES)
+            numero_base = rng.randint(cls.SOCIAL_SECURITY_SEQUENCE_MIN, cls.SOCIAL_SECURITY_SEQUENCE_MAX)
+            numero_seguridad_social = cls.construir_numero_seguridad_social(
+                codigo_provincia,
+                numero_base,
+            )
+
+            if not cls.objects.filter(pk=numero_seguridad_social).exists():
+                return numero_seguridad_social
+
+        raise RuntimeError("No se pudo generar un numero de la Seguridad Social unico.")
+
     @property
     def genero_label(self):
         genero_normalizado = self.normalizar_genero(self.genero)
@@ -95,7 +146,14 @@ class Paciente(models.Model):
         estado_civil_normalizado = self.normalizar_estado_civil(self.estado_civil)
         return dict(self.ESTADO_CIVIL_CHOICES).get(estado_civil_normalizado, "Desconocido")
 
+    @property
+    def id_enmascarado(self):
+        raw_id = str(self.id or "")
+        return f"{'*' * max(len(raw_id) - 2, 0)}{raw_id[-2:]}"
+
     def save(self, *args, **kwargs):
+        if self.id is None:
+            self.id = self.generar_numero_seguridad_social()
         self.genero = self.normalizar_genero(self.genero)
         self.estado_civil = self.normalizar_estado_civil(self.estado_civil)
         super().save(*args, **kwargs)
