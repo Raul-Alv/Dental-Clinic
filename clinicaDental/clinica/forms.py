@@ -44,19 +44,21 @@ class ProcedimientoForm(forms.ModelForm):
         "status",
         "paciente",
         "practicante",
+        "realizado_el",
+    )
+    OPTIONAL_FIELDS = (
         "diente",
         "descripcion",
-        "realizado_el",
     )
 
     codigo = CatalogoModelChoiceField(
         queryset=ProcedimientoCatalogo.objects.all(),
         widget=CatalogoSelect(attrs={"class": "form-control"}),
-        label="Procedimiento",
+        label="Intervención",
     )
     codigo_text = forms.CharField(
         required=False,
-        label="Codigo del Procedimiento",
+        label="Codigo de la intervención",
         widget=forms.TextInput(attrs={"class": "form-control", "readonly": "readonly"}),
     )
 
@@ -76,7 +78,7 @@ class ProcedimientoForm(forms.ModelForm):
             "status": "Estado",
             "paciente": "Paciente",
             "practicante": "Practicante",
-            "diente": "Diente",
+            "diente": "Pieza dental",
             "descripcion": "Descripción",
             "realizado_el": "Fecha de Realización",
         }
@@ -106,6 +108,11 @@ class ProcedimientoForm(forms.ModelForm):
             field.error_messages["required"] = "Es obligatorio."
             field.widget.attrs["aria-required"] = "true"
 
+        for field_name in self.OPTIONAL_FIELDS:
+            field = self.fields[field_name]
+            field.required = False
+            field.widget.attrs.pop("aria-required", None)
+
         self.fields["paciente"].queryset = Paciente.objects.filter(activo=True)
         self.fields["practicante"].queryset = Practicante.objects.filter(activo=True)
 
@@ -114,13 +121,13 @@ class ProcedimientoForm(forms.ModelForm):
             self.fields["paciente"].initial = paciente_fijado
             self.fields["paciente"].empty_label = None
 
-        is_new_instance = not (self.instance and self.instance.pk)
+        is_new_instance = not self.instance or self.instance._state.adding
         if not self.is_bound and is_new_instance:
             self.initial.setdefault("status", StatusProcedimiento.DESCONOCIDO)
             self.initial.setdefault("realizado_el", timezone.localdate())
 
         initial_codigo = None
-        if self.instance and self.instance.pk:
+        if self.instance and not self.instance._state.adding:
             initial_codigo = self.instance.codigo.codigo
         else:
             selected_codigo = self.data.get("codigo") or self.initial.get("codigo")

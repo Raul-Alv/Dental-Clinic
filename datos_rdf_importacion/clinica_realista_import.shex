@@ -1,0 +1,129 @@
+PREFIX fhir: <http://hl7.org/fhir/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+start = @<PatientShape>
+
+<PatientShape> {
+  rdf:type [ fhir:Patient ] ;
+  fhir:Patient.active @<ValueBooleanShape> ;
+  fhir:Patient.name @<HumanNameShape>+ ;
+  fhir:Patient.gender @<GenderShape> ;
+  fhir:Patient.birthDate @<ValueDateShape> ;
+  fhir:Patient.maritalStatus @<MaritalStatusShape> ;
+  fhir:Patient.telecom @<TelecomShape>* ;
+  fhir:Patient.address @<AddressShape>* ;
+}
+
+<PractitionerShape> {
+  rdf:type [ fhir:Practitioner ] ;
+  fhir:Practitioner.active @<ValueBooleanShape> ;
+  fhir:Practitioner.name @<HumanNameShape>+ ;
+  fhir:Practitioner.gender @<GenderShape> ;
+  fhir:Practitioner.telecom @<TelecomShape>* ;
+  fhir:Practitioner.qualification @<QualificationShape>* ;
+}
+
+<ProcedureShape> {
+  rdf:type [ fhir:Procedure ] ;
+  fhir:Procedure.status @<ProcedureStatusShape> ;
+  fhir:Procedure.code @<ProcedureCodeShape> ;
+  fhir:Procedure.performedDateTime @<ValueDateShape> ;
+  fhir:Procedure.subject @<ReferenceWrapperShape> ;
+  fhir:Procedure.performer @<PerformerShape> ;
+  fhir:Procedure.bodySite @<ProcedureBodySiteShape>* ;
+  fhir:Procedure.note @<AnnotationShape>* ;
+}
+
+<HumanNameShape> {
+  fhir:HumanName.family @<ValueStringShape> ;
+  fhir:HumanName.given @<ValueStringShape>+ ;
+}
+
+<TelecomShape> {
+  fhir:index xsd:integer ;
+  fhir:ContactPoint.system @<ContactSystemShape> ;
+  fhir:ContactPoint.value @<ValueStringShape> ;
+}
+
+<AddressShape> {
+  fhir:Address.line @<ValueStringShape>+ ;
+  fhir:Address.city @<ValueStringShape> ;
+  fhir:Address.state @<ValueStringShape> ;
+  fhir:Address.postalCode @<ValueStringShape> ;
+  fhir:Address.country @<ValueStringShape> ;
+}
+
+<QualificationShape> {
+  fhir:CodeableConcept.text @<ValueStringShape> ;
+}
+
+<ProcedureCodeShape> {
+  fhir:CodeableConcept.coding @<ProcedureCodingShape>+ ;
+  fhir:CodeableConcept.text @<ValueStringShape> ;
+}
+
+<ProcedureBodySiteShape> {
+  fhir:CodeableConcept.coding @<BodySiteCodingShape>+ ;
+  fhir:CodeableConcept.text @<ValueStringShape>* ;
+}
+
+<AnnotationShape> {
+  fhir:Annotation.text @<ValueStringShape> ;
+}
+
+<ProcedureCodingShape> {
+  fhir:Coding.code @<ValueStringShape> ;
+  fhir:Coding.system @<ValueURIShape> ;
+  fhir:Coding.display @<ValueStringShape>* ;
+}
+
+<BodySiteCodingShape> {
+  fhir:Coding.code @<ValueStringShape> ;
+  fhir:Coding.system @<ValueURIShape> ;
+  fhir:Coding.display @<ValueStringShape>* ;
+}
+
+<PerformerShape> {
+  fhir:Procedure.performer.actor @<ReferenceWrapperShape> ;
+}
+
+<ReferenceWrapperShape> {
+  fhir:Reference.reference @<ReferenceShape> ;
+}
+
+<ReferenceShape> {
+  fhir:value xsd:string ;
+}
+
+<ValueBooleanShape> {
+  fhir:value xsd:boolean ;
+}
+
+<ValueStringShape> {
+  fhir:value xsd:string ;
+}
+
+<ValueDateShape> {
+  fhir:value xsd:date ;
+}
+
+<ValueURIShape> {
+  fhir:value xsd:anyURI ;
+}
+
+<GenderShape> {
+  fhir:value [ "male" "female" "other" "unknown" ] ;
+}
+
+<MaritalStatusShape> {
+  fhir:value [ "A" "D" "M" "U" "W" "UNK" ] ;
+}
+
+<ProcedureStatusShape> {
+  fhir:value [ "preparation" "in-progress" "not-done" "on-hold" "stopped" "completed" "entered-in-error" "unknown" ] ;
+}
+
+<ContactSystemShape> {
+  fhir:value [ "phone" "email" "url" "fax" "pager" "other" ] ;
+}

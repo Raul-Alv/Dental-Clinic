@@ -1,0 +1,2036 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://hl7.org/fhir/Patient/142746893153> a fhir:Patient ;
+    fhir:Patient.active [ fhir:value true ] ;
+    fhir:Patient.address [ fhir:Address.city [ fhir:value "Córdoba" ] ;
+            fhir:Address.country [ fhir:value "España" ] ;
+            fhir:Address.line [ fhir:value "Avenida Gran Capitán 15 2D" ] ;
+            fhir:Address.postalCode [ fhir:value "14008" ] ;
+            fhir:Address.state [ fhir:value "Córdoba" ] ] ;
+    fhir:Patient.birthDate [ fhir:value "1964-10-09"^^xsd:date ] ;
+    fhir:Patient.gender [ fhir:value "female" ] ;
+    fhir:Patient.maritalStatus [ fhir:value "D" ] ;
+    fhir:Patient.name [ fhir:HumanName.family [ fhir:value "Molina Campos" ] ;
+            fhir:HumanName.given [ fhir:value "Beatriz" ] ] ;
+    fhir:Patient.telecom [ fhir:ContactPoint.system [ fhir:value "phone" ] ;
+            fhir:ContactPoint.value [ fhir:value "611234511" ] ;
+            fhir:index 0 ] .
+
+<http://hl7.org/fhir/Patient/156193054270> a fhir:Patient ;
+    fhir:Patient.active [ fhir:value true ] ;
+    fhir:Patient.address [ fhir:Address.city [ fhir:value "A Coruña" ] ;
+            fhir:Address.country [ fhir:value "España" ] ;
+            fhir:Address.line [ fhir:value "Rúa Real 42 1A" ] ;
+            fhir:Address.postalCode [ fhir:value "15003" ] ;
+            fhir:Address.state [ fhir:value "A Coruña" ] ] ;
+    fhir:Patient.birthDate [ fhir:value "1997-02-14"^^xsd:date ] ;
+    fhir:Patient.gender [ fhir:value "female" ] ;
+    fhir:Patient.maritalStatus [ fhir:value "U" ] ;
+    fhir:Patient.name [ fhir:HumanName.family [ fhir:value "Iglesias Castro" ] ;
+            fhir:HumanName.given [ fhir:value "Nuria" ] ] ;
+    fhir:Patient.telecom [ fhir:ContactPoint.system [ fhir:value "phone" ] ;
+            fhir:ContactPoint.value [ fhir:value "611234507" ] ;
+            fhir:index 0 ] .
+
+<http://hl7.org/fhir/Patient/283824519067> a fhir:Patient ;
+    fhir:Patient.active [ fhir:value true ] ;
+    fhir:Patient.address [ fhir:Address.city [ fhir:value "Madrid" ] ;
+            fhir:Address.country [ fhir:value "España" ] ;
+            fhir:Address.line [ fhir:value "Calle de Alcalá 104 5C" ] ;
+            fhir:Address.postalCode [ fhir:value "28009" ] ;
+            fhir:Address.state [ fhir:value "Madrid" ] ] ;
+    fhir:Patient.birthDate [ fhir:value "1992-01-25"^^xsd:date ] ;
+    fhir:Patient.gender [ fhir:value "female" ] ;
+    fhir:Patient.maritalStatus [ fhir:value "U" ] ;
+    fhir:Patient.name [ fhir:HumanName.family [ fhir:value "Martín López" ] ;
+            fhir:HumanName.given [ fhir:value "Sofía" ] ] ;
+    fhir:Patient.telecom [ fhir:ContactPoint.system [ fhir:value "phone" ] ;
+            fhir:ContactPoint.value [ fhir:value "611234503" ] ;
+            fhir:index 0 ] .
+
+<http://hl7.org/fhir/Patient/297361902422> a fhir:Patient ;
+    fhir:Patient.active [ fhir:value true ] ;
+    fhir:Patient.address [ fhir:Address.city [ fhir:value "Málaga" ] ;
+            fhir:Address.country [ fhir:value "España" ] ;
+            fhir:Address.line [ fhir:value "Calle Larios 9 3C" ] ;
+            fhir:Address.postalCode [ fhir:value "29005" ] ;
+            fhir:Address.state [ fhir:value "Málaga" ] ] ;
+    fhir:Patient.birthDate [ fhir:value "1989-05-22"^^xsd:date ] ;
+    fhir:Patient.gender [ fhir:value "female" ] ;
+    fhir:Patient.maritalStatus [ fhir:value "U" ] ;
+    fhir:Patient.name [ fhir:HumanName.family [ fhir:value "Torres Molina" ] ;
+            fhir:HumanName.given [ fhir:value "Cristina" ] ] ;
+    fhir:Patient.telecom [ fhir:ContactPoint.system [ fhir:value "phone" ] ;
+            fhir:ContactPoint.value [ fhir:value "611234509" ] ;
+            fhir:index 0 ] .
+
+<http://hl7.org/fhir/Patient/306930145201> a fhir:Patient ;
+    fhir:Patient.active [ fhir:value true ] ;
+    fhir:Patient.address [ fhir:Address.city [ fhir:value "Murcia" ] ;
+            fhir:Address.country [ fhir:value "España" ] ;
+            fhir:Address.line [ fhir:value "Avenida Libertad 31 Bajo" ] ;
+            fhir:Address.postalCode [ fhir:value "30009" ] ;
+            fhir:Address.state [ fhir:value "Murcia" ] ] ;
+    fhir:Patient.birthDate [ fhir:value "1994-07-28"^^xsd:date ] ;
+    fhir:Patient.gender [ fhir:value "male" ] ;
+    fhir:Patient.maritalStatus [ fhir:value "U" ] ;
+    fhir:Patient.name [ fhir:HumanName.family [ fhir:value "Navarro Ortega" ] ;
+            fhir:HumanName.given [ fhir:value "Marcos" ] ] ;
+    fhir:Patient.telecom [ fhir:ContactPoint.system [ fhir:value "phone" ] ;
+            fhir:ContactPoint.value [ fhir:value "611234512" ] ;
+            fhir:index 0 ] .
+
+<http://hl7.org/fhir/Patient/332301456713> a fhir:Patient ;
+    fhir:Patient.active [ fhir:value true ] ;
+    fhir:Patient.address [ fhir:Address.city [ fhir:value "Oviedo" ] ;
+            fhir:Address.country [ fhir:value "España" ] ;
+            fhir:Address.line [ fhir:value "Calle Uría 12 3B" ] ;
+            fhir:Address.postalCode [ fhir:value "33003" ] ;
+            fhir:Address.state [ fhir:value "Asturias" ] ] ;
+    fhir:Patient.birthDate [ fhir:value "1978-03-12"^^xsd:date ] ;
+    fhir:Patient.gender [ fhir:value "female" ] ;
+    fhir:Patient.maritalStatus [ fhir:value "M" ] ;
+    fhir:Patient.name [ fhir:HumanName.family [ fhir:value "García Moreno" ] ;
+            fhir:HumanName.given [ fhir:value "Laura" ] ] ;
+    fhir:Patient.telecom [ fhir:ContactPoint.system [ fhir:value "phone" ] ;
+            fhir:ContactPoint.value [ fhir:value "611234501" ] ;
+            fhir:index 0 ] .
+
+<http://hl7.org/fhir/Patient/332310784271> a fhir:Patient ;
+    fhir:Patient.active [ fhir:value true ] ;
+    fhir:Patient.address [ fhir:Address.city [ fhir:value "Gijón" ] ;
+            fhir:Address.country [ fhir:value "España" ] ;
+            fhir:Address.line [ fhir:value "Calle Corrida 18 2A" ] ;
+            fhir:Address.postalCode [ fhir:value "33206" ] ;
+            fhir:Address.state [ fhir:value "Asturias" ] ] ;
+    fhir:Patient.birthDate [ fhir:value "1985-09-04"^^xsd:date ] ;
+    fhir:Patient.gender [ fhir:value "male" ] ;
+    fhir:Patient.maritalStatus [ fhir:value "U" ] ;
+    fhir:Patient.name [ fhir:HumanName.family [ fhir:value "Fernández Álvarez" ] ;
+            fhir:HumanName.given [ fhir:value "Miguel" ] ] ;
+    fhir:Patient.telecom [ fhir:ContactPoint.system [ fhir:value "phone" ] ;
+            fhir:ContactPoint.value [ fhir:value "611234502" ] ;
+            fhir:index 0 ] .
+
+<http://hl7.org/fhir/Patient/365412098636> a fhir:Patient ;
+    fhir:Patient.active [ fhir:value true ] ;
+    fhir:Patient.address [ fhir:Address.city [ fhir:value "Vigo" ] ;
+            fhir:Address.country [ fhir:value "España" ] ;
+            fhir:Address.line [ fhir:value "Rúa do Príncipe 3 1C" ] ;
+            fhir:Address.postalCode [ fhir:value "36202" ] ;
+            fhir:Address.state [ fhir:value "Pontevedra" ] ] ;
+    fhir:Patient.birthDate [ fhir:value "2000-09-17"^^xsd:date ] ;
+    fhir:Patient.gender [ fhir:value "male" ] ;
+    fhir:Patient.maritalStatus [ fhir:value "U" ] ;
+    fhir:Patient.name [ fhir:HumanName.family [ fhir:value "Pereira Salgado" ] ;
+            fhir:HumanName.given [ fhir:value "Adrián" ] ] ;
+    fhir:Patient.telecom [ fhir:ContactPoint.system [ fhir:value "phone" ] ;
+            fhir:ContactPoint.value [ fhir:value "611234514" ] ;
+            fhir:index 0 ] .
+
+<http://hl7.org/fhir/Patient/413016725887> a fhir:Patient ;
+    fhir:Patient.active [ fhir:value true ] ;
+    fhir:Patient.address [ fhir:Address.city [ fhir:value "Sevilla" ] ;
+            fhir:Address.country [ fhir:value "España" ] ;
+            fhir:Address.line [ fhir:value "Calle Sierpes 7 2B" ] ;
+            fhir:Address.postalCode [ fhir:value "41004" ] ;
+            fhir:Address.state [ fhir:value "Sevilla" ] ] ;
+    fhir:Patient.birthDate [ fhir:value "1981-08-30"^^xsd:date ] ;
+    fhir:Patient.gender [ fhir:value "male" ] ;
+    fhir:Patient.maritalStatus [ fhir:value "M" ] ;
+    fhir:Patient.name [ fhir:HumanName.family [ fhir:value "Romero Prieto" ] ;
+            fhir:HumanName.given [ fhir:value "Alberto" ] ] ;
+    fhir:Patient.telecom [ fhir:ContactPoint.system [ fhir:value "phone" ] ;
+            fhir:ContactPoint.value [ fhir:value "611234506" ] ;
+            fhir:index 0 ] .
+
+<http://hl7.org/fhir/Patient/464028176533> a fhir:Patient ;
+    fhir:Patient.active [ fhir:value true ] ;
+    fhir:Patient.address [ fhir:Address.city [ fhir:value "Valencia" ] ;
+            fhir:Address.country [ fhir:value "España" ] ;
+            fhir:Address.line [ fhir:value "Avenida del Puerto 38 4E" ] ;
+            fhir:Address.postalCode [ fhir:value "46021" ] ;
+            fhir:Address.state [ fhir:value "Valencia" ] ] ;
+    fhir:Patient.birthDate [ fhir:value "1974-06-19"^^xsd:date ] ;
+    fhir:Patient.gender [ fhir:value "female" ] ;
+    fhir:Patient.maritalStatus [ fhir:value "M" ] ;
+    fhir:Patient.name [ fhir:HumanName.family [ fhir:value "Serrano Vidal" ] ;
+            fhir:HumanName.given [ fhir:value "Patricia" ] ] ;
+    fhir:Patient.telecom [ fhir:ContactPoint.system [ fhir:value "phone" ] ;
+            fhir:ContactPoint.value [ fhir:value "611234505" ] ;
+            fhir:index 0 ] .
+
+<http://hl7.org/fhir/Patient/473681027560> a fhir:Patient ;
+    fhir:Patient.active [ fhir:value true ] ;
+    fhir:Patient.address [ fhir:Address.city [ fhir:value "Valladolid" ] ;
+            fhir:Address.country [ fhir:value "España" ] ;
+            fhir:Address.line [ fhir:value "Calle Santiago 17 4B" ] ;
+            fhir:Address.postalCode [ fhir:value "47001" ] ;
+            fhir:Address.state [ fhir:value "Valladolid" ] ] ;
+    fhir:Patient.birthDate [ fhir:value "1982-02-02"^^xsd:date ] ;
+    fhir:Patient.gender [ fhir:value "female" ] ;
+    fhir:Patient.maritalStatus [ fhir:value "M" ] ;
+    fhir:Patient.name [ fhir:HumanName.family [ fhir:value "Domínguez Gil" ] ;
+            fhir:HumanName.given [ fhir:value "Raquel" ] ] ;
+    fhir:Patient.telecom [ fhir:ContactPoint.system [ fhir:value "phone" ] ;
+            fhir:ContactPoint.value [ fhir:value "611234513" ] ;
+            fhir:index 0 ] .
+
+<http://hl7.org/fhir/Patient/484308769108> a fhir:Patient ;
+    fhir:Patient.active [ fhir:value true ] ;
+    fhir:Patient.address [ fhir:Address.city [ fhir:value "Bilbao" ] ;
+            fhir:Address.country [ fhir:value "España" ] ;
+            fhir:Address.line [ fhir:value "Gran Vía 56 7D" ] ;
+            fhir:Address.postalCode [ fhir:value "48011" ] ;
+            fhir:Address.state [ fhir:value "Bizkaia" ] ] ;
+    fhir:Patient.birthDate [ fhir:value "1971-04-16"^^xsd:date ] ;
+    fhir:Patient.gender [ fhir:value "male" ] ;
+    fhir:Patient.maritalStatus [ fhir:value "M" ] ;
+    fhir:Patient.name [ fhir:HumanName.family [ fhir:value "Aguirre Etxeberria" ] ;
+            fhir:HumanName.given [ fhir:value "Iker" ] ] ;
+    fhir:Patient.telecom [ fhir:ContactPoint.system [ fhir:value "phone" ] ;
+            fhir:ContactPoint.value [ fhir:value "611234510" ] ;
+            fhir:index 0 ] .
+
+<http://hl7.org/fhir/Patient/502874513635> a fhir:Patient ;
+    fhir:Patient.active [ fhir:value true ] ;
+    fhir:Patient.address [ fhir:Address.city [ fhir:value "Zaragoza" ] ;
+            fhir:Address.country [ fhir:value "España" ] ;
+            fhir:Address.line [ fhir:value "Paseo Independencia 24 6A" ] ;
+            fhir:Address.postalCode [ fhir:value "50004" ] ;
+            fhir:Address.state [ fhir:value "Zaragoza" ] ] ;
+    fhir:Patient.birthDate [ fhir:value "1958-12-03"^^xsd:date ] ;
+    fhir:Patient.gender [ fhir:value "male" ] ;
+    fhir:Patient.maritalStatus [ fhir:value "W" ] ;
+    fhir:Patient.name [ fhir:HumanName.family [ fhir:value "Blasco Ferrer" ] ;
+            fhir:HumanName.given [ fhir:value "Héctor" ] ] ;
+    fhir:Patient.telecom [ fhir:ContactPoint.system [ fhir:value "phone" ] ;
+            fhir:ContactPoint.value [ fhir:value "611234508" ] ;
+            fhir:index 0 ] .
+
+<http://hl7.org/fhir/Patient/77814302908> a fhir:Patient ;
+    fhir:Patient.active [ fhir:value true ] ;
+    fhir:Patient.address [ fhir:Address.city [ fhir:value "Palma" ] ;
+            fhir:Address.country [ fhir:value "España" ] ;
+            fhir:Address.line [ fhir:value "Carrer de Sant Miquel 28 2A" ] ;
+            fhir:Address.postalCode [ fhir:value "07002" ] ;
+            fhir:Address.state [ fhir:value "Illes Balears" ] ] ;
+    fhir:Patient.birthDate [ fhir:value "1976-01-31"^^xsd:date ] ;
+    fhir:Patient.gender [ fhir:value "female" ] ;
+    fhir:Patient.maritalStatus [ fhir:value "M" ] ;
+    fhir:Patient.name [ fhir:HumanName.family [ fhir:value "Salas Pons" ] ;
+            fhir:HumanName.given [ fhir:value "Marta" ] ] ;
+    fhir:Patient.telecom [ fhir:ContactPoint.system [ fhir:value "phone" ] ;
+            fhir:ContactPoint.value [ fhir:value "611234515" ] ;
+            fhir:index 0 ] .
+
+<http://hl7.org/fhir/Patient/85129043303> a fhir:Patient ;
+    fhir:Patient.active [ fhir:value true ] ;
+    fhir:Patient.address [ fhir:Address.city [ fhir:value "Barcelona" ] ;
+            fhir:Address.country [ fhir:value "España" ] ;
+            fhir:Address.line [ fhir:value "Carrer de Mallorca 221 1D" ] ;
+            fhir:Address.postalCode [ fhir:value "08008" ] ;
+            fhir:Address.state [ fhir:value "Barcelona" ] ] ;
+    fhir:Patient.birthDate [ fhir:value "1969-11-07"^^xsd:date ] ;
+    fhir:Patient.gender [ fhir:value "male" ] ;
+    fhir:Patient.maritalStatus [ fhir:value "D" ] ;
+    fhir:Patient.name [ fhir:HumanName.family [ fhir:value "Ruiz Sánchez" ] ;
+            fhir:HumanName.given [ fhir:value "Daniel" ] ] ;
+    fhir:Patient.telecom [ fhir:ContactPoint.system [ fhir:value "phone" ] ;
+            fhir:ContactPoint.value [ fhir:value "611234504" ] ;
+            fhir:index 0 ] .
+
+<http://hl7.org/fhir/Practitioner/501> a fhir:Practitioner ;
+    fhir:Practitioner.active [ fhir:value true ] ;
+    fhir:Practitioner.gender [ fhir:value "female" ] ;
+    fhir:Practitioner.name [ fhir:HumanName.family [ fhir:value "Navarro Ruiz" ] ;
+            fhir:HumanName.given [ fhir:value "Elisa" ] ] ;
+    fhir:Practitioner.qualification [ fhir:CodeableConcept.text [ fhir:value "Odontóloga general" ] ] ;
+    fhir:Practitioner.telecom [ fhir:ContactPoint.system [ fhir:value "phone" ] ;
+            fhir:ContactPoint.value [ fhir:value "620451983" ] ;
+            fhir:index 0 ] .
+
+<http://hl7.org/fhir/Practitioner/502> a fhir:Practitioner ;
+    fhir:Practitioner.active [ fhir:value true ] ;
+    fhir:Practitioner.gender [ fhir:value "male" ] ;
+    fhir:Practitioner.name [ fhir:HumanName.family [ fhir:value "Ortega Molina" ] ;
+            fhir:HumanName.given [ fhir:value "Javier" ] ] ;
+    fhir:Practitioner.qualification [ fhir:CodeableConcept.text [ fhir:value "Endodoncista" ] ] ;
+    fhir:Practitioner.telecom [ fhir:ContactPoint.system [ fhir:value "phone" ] ;
+            fhir:ContactPoint.value [ fhir:value "621874320" ] ;
+            fhir:index 0 ] .
+
+<http://hl7.org/fhir/Practitioner/503> a fhir:Practitioner ;
+    fhir:Practitioner.active [ fhir:value true ] ;
+    fhir:Practitioner.gender [ fhir:value "female" ] ;
+    fhir:Practitioner.name [ fhir:HumanName.family [ fhir:value "Díaz Herrera" ] ;
+            fhir:HumanName.given [ fhir:value "Carmen" ] ] ;
+    fhir:Practitioner.qualification [ fhir:CodeableConcept.text [ fhir:value "Periodoncista" ] ] ;
+    fhir:Practitioner.telecom [ fhir:ContactPoint.system [ fhir:value "phone" ] ;
+            fhir:ContactPoint.value [ fhir:value "622309176" ] ;
+            fhir:index 0 ] .
+
+<http://hl7.org/fhir/Practitioner/504> a fhir:Practitioner ;
+    fhir:Practitioner.active [ fhir:value true ] ;
+    fhir:Practitioner.gender [ fhir:value "male" ] ;
+    fhir:Practitioner.name [ fhir:HumanName.family [ fhir:value "Santos Vega" ] ;
+            fhir:HumanName.given [ fhir:value "Rubén" ] ] ;
+    fhir:Practitioner.qualification [ fhir:CodeableConcept.text [ fhir:value "Cirujano oral" ] ] ;
+    fhir:Practitioner.telecom [ fhir:ContactPoint.system [ fhir:value "phone" ] ;
+            fhir:ContactPoint.value [ fhir:value "623518742" ] ;
+            fhir:index 0 ] .
+
+<http://hl7.org/fhir/Practitioner/505> a fhir:Practitioner ;
+    fhir:Practitioner.active [ fhir:value true ] ;
+    fhir:Practitioner.gender [ fhir:value "female" ] ;
+    fhir:Practitioner.name [ fhir:HumanName.family [ fhir:value "Castillo León" ] ;
+            fhir:HumanName.given [ fhir:value "Irene" ] ] ;
+    fhir:Practitioner.qualification [ fhir:CodeableConcept.text [ fhir:value "Odontopediatra y estética dental" ] ] ;
+    fhir:Practitioner.telecom [ fhir:ContactPoint.system [ fhir:value "phone" ] ;
+            fhir:ContactPoint.value [ fhir:value "624760319" ] ;
+            fhir:index 0 ] .
+
+<http://hl7.org/fhir/Procedure/013e1670-679a-5209-87fb-e56ac0fee1bc> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161533D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente molar inferior izquierdo primero permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "55162003" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Extracción dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Extracción simple por fractura no restaurable. Pieza ISO 36" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-10-15"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/501" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/365412098636" ] ] .
+
+<http://hl7.org/fhir/Procedure/02bb367f-ea8a-5769-afdb-c017a296ebfe> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161412D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente premolar inferior derecho segundo permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "773273007" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Colocación de corona dental temporal en diente" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Corona temporal para protección cuspídea. Pieza ISO 45" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-03-20"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/501" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/413016725887" ] ] .
+
+<http://hl7.org/fhir/Procedure/03447ea5-2dc4-50bc-b270-e2b008ace780> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "1260193009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Eliminación de cálculo dental con raspador dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Refuerzo periodontal con raspado localizado" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-09-11"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/504" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/297361902422" ] ] .
+
+<http://hl7.org/fhir/Procedure/03729378-e249-5c57-941a-36cff6e5dc36> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "104791000220103" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Aplicación tópica de peróxido de hidrógeno en dientes vitales decolorados mediante férula de blanqueamiento dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Blanqueamiento domiciliario supervisado" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-02-15"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/502" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/306930145201" ] ] .
+
+<http://hl7.org/fhir/Procedure/05ae6102-94c1-5c01-bf6b-40a5402359ca> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "63963009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Profilaxis dental en adultos" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Profilaxis semestral de mantenimiento" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-05-13"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/503" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/85129043303" ] ] .
+
+<http://hl7.org/fhir/Procedure/0bf9f441-5112-5604-af65-3727c632dd4a> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "104791000220103" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Aplicación tópica de peróxido de hidrógeno en dientes vitales decolorados mediante férula de blanqueamiento dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Blanqueamiento domiciliario supervisado" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-09-11"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/503" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/85129043303" ] ] .
+
+<http://hl7.org/fhir/Procedure/100def57-7d93-5e81-a9f1-a06a18bb1b5b> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "58707002" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Educación en higiene oral" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Educación en higiene oral personalizada" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-02-13"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/503" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/283824519067" ] ] .
+
+<http://hl7.org/fhir/Procedure/102bcb6c-f55f-53f9-b913-88747579d1cb> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161006D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente incisivo central superior izquierdo permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "1264277001" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Tratamiento de conducto radicular" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Tratamiento endodóntico por pulpitis. Pieza ISO 21" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-08-11"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/504" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/473681027560" ] ] .
+
+<http://hl7.org/fhir/Procedure/11c26017-5827-5b46-8de3-a0be1bf88af3> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "160704D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente molar inferior derecho segundo permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "1264277001" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Tratamiento de conducto radicular" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Tratamiento endodóntico por pulpitis. Pieza ISO 47" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-01-06"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/504" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/297361902422" ] ] .
+
+<http://hl7.org/fhir/Procedure/133546e5-437a-5bbc-b027-f00bbfc05424> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161546D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente premolar superior derecho segundo permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "55162003" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Extracción dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Extracción simple por fractura no restaurable. Pieza ISO 15" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-04-04"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/502" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/156193054270" ] ] .
+
+<http://hl7.org/fhir/Procedure/14edf21e-d1e8-5bc8-9f9a-0ba95a155bb4> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "160817D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente canino inferior izquierdo permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "1264277001" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Tratamiento de conducto radicular" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Tratamiento endodóntico por pulpitis. Pieza ISO 33" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-04-08"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/505" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/85129043303" ] ] .
+
+<http://hl7.org/fhir/Procedure/15a835d8-a212-5836-8a25-00cfedc5f69d> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "1260193009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Eliminación de cálculo dental con raspador dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Raspado y eliminación de cálculo" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-04-09"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/503" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/464028176533" ] ] .
+
+<http://hl7.org/fhir/Procedure/187afc50-c045-5f9c-bdc5-4fbccc1cf253> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "63963009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Profilaxis dental en adultos" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Profilaxis dental y control de placa" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-04-22"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/505" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/365412098636" ] ] .
+
+<http://hl7.org/fhir/Procedure/19d22a33-b1ac-5ded-862f-1a7e2c692ecf> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161372D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente molar inferior izquierdo segundo permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "773273007" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Colocación de corona dental temporal en diente" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Corona temporal para protección cuspídea. Pieza ISO 37" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-07-20"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/505" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/77814302908" ] ] .
+
+<http://hl7.org/fhir/Procedure/19d817b5-83dc-5dd3-96b2-7babb7eb2c4f> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "1260193009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Eliminación de cálculo dental con raspador dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Raspado y eliminación de cálculo" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-06-07"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/504" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/332301456713" ] ] .
+
+<http://hl7.org/fhir/Procedure/1a927354-125f-5d46-8bff-5c2d8530ef1e> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "1260193009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Eliminación de cálculo dental con raspador dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Raspado y eliminación de cálculo" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-11-12"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/503" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/297361902422" ] ] .
+
+<http://hl7.org/fhir/Procedure/1d5744de-bd57-5f70-bf8b-39dd886e5aa3> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "63963009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Profilaxis dental en adultos" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Profilaxis dental y control de placa" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-12-26"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/501" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/464028176533" ] ] .
+
+<http://hl7.org/fhir/Procedure/1e3b56f8-e62d-5b84-a023-95752668a580> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "58707002" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Educación en higiene oral" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Educación en higiene oral personalizada" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-06-08"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/502" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/306930145201" ] ] .
+
+<http://hl7.org/fhir/Procedure/1e69219e-6edb-5ab6-9ebf-7405d2b23096> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "58707002" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Educación en higiene oral" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Educación en higiene oral personalizada" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-02-23"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/502" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/464028176533" ] ] .
+
+<http://hl7.org/fhir/Procedure/1f1494de-05d1-566a-b5c9-a77fd40dbaad> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "104791000220103" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Aplicación tópica de peróxido de hidrógeno en dientes vitales decolorados mediante férula de blanqueamiento dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Blanqueamiento domiciliario supervisado" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-08-06"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/503" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/464028176533" ] ] .
+
+<http://hl7.org/fhir/Procedure/1f6aeed5-6b14-5ce2-9428-be680719d49f> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "89846007" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Ortopantomografía" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Estudio radiológico inicial" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-04-17"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/504" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/473681027560" ] ] .
+
+<http://hl7.org/fhir/Procedure/1fc25886-a0b1-5c50-9271-e9243eda2edb> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161372D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente molar inferior izquierdo segundo permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "1264277001" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Tratamiento de conducto radicular" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Tratamiento endodóntico por pulpitis. Pieza ISO 37" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-06-30"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/505" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/332310784271" ] ] .
+
+<http://hl7.org/fhir/Procedure/2386fe64-81c5-5ec7-b5c0-114eddb5f67d> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "63963009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Profilaxis dental en adultos" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Profilaxis semestral de mantenimiento" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-09-25"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/503" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/365412098636" ] ] .
+
+<http://hl7.org/fhir/Procedure/251f1b58-8f63-5685-ab8e-f1e7dfc9fc2c> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "89846007" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Ortopantomografía" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Estudio radiológico inicial" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-01-21"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/505" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/283824519067" ] ] .
+
+<http://hl7.org/fhir/Procedure/26cae929-f6d1-5fbd-ac8d-025bb60afd9b> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161454D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente molar superior izquierdo tercero permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "65546002" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Extracción de muela del juicio" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Extracción de tercer molar con control postoperatorio. Pieza ISO 28" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-03-27"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/503" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/306930145201" ] ] .
+
+<http://hl7.org/fhir/Procedure/271bab43-69c9-5be4-ac3f-cbacfef86e4c> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "104791000220103" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Aplicación tópica de peróxido de hidrógeno en dientes vitales decolorados mediante férula de blanqueamiento dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Blanqueamiento domiciliario supervisado" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-04-19"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/503" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/502874513635" ] ] .
+
+<http://hl7.org/fhir/Procedure/28090549-350d-573d-9474-d2619c229efa> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "104791000220103" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Aplicación tópica de peróxido de hidrógeno en dientes vitales decolorados mediante férula de blanqueamiento dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Blanqueamiento domiciliario supervisado" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-06-23"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/503" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/413016725887" ] ] .
+
+<http://hl7.org/fhir/Procedure/29a069dc-e90f-52ab-a294-ac172194f11b> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "89846007" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Ortopantomografía" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Estudio radiológico inicial" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-05-14"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/505" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/484308769108" ] ] .
+
+<http://hl7.org/fhir/Procedure/2dd20168-f60b-549f-a1e9-17646f0e88fc> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "1260193009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Eliminación de cálculo dental con raspador dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Raspado y eliminación de cálculo" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-09-02"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/503" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/142746893153" ] ] .
+
+<http://hl7.org/fhir/Procedure/2e8024be-5fff-58b2-a566-75969bb35029> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "63963009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Profilaxis dental en adultos" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Profilaxis dental y control de placa" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-10-22"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/501" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/156193054270" ] ] .
+
+<http://hl7.org/fhir/Procedure/33ffd316-a9a3-5f73-b00f-73ad59faa5cc> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "1260193009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Eliminación de cálculo dental con raspador dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Raspado y eliminación de cálculo" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-10-10"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/503" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/484308769108" ] ] .
+
+<http://hl7.org/fhir/Procedure/34dfee8c-70cb-5a6f-94ba-075e0b3c40cf> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "63963009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Profilaxis dental en adultos" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Profilaxis dental y control de placa" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-09-10"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/501" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/502874513635" ] ] .
+
+<http://hl7.org/fhir/Procedure/34ea52ce-b93b-5abe-b150-33a6e93ba68c> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "63963009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Profilaxis dental en adultos" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Profilaxis semestral de mantenimiento" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-05-27"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/504" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/464028176533" ] ] .
+
+<http://hl7.org/fhir/Procedure/369608c2-0e86-5a67-b05b-e4fc0ffd88c4> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "160957D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente canino superior izquierdo permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "55162003" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Extracción dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Extracción simple por fractura no restaurable. Pieza ISO 23" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-01-26"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/501" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/142746893153" ] ] .
+
+<http://hl7.org/fhir/Procedure/386de13d-eebf-5d51-bea5-8268e719385b> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161412D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente premolar inferior derecho segundo permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "1264277001" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Tratamiento de conducto radicular" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Tratamiento endodóntico por pulpitis. Pieza ISO 45" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-02-12"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/504" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/502874513635" ] ] .
+
+<http://hl7.org/fhir/Procedure/3876e1de-c424-5e87-8c74-0e83e8b05cd6> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "104791000220103" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Aplicación tópica de peróxido de hidrógeno en dientes vitales decolorados mediante férula de blanqueamiento dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Blanqueamiento domiciliario supervisado" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-10-20"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/503" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/283824519067" ] ] .
+
+<http://hl7.org/fhir/Procedure/39ed684b-13df-55d6-b704-96bd48ad51bb> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "89846007" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Ortopantomografía" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Control radiológico evolutivo" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-11-24"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/504" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/156193054270" ] ] .
+
+<http://hl7.org/fhir/Procedure/3c1cf615-fb53-5d60-9e3a-e7884349bb00> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "104791000220103" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Aplicación tópica de peróxido de hidrógeno en dientes vitales decolorados mediante férula de blanqueamiento dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Blanqueamiento domiciliario supervisado" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-06-03"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/502" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/297361902422" ] ] .
+
+<http://hl7.org/fhir/Procedure/3d86cf74-7ebf-561a-9843-2cf4fd41166a> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161227D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente molar superior derecho tercero permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "65546002" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Extracción de muela del juicio" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Extracción de tercer molar con control postoperatorio. Pieza ISO 18" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-09-27"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/504" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/464028176533" ] ] .
+
+<http://hl7.org/fhir/Procedure/3f112182-3e64-5cd1-9e84-c6a70647e78d> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "104791000220103" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Aplicación tópica de peróxido de hidrógeno en dientes vitales decolorados mediante férula de blanqueamiento dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Blanqueamiento domiciliario supervisado" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-05-23"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/503" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/156193054270" ] ] .
+
+<http://hl7.org/fhir/Procedure/3f788df5-2c5b-541a-a9ce-f570c45e381e> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "160817D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente canino inferior izquierdo permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "773273007" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Colocación de corona dental temporal en diente" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Ajuste de corona temporal. Pieza ISO 33" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2026-01-27"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/501" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/502874513635" ] ] .
+
+<http://hl7.org/fhir/Procedure/3f8bdc0d-f75c-5fa8-b323-12a135176637> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161454D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente molar superior izquierdo tercero permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "65546002" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Extracción de muela del juicio" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Extracción de tercer molar con control postoperatorio. Pieza ISO 28" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-05-06"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/503" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/142746893153" ] ] .
+
+<http://hl7.org/fhir/Procedure/420c9bb1-b0cc-541c-b160-0ed2ef3b981a> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "58707002" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Educación en higiene oral" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Educación en higiene oral personalizada" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-06-20"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/501" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/365412098636" ] ] .
+
+<http://hl7.org/fhir/Procedure/43119929-5df1-57dc-90df-07874de8647c> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "58707002" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Educación en higiene oral" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Educación en higiene oral personalizada" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-10-30"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/502" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/502874513635" ] ] .
+
+<http://hl7.org/fhir/Procedure/4355af1f-f610-5891-8bd9-b6b378baca14> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "1260193009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Eliminación de cálculo dental con raspador dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Refuerzo periodontal con raspado localizado" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-08-16"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/502" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/156193054270" ] ] .
+
+<http://hl7.org/fhir/Procedure/44cffff4-bcd4-57d3-830a-0cf9c21b9c2c> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "1260193009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Eliminación de cálculo dental con raspador dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Raspado y eliminación de cálculo" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-02-18"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/504" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/85129043303" ] ] .
+
+<http://hl7.org/fhir/Procedure/4d0dbaa2-1172-5aa1-b513-278254d29b35> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "58707002" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Educación en higiene oral" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Educación en higiene oral personalizada" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-07-12"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/502" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/142746893153" ] ] .
+
+<http://hl7.org/fhir/Procedure/4e2d4312-65e8-53c2-be36-2cacdadda0aa> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "1260193009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Eliminación de cálculo dental con raspador dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Refuerzo periodontal con raspado localizado" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-07-21"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/505" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/464028176533" ] ] .
+
+<http://hl7.org/fhir/Procedure/4eae01d7-ae59-59b6-98e3-d4547c206361> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161941D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente incisivo lateral superior derecho permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "55162003" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Extracción dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Extracción simple por fractura no restaurable. Pieza ISO 12" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-04-11"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/501" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/297361902422" ] ] .
+
+<http://hl7.org/fhir/Procedure/502eb215-8cf9-5918-809f-2d3f265d5610> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161514D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente canino inferior derecho permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "773273007" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Colocación de corona dental temporal en diente" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Ajuste de corona temporal. Pieza ISO 43" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2026-02-10"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/502" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/297361902422" ] ] .
+
+<http://hl7.org/fhir/Procedure/51817ec9-38c1-5f36-97ec-7a9b2023fa82> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "160957D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente canino superior izquierdo permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "1264277001" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Tratamiento de conducto radicular" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Tratamiento endodóntico por pulpitis. Pieza ISO 23" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-07-03"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/504" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/365412098636" ] ] .
+
+<http://hl7.org/fhir/Procedure/59cd6c92-7b76-5c74-ab89-6c43c1f5c162> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161227D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente molar superior derecho tercero permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "65546002" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Extracción de muela del juicio" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Extracción de tercer molar con control postoperatorio. Pieza ISO 18" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-01-14"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/504" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/332310784271" ] ] .
+
+<http://hl7.org/fhir/Procedure/5e68c5e9-f70b-5f75-bcc6-328b7facc15b> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161454D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente molar superior izquierdo tercero permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "65546002" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Extracción de muela del juicio" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Extracción de tercer molar con control postoperatorio. Pieza ISO 28" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-12-18"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/503" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/77814302908" ] ] .
+
+<http://hl7.org/fhir/Procedure/5f175f27-c00e-5a0b-8c35-423971e6338c> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161010D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente molar superior derecho primero permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "1264277001" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Tratamiento de conducto radicular" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Tratamiento endodóntico por pulpitis. Pieza ISO 16" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-12-02"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/504" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/484308769108" ] ] .
+
+<http://hl7.org/fhir/Procedure/5f5e490f-5390-5a16-b1f9-5a59dbccdeeb> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161607D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente premolar superior derecho primero permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "1264277001" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Tratamiento de conducto radicular" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Tratamiento endodóntico por pulpitis. Pieza ISO 14" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-10-24"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/504" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/142746893153" ] ] .
+
+<http://hl7.org/fhir/Procedure/6176be40-c303-5651-9a3b-ba3c6c316408> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161262D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente molar superior derecho segundo permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "55162003" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Extracción dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Extracción simple por fractura no restaurable. Pieza ISO 17" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-05-04"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/502" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/413016725887" ] ] .
+
+<http://hl7.org/fhir/Procedure/620c4260-8fca-572e-ba34-84ec499f2db1> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "160654D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente premolar inferior izquierdo primero permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "773273007" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Colocación de corona dental temporal en diente" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Corona temporal para protección cuspídea. Pieza ISO 34" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-08-12"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/501" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/332310784271" ] ] .
+
+<http://hl7.org/fhir/Procedure/623095ce-9190-585f-a605-cec681cf655c> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "89846007" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Ortopantomografía" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Estudio radiológico inicial" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-06-22"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/505" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/297361902422" ] ] .
+
+<http://hl7.org/fhir/Procedure/63a8354c-3c55-5b4b-a11e-f96d615d8028> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "58707002" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Educación en higiene oral" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Educación en higiene oral personalizada" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-03-16"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/503" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/332310784271" ] ] .
+
+<http://hl7.org/fhir/Procedure/63cf7879-5b64-54eb-8fbe-ca04cfc000ac> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "58707002" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Educación en higiene oral" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Educación en higiene oral personalizada" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-09-28"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/502" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/297361902422" ] ] .
+
+<http://hl7.org/fhir/Procedure/6489fd56-d41c-5f00-8d35-d9fb203b0f13> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "104791000220103" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Aplicación tópica de peróxido de hidrógeno en dientes vitales decolorados mediante férula de blanqueamiento dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Blanqueamiento domiciliario supervisado" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-01-08"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/502" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/473681027560" ] ] .
+
+<http://hl7.org/fhir/Procedure/64f35786-bd09-59c1-958a-0b15fd746bb0> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161291D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente incisivo central inferior derecho permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "1264277001" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Tratamiento de conducto radicular" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Tratamiento endodóntico por pulpitis. Pieza ISO 41" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-04-20"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/504" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/413016725887" ] ] .
+
+<http://hl7.org/fhir/Procedure/65d0b128-065a-5cfd-aea7-e8b5d81c3d8c> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "160817D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente canino inferior izquierdo permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "55162003" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Extracción dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Extracción simple por fractura no restaurable. Pieza ISO 33" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-11-09"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/502" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/332301456713" ] ] .
+
+<http://hl7.org/fhir/Procedure/68b6ae35-026d-59fd-bd97-f4e4905ef583> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161454D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente molar superior izquierdo tercero permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "65546002" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Extracción de muela del juicio" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Extracción de tercer molar con control postoperatorio. Pieza ISO 28" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-02-23"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/503" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/473681027560" ] ] .
+
+<http://hl7.org/fhir/Procedure/6aa2aba0-b493-5f63-bba1-32275f658181> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "58707002" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Educación en higiene oral" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Reeducación de técnica de cepillado" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2026-01-20"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/501" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/77814302908" ] ] .
+
+<http://hl7.org/fhir/Procedure/6c6f4533-39cc-5fca-9e61-1815765564f0> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161291D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente incisivo central inferior derecho permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "773273007" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Colocación de corona dental temporal en diente" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Corona temporal para protección cuspídea. Pieza ISO 41" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-05-30"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/501" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/85129043303" ] ] .
+
+<http://hl7.org/fhir/Procedure/6e9428c6-fd22-5ff2-a603-f8682f30e9ec> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "1260193009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Eliminación de cálculo dental con raspador dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Refuerzo periodontal con raspado localizado" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-11-22"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/505" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/77814302908" ] ] .
+
+<http://hl7.org/fhir/Procedure/73bd1ccf-f92d-51b2-94da-f994cbd2d270> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "58707002" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Educación en higiene oral" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Educación en higiene oral personalizada" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-01-12"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/502" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/413016725887" ] ] .
+
+<http://hl7.org/fhir/Procedure/77787cf7-b0f1-5147-bf21-74ba9110099d> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "63963009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Profilaxis dental en adultos" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Profilaxis semestral de mantenimiento" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-09-16"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/502" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/473681027560" ] ] .
+
+<http://hl7.org/fhir/Procedure/7945403f-d70d-5908-8789-46e4cd0949f8> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "160770D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente molar inferior derecho primero permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "773273007" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Colocación de corona dental temporal en diente" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Corona temporal para protección cuspídea. Pieza ISO 46" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-05-04"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/505" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/156193054270" ] ] .
+
+<http://hl7.org/fhir/Procedure/7cab0b9b-014a-56b5-aa88-5d2443e5862c> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "104791000220103" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Aplicación tópica de peróxido de hidrógeno en dientes vitales decolorados mediante férula de blanqueamiento dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Blanqueamiento domiciliario supervisado" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-11-20"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/503" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/332310784271" ] ] .
+
+<http://hl7.org/fhir/Procedure/7d1a64cf-1c1e-5e61-8f23-5a3c19ba9355> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "63963009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Profilaxis dental en adultos" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Profilaxis semestral de mantenimiento" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-07-05"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/502" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/502874513635" ] ] .
+
+<http://hl7.org/fhir/Procedure/7d23cf49-8b0d-5f3c-a31c-1fdb1b401584> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161607D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente premolar superior derecho primero permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "55162003" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Extracción dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Extracción simple por fractura no restaurable. Pieza ISO 14" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-05-18"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/501" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/502874513635" ] ] .
+
+<http://hl7.org/fhir/Procedure/7d4be869-f886-5b6a-ba73-d8ea373fbb50> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "1260193009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Eliminación de cálculo dental con raspador dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Raspado y eliminación de cálculo" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-08-10"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/502" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/365412098636" ] ] .
+
+<http://hl7.org/fhir/Procedure/7dc1d9c2-b64b-5394-82b3-459e60b26c6a> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "63963009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Profilaxis dental en adultos" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Profilaxis dental y control de placa" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-03-21"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/505" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/77814302908" ] ] .
+
+<http://hl7.org/fhir/Procedure/7e1184ff-c990-58d0-bce6-f34d995d52ee> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "160770D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente molar inferior derecho primero permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "1264277001" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Tratamiento de conducto radicular" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Revisión endodóntica con control de síntomas. Pieza ISO 46" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2026-03-27"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/503" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "in-progress" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/297361902422" ] ] .
+
+<http://hl7.org/fhir/Procedure/7e27dd5d-6d3e-5eaf-b8d4-1e5bb606bd70> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161533D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente molar inferior izquierdo primero permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "773273007" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Colocación de corona dental temporal en diente" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Corona temporal para protección cuspídea. Pieza ISO 36" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-09-15"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/501" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/332301456713" ] ] .
+
+<http://hl7.org/fhir/Procedure/7e785ed1-b49d-530b-9229-fc3e0173b8b7> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "89846007" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Ortopantomografía" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Estudio radiológico inicial" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-11-12"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/505" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/464028176533" ] ] .
+
+<http://hl7.org/fhir/Procedure/7eb4075c-76a0-52ab-a0a9-0cb283c4e3f7> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "89846007" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Ortopantomografía" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Control radiológico evolutivo" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-12-22"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/501" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/297361902422" ] ] .
+
+<http://hl7.org/fhir/Procedure/7f591c50-2c8f-5d1e-9c60-d60d569df016> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161150D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente premolar inferior izquierdo segundo permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "1264277001" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Tratamiento de conducto radicular" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Tratamiento endodóntico por pulpitis. Pieza ISO 35" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-05-26"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/505" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/283824519067" ] ] .
+
+<http://hl7.org/fhir/Procedure/8057553e-85ac-5630-b360-8f4892184b25> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "1260193009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Eliminación de cálculo dental con raspador dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Raspado y eliminación de cálculo" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-06-14"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/503" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/473681027560" ] ] .
+
+<http://hl7.org/fhir/Procedure/816e9d8f-37f0-5740-bca3-c9d5cdad0569> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161514D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente canino inferior derecho permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "773273007" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Colocación de corona dental temporal en diente" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Corona temporal para protección cuspídea. Pieza ISO 43" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-04-24"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/501" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/464028176533" ] ] .
+
+<http://hl7.org/fhir/Procedure/82f4a321-c51e-5429-b2c6-4d171effa9ea> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161227D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente molar superior derecho tercero permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "65546002" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Extracción de muela del juicio" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Extracción de tercer molar con control postoperatorio. Pieza ISO 18" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-08-15"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/504" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/413016725887" ] ] .
+
+<http://hl7.org/fhir/Procedure/8372f702-eea1-57fd-b2a4-7f94ea3cc09e> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "160770D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente molar inferior derecho primero permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "55162003" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Extracción dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Extracción simple por fractura no restaurable. Pieza ISO 46" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-06-14"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/502" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/464028176533" ] ] .
+
+<http://hl7.org/fhir/Procedure/84cc9c6c-8d72-5293-8ebc-aef4cd8ad294> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "1260193009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Eliminación de cálculo dental con raspador dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Raspado y eliminación de cálculo" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-05-01"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/504" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/332310784271" ] ] .
+
+<http://hl7.org/fhir/Procedure/858cb201-96fe-5e06-86da-1ec33233623e> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161227D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente molar superior derecho tercero permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "65546002" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Extracción de muela del juicio" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Extracción de tercer molar con control postoperatorio. Pieza ISO 18" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-11-02"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/504" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/85129043303" ] ] .
+
+<http://hl7.org/fhir/Procedure/8604e6d3-ea8b-57a7-8f28-63bee2499e13> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161262D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente molar superior derecho segundo permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "773273007" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Colocación de corona dental temporal en diente" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Corona temporal para protección cuspídea. Pieza ISO 17" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-03-28"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/505" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/502874513635" ] ] .
+
+<http://hl7.org/fhir/Procedure/86109e7c-0185-5aa4-ab8e-2dc347aba2a8> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "104791000220103" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Aplicación tópica de peróxido de hidrógeno en dientes vitales decolorados mediante férula de blanqueamiento dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Blanqueamiento domiciliario supervisado" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-03-19"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/502" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/142746893153" ] ] .
+
+<http://hl7.org/fhir/Procedure/8b0d392c-90ab-5113-8be7-79618cb45d96> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "58707002" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Educación en higiene oral" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Reeducación de técnica de cepillado" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-09-24"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/502" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/413016725887" ] ] .
+
+<http://hl7.org/fhir/Procedure/8d6cbd94-4524-5745-8409-4917b08ad36b> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "63963009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Profilaxis dental en adultos" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Profilaxis dental y control de placa" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-03-11"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/502" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/332301456713" ] ] .
+
+<http://hl7.org/fhir/Procedure/8fe82a50-db50-573d-b82c-5c0acaa5f3e6> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "63963009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Profilaxis dental en adultos" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Profilaxis semestral de mantenimiento" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-06-17"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/505" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/413016725887" ] ] .
+
+<http://hl7.org/fhir/Procedure/9034735a-4f24-5b80-b332-a0a5d4616136> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "63963009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Profilaxis dental en adultos" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Profilaxis dental y control de placa" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-05-25"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/501" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/142746893153" ] ] .
+
+<http://hl7.org/fhir/Procedure/918182d2-f754-521c-bd81-1e290f036057> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161068D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente incisivo central inferior izquierdo permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "55162003" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Extracción dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Extracción simple por fractura no restaurable. Pieza ISO 31" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-10-09"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/502" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/332310784271" ] ] .
+
+<http://hl7.org/fhir/Procedure/91a4daf7-566e-546e-8a09-873020ce28a6> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161068D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente incisivo central inferior izquierdo permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "1264277001" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Tratamiento de conducto radicular" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Tratamiento endodóntico por pulpitis. Pieza ISO 31" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-03-09"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/505" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/464028176533" ] ] .
+
+<http://hl7.org/fhir/Procedure/91c5b54c-58a2-5a3b-af07-b7680ae71a59> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161006D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente incisivo central superior izquierdo permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "55162003" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Extracción dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Extracción simple por fractura no restaurable. Pieza ISO 21" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-03-13"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/501" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/484308769108" ] ] .
+
+<http://hl7.org/fhir/Procedure/92d4b11c-b4b1-5ae1-a216-41c2c80ad2e4> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161178D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente premolar superior izquierdo segundo permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "55162003" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Extracción dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Extracción simple por fractura no restaurable. Pieza ISO 25" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-12-26"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/501" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/306930145201" ] ] .
+
+<http://hl7.org/fhir/Procedure/944e6c6c-df76-5dc8-bd93-d55e210d5f6d> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "89846007" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Ortopantomografía" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Estudio radiológico inicial" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-10-01"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/505" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/413016725887" ] ] .
+
+<http://hl7.org/fhir/Procedure/95306796-7fa7-5073-8a58-a1c853c19138> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "89846007" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Ortopantomografía" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Estudio radiológico inicial" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-01-09"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/501" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/332301456713" ] ] .
+
+<http://hl7.org/fhir/Procedure/98205e23-f176-52e3-bae0-4c5c1dc229db> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161197D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente incisivo lateral inferior derecho permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "55162003" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Extracción dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Extracción simple por fractura no restaurable. Pieza ISO 42" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-08-29"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/502" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/283824519067" ] ] .
+
+<http://hl7.org/fhir/Procedure/9b1156a2-8b8d-542e-8af9-0b893d61d3e2> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "63963009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Profilaxis dental en adultos" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Profilaxis dental y control de placa" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-02-13"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/501" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/85129043303" ] ] .
+
+<http://hl7.org/fhir/Procedure/9ce89b3b-8e24-508e-a0ba-d4b851e7f4fa> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161477D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente incisivo lateral inferior izquierdo permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "773273007" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Colocación de corona dental temporal en diente" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Corona temporal para protección cuspídea. Pieza ISO 32" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-07-06"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/501" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/283824519067" ] ] .
+
+<http://hl7.org/fhir/Procedure/9ea508fd-bf7e-55be-8663-a1e2d3ea1c4e> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161227D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente molar superior derecho tercero permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "65546002" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Extracción de muela del juicio" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Extracción de tercer molar con control postoperatorio. Pieza ISO 18" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-07-14"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/504" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/156193054270" ] ] .
+
+<http://hl7.org/fhir/Procedure/9eecd0c9-e986-5226-83ac-55d2d74badd6> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "104791000220103" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Aplicación tópica de peróxido de hidrógeno en dientes vitales decolorados mediante férula de blanqueamiento dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Blanqueamiento domiciliario supervisado" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-11-24"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/502" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/365412098636" ] ] .
+
+<http://hl7.org/fhir/Procedure/9f2944f5-79e7-51ea-a99c-bb15d3f7b960> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "63963009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Profilaxis dental en adultos" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Profilaxis dental y control de placa" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-06-28"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/501" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/484308769108" ] ] .
+
+<http://hl7.org/fhir/Procedure/a124305c-5571-5bb9-9afd-26a067b7a1be> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "89846007" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Ortopantomografía" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Estudio radiológico inicial" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-08-24"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/505" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/156193054270" ] ] .
+
+<http://hl7.org/fhir/Procedure/a6be60ee-c5ae-59d3-894d-7e8d58541bf2> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161227D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente molar superior derecho tercero permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "65546002" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Extracción de muela del juicio" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Extracción de tercer molar con control postoperatorio. Pieza ISO 18" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-05-04"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/504" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/297361902422" ] ] .
+
+<http://hl7.org/fhir/Procedure/ab61025b-3faa-54f3-b7f6-479a180e22e5> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "58707002" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Educación en higiene oral" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Reeducación de técnica de cepillado" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-10-31"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/505" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/297361902422" ] ] .
+
+<http://hl7.org/fhir/Procedure/b08627bd-4b6e-5b59-bacf-40474b88cefd> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161227D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente molar superior derecho tercero permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "65546002" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Extracción de muela del juicio" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Extracción de tercer molar con control postoperatorio. Pieza ISO 18" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-12-07"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/504" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/283824519067" ] ] .
+
+<http://hl7.org/fhir/Procedure/b0e590ee-a794-5560-93de-620ac6dbcf8d> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "63963009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Profilaxis dental en adultos" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Profilaxis dental y control de placa" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-08-05"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/501" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/297361902422" ] ] .
+
+<http://hl7.org/fhir/Procedure/b1c5f7f7-c423-5797-851f-33503369f234> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "58707002" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Educación en higiene oral" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Educación en higiene oral personalizada" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-12-09"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/502" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/156193054270" ] ] .
+
+<http://hl7.org/fhir/Procedure/b4c30e20-2087-5a62-96ec-8c4bd893c1b0> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "89846007" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Ortopantomografía" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Estudio radiológico inicial" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-03-06"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/504" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/365412098636" ] ] .
+
+<http://hl7.org/fhir/Procedure/b50fd666-85bf-51d4-85e5-7cf7d37d4afb> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "58707002" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Educación en higiene oral" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Reeducación de técnica de cepillado" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-09-28"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/503" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/156193054270" ] ] .
+
+<http://hl7.org/fhir/Procedure/b6501766-e9b2-5694-88bd-162282f49372> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "63963009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Profilaxis dental en adultos" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Profilaxis semestral de mantenimiento" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-10-10"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/504" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/77814302908" ] ] .
+
+<http://hl7.org/fhir/Procedure/b6ed828b-d60a-577f-9746-af3001c9eb15> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161941D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente incisivo lateral superior derecho permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "1264277001" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Tratamiento de conducto radicular" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Tratamiento endodóntico por pulpitis. Pieza ISO 12" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-09-17"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/504" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/306930145201" ] ] .
+
+<http://hl7.org/fhir/Procedure/b934b204-1d35-5e39-9420-584e3e7dec58> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161514D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente canino inferior derecho permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "1264277001" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Tratamiento de conducto radicular" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Tratamiento endodóntico por pulpitis. Pieza ISO 43" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-03-12"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/504" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/156193054270" ] ] .
+
+<http://hl7.org/fhir/Procedure/bbfee935-c7d4-517b-8092-cdb4513890bc> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "160840D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente canino superior derecho permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "773273007" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Colocación de corona dental temporal en diente" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Corona temporal para protección cuspídea. Pieza ISO 13" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-01-20"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/505" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/484308769108" ] ] .
+
+<http://hl7.org/fhir/Procedure/bd6df0a9-d3f0-56d7-91bc-3167f85c0524> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161546D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente premolar superior derecho segundo permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "773273007" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Colocación de corona dental temporal en diente" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Corona temporal para protección cuspídea. Pieza ISO 15" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-02-20"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/505" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/297361902422" ] ] .
+
+<http://hl7.org/fhir/Procedure/bf8b603d-ae18-5733-b558-1eac0a649216> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "1260193009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Eliminación de cálculo dental con raspador dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Refuerzo periodontal con raspado localizado" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-08-24"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/503" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/502874513635" ] ] .
+
+<http://hl7.org/fhir/Procedure/c07d7311-4c2a-5026-b928-1ffb79b80917> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "1260193009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Eliminación de cálculo dental con raspador dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Refuerzo periodontal con raspado localizado" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-11-14"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/504" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/365412098636" ] ] .
+
+<http://hl7.org/fhir/Procedure/c3a9b594-416f-563b-a853-ff747fb18350> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "63963009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Profilaxis dental en adultos" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Profilaxis dental y control de placa" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-01-31"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/502" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/332310784271" ] ] .
+
+<http://hl7.org/fhir/Procedure/c4857127-a64a-5ca1-a2d1-490d0077e434> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161227D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente molar superior derecho tercero permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "65546002" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Extracción de muela del juicio" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Extracción de tercer molar con control postoperatorio. Pieza ISO 18" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-06-08"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/504" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/502874513635" ] ] .
+
+<http://hl7.org/fhir/Procedure/c94d9013-963c-5a80-ba80-b9939d9033c0> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161317D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente molar superior izquierdo segundo permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "55162003" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Extracción dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Extracción simple por fractura no restaurable. Pieza ISO 27" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-11-12"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/501" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/473681027560" ] ] .
+
+<http://hl7.org/fhir/Procedure/c97a7585-7ad7-5393-9851-5cf3c46a43f8> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161496D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente premolar inferior derecho primero permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "55162003" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Extracción dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Extracción simple por fractura no restaurable. Pieza ISO 44" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-07-22"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/502" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/85129043303" ] ] .
+
+<http://hl7.org/fhir/Procedure/ccb755e7-7a24-5dba-a2d6-fbc87163a2a5> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "63963009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Profilaxis dental en adultos" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Profilaxis dental y control de placa" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-07-13"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/505" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/306930145201" ] ] .
+
+<http://hl7.org/fhir/Procedure/ce9642aa-e7dc-54a8-8baf-66f36c4c290f> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "58707002" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Educación en higiene oral" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Educación en higiene oral personalizada" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-04-26"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/503" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/332301456713" ] ] .
+
+<http://hl7.org/fhir/Procedure/d12bb331-6746-5dba-80f6-4f9bafab3ac0> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "63963009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Profilaxis dental en adultos" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Profilaxis semestral de mantenimiento" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-07-23"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/503" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/297361902422" ] ] .
+
+<http://hl7.org/fhir/Procedure/d20d7cbe-6741-5cd4-ab6b-cc076c3e507b> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "58707002" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Educación en higiene oral" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Reeducación de técnica de cepillado" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-10-19"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/504" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/502874513635" ] ] .
+
+<http://hl7.org/fhir/Procedure/d2104dca-41b8-5eb8-98fd-8985f08c3668> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "1260193009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Eliminación de cálculo dental con raspador dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Raspado y eliminación de cálculo" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-03-31"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/504" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/283824519067" ] ] .
+
+<http://hl7.org/fhir/Procedure/d5add4dc-c8bc-53bd-9872-89024ec04215> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "1260193009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Eliminación de cálculo dental con raspador dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Raspado y eliminación de cálculo" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-07-20"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/503" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/306930145201" ] ] .
+
+<http://hl7.org/fhir/Procedure/d76afd4d-c1a8-5da0-bdfd-44991f9fef77> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "58707002" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Educación en higiene oral" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Educación en higiene oral personalizada" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-07-26"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/501" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/473681027560" ] ] .
+
+<http://hl7.org/fhir/Procedure/d8f7d949-525f-5cd4-8e7a-d28b4d0df63c> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161329D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente premolar superior izquierdo primero permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "773273007" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Colocación de corona dental temporal en diente" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Corona temporal para protección cuspídea. Pieza ISO 24" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-09-25"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/505" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/473681027560" ] ] .
+
+<http://hl7.org/fhir/Procedure/db3ee50f-327d-542b-b112-8304be65999b> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "63963009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Profilaxis dental en adultos" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Profilaxis dental y control de placa" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-03-15"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/501" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/283824519067" ] ] .
+
+<http://hl7.org/fhir/Procedure/dc0a2ef4-0a3a-5570-9f00-e6a747ee3603> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "63963009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Profilaxis dental en adultos" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Profilaxis dental y control de placa" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-11-22"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/501" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/413016725887" ] ] .
+
+<http://hl7.org/fhir/Procedure/dc98a9de-42fc-56f2-85ae-e6f861294d51> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "104791000220103" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Aplicación tópica de peróxido de hidrógeno en dientes vitales decolorados mediante férula de blanqueamiento dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Blanqueamiento domiciliario supervisado" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-10-29"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/502" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/77814302908" ] ] .
+
+<http://hl7.org/fhir/Procedure/deb72771-afaa-52a4-9f09-e4b80ac95aed> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "89846007" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Ortopantomografía" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Estudio radiológico inicial" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-07-23"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/505" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/502874513635" ] ] .
+
+<http://hl7.org/fhir/Procedure/df899555-8fe3-5e9f-8d87-c8a1f6475488> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "160654D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente premolar inferior izquierdo primero permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "55162003" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Extracción dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Extracción simple por fractura no restaurable. Pieza ISO 34" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-09-03"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/501" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/77814302908" ] ] .
+
+<http://hl7.org/fhir/Procedure/e0542a6c-7013-5f5a-919f-d729289b9903> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161109D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente incisivo lateral superior izquierdo permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "773273007" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Colocación de corona dental temporal en diente" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Corona temporal para protección cuspídea. Pieza ISO 22" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-10-29"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/505" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/306930145201" ] ] .
+
+<http://hl7.org/fhir/Procedure/e089b012-c4d3-5fd4-8319-46f9808e25e6> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "58707002" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Educación en higiene oral" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Educación en higiene oral personalizada" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-08-20"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/502" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/484308769108" ] ] .
+
+<http://hl7.org/fhir/Procedure/e09fa4df-fb80-5171-97ab-b47c0af3559e> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "89846007" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Ortopantomografía" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Control radiológico evolutivo" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-12-10"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/505" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/502874513635" ] ] .
+
+<http://hl7.org/fhir/Procedure/e3fcf14f-721d-543b-8e72-9c1428bf9709> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "89846007" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Ortopantomografía" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Estudio radiológico inicial" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-02-06"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/504" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/77814302908" ] ] .
+
+<http://hl7.org/fhir/Procedure/e5a4cc1f-1e59-549f-a3de-f9897e388a84> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "58707002" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Educación en higiene oral" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Educación en higiene oral personalizada" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-05-16"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/501" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/77814302908" ] ] .
+
+<http://hl7.org/fhir/Procedure/e629f4c2-83ca-5a8b-9f01-a9f804178561> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "1260193009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Eliminación de cálculo dental con raspador dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Raspado y eliminación de cálculo" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-06-26"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/502" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/77814302908" ] ] .
+
+<http://hl7.org/fhir/Procedure/e79782a7-ef9d-5048-99b1-cf93155a14d3> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161454D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente molar superior izquierdo tercero permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "65546002" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Extracción de muela del juicio" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Extracción de tercer molar con control postoperatorio. Pieza ISO 28" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-01-19"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/503" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/365412098636" ] ] .
+
+<http://hl7.org/fhir/Procedure/e8ce40ac-5efe-5285-bd52-1839f76ab474> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "1260193009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Eliminación de cálculo dental con raspador dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Refuerzo periodontal con raspado localizado" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-08-05"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/501" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/413016725887" ] ] .
+
+<http://hl7.org/fhir/Procedure/ed2af8cc-381e-5196-a22d-5c7ab8fe0569> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "63963009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Profilaxis dental en adultos" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Profilaxis dental y control de placa" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-06-04"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/505" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/473681027560" ] ] .
+
+<http://hl7.org/fhir/Procedure/ed5348c8-dd4b-5b1b-9f62-d89f652d7795> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161132D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente molar superior izquierdo primero permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "1264277001" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Tratamiento de conducto radicular" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Tratamiento endodóntico por pulpitis. Pieza ISO 26" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-08-02"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/505" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/332301456713" ] ] .
+
+<http://hl7.org/fhir/Procedure/ede90b8c-6a0b-5f29-be35-ca80444e2776> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "1260193009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Eliminación de cálculo dental con raspador dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Raspado y eliminación de cálculo" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-03-04"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/503" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/413016725887" ] ] .
+
+<http://hl7.org/fhir/Procedure/ee312dff-3a77-52f8-a2f6-90a6274d1592> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "89846007" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Ortopantomografía" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Estudio radiológico inicial" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-12-22"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/505" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/85129043303" ] ] .
+
+<http://hl7.org/fhir/Procedure/f03aee90-428f-5fb7-8942-2103cd61a22e> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "1260193009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Eliminación de cálculo dental con raspador dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Raspado y eliminación de cálculo" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-02-01"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/503" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/156193054270" ] ] .
+
+<http://hl7.org/fhir/Procedure/f3bc874e-7523-5b3b-a405-69a669ba46ec> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "160903D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente incisivo central superior derecho permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "773273007" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Colocación de corona dental temporal en diente" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Corona temporal para protección cuspídea. Pieza ISO 11" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-12-11"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/505" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/142746893153" ] ] .
+
+<http://hl7.org/fhir/Procedure/f3ee7a18-9eb5-5187-abf0-322fe6d34761> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "58707002" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Educación en higiene oral" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Educación en higiene oral personalizada" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-03-30"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/502" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/85129043303" ] ] .
+
+<http://hl7.org/fhir/Procedure/f4c459e6-3642-58a3-904b-1e40530e7b8c> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161329D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente premolar superior izquierdo primero permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "1264277001" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Tratamiento de conducto radicular" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Tratamiento endodóntico por pulpitis. Pieza ISO 24" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-08-25"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/503" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/77814302908" ] ] .
+
+<http://hl7.org/fhir/Procedure/f7fc421d-0033-592b-b02f-550968c02c72> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "1260193009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Eliminación de cálculo dental con raspador dental" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Raspado y eliminación de cálculo" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-12-16"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/503" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/502874513635" ] ] .
+
+<http://hl7.org/fhir/Procedure/f91396c4-01ed-53cd-a5f1-430c10940e8a> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "89846007" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Ortopantomografía" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Estudio radiológico inicial" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-05-28"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/504" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/306930145201" ] ] .
+
+<http://hl7.org/fhir/Procedure/f9862ebf-337f-5243-8afa-08f25b6f4627> a fhir:Procedure ;
+    fhir:Procedure.bodySite [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "161132D" ] ;
+                    fhir:Coding.display [ fhir:value "Diente molar superior izquierdo primero permanente completo" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/snodent"^^xsd:anyURI ] ] ] ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "773273007" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Colocación de corona dental temporal en diente" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Corona temporal para protección cuspídea. Pieza ISO 26" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2024-08-15"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/505" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/365412098636" ] ] .
+
+<http://hl7.org/fhir/Procedure/ffee7e97-1ea5-5ff7-b5a7-9e06e0b34c40> a fhir:Procedure ;
+    fhir:Procedure.code [ fhir:CodeableConcept.coding [ fhir:Coding.code [ fhir:value "63963009" ] ;
+                    fhir:Coding.system [ fhir:value "http://ada.org/cdt"^^xsd:anyURI ] ] ;
+            fhir:CodeableConcept.text [ fhir:value " Profilaxis dental en adultos" ] ] ;
+    fhir:Procedure.note [ fhir:Annotation.text [ fhir:value "Profilaxis semestral de mantenimiento" ] ] ;
+    fhir:Procedure.performedDateTime [ fhir:value "2025-06-26"^^xsd:date ] ;
+    fhir:Procedure.performer [ fhir:Procedure.performer.actor [ fhir:Reference.reference [ fhir:value "Practitioner/501" ] ] ] ;
+    fhir:Procedure.status [ fhir:value "completed" ] ;
+    fhir:Procedure.subject [ fhir:Reference.reference [ fhir:value "Patient/156193054270" ] ] .
+

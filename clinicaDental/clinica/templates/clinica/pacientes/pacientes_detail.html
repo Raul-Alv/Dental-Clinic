@@ -18,7 +18,7 @@
     <div class="action-group">
       <a href="{% url 'procedimiento_crear' %}?paciente={{ paciente.id }}" class="btn btn-primary">Añadir procedimiento</a>
       <a href="{% url 'paciente_update' paciente.id %}" class="btn btn-primary">Editar ficha</a>
-      <a href="{% url 'exportar_paciente' paciente.id %}" class="btn btn-outline-secondary">Exportar RDF</a>
+      <a href="{% url 'exportar_paciente' paciente.id %}" class="btn btn-outline-secondary">Exportar paciente</a>
       <button type="button" class="btn btn-danger" data-bs-toggle="modal"
         data-bs-target="#confirmDeleteModal{{ paciente.id }}">
         Desactivar
@@ -29,14 +29,14 @@
   <div class="detail-layout">
     <section class="section-card detail-summary">
       <span class="page-kicker">Resumen</span>
-      <h2>Perfil del paciente</h2>
+      <h2>Datos personales</h2>
       <div class="detail-summary__grid">
         <div>
-          <span>Genero</span>
+          <span>Género</span>
           <strong>{{ paciente.genero_label }}</strong>
         </div>
         <div>
-          <span>Telefono</span>
+          <span>Teléfono</span>
           <strong>{{ paciente.telefono|default:"Sin telefono" }}</strong>
         </div>
         <div>
@@ -66,11 +66,11 @@
           <dd>{{ paciente.provincia|default:"No indicada" }}</dd>
         </div>
         <div>
-          <dt>Codigo postal</dt>
+          <dt>Código postal</dt>
           <dd>{{ paciente.codigo_postal|default:"No indicado" }}</dd>
         </div>
         <div>
-          <dt>Pais</dt>
+          <dt>País</dt>
           <dd>{{ paciente.pais|default:"No indicado" }}</dd>
         </div>
       </dl>
@@ -80,7 +80,7 @@
       <div class="section-card__header">
         <div>
           <span class="page-kicker">Historial</span>
-          <h2>Procedimientos del paciente</h2>
+          <h2>Intervenciones del paciente</h2>
         </div>
         <span class="soft-badge">{{ procedimientos|length }} registros</span>
       </div>
@@ -90,10 +90,10 @@
           <table class="table align-middle">
             <thead>
               <tr>
-                <th scope="col">Procedimiento</th>
+                <th scope="col">Intervención</th>
                 <th scope="col">Estado</th>
                 <th scope="col">Dentista</th>
-                <th scope="col">Diente</th>
+                <th scope="col">Pieza dental</th>
                 <th scope="col">Fecha</th>
               </tr>
             </thead>
@@ -129,7 +129,7 @@
         </div>
       {% else %}
         <div class="empty-state">
-          <h2>Este paciente todavia no tiene procedimientos</h2>
+          <h2>Este paciente todavia no tiene intervenciones registradas</h2>
           <p>Cuando registres el primero aparecera aqui junto al resto de su historial clinico.</p>
         </div>
       {% endif %}
