@@ -1,5 +1,6 @@
 import re
 import random
+import uuid
 
 from django.db import models
 
@@ -238,14 +239,14 @@ class ProcedimientoCatalogo(models.Model):
         return self.text
     
 class Procedimiento(models.Model):
-    id = models.AutoField(primary_key=True) #ID autoincremental
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False) # GUID aleatorio
     status = models.CharField(max_length=20, choices=StatusProcedimiento.choices, default=StatusProcedimiento.PREPARACION)
     codigo = models.ForeignKey(ProcedimientoCatalogo, on_delete=models.PROTECT) #Codigo del procedimiento basado en SNOMED CT
     paciente = models.ForeignKey(Paciente, on_delete=models.PROTECT)
     practicante = models.ForeignKey(Practicante, on_delete=models.PROTECT)
     practicante_externo_uri = models.URLField(blank=True, null=True) #URI del practicante externo si aplica
     diente = models.ForeignKey(Diente, on_delete=models.PROTECT, blank=True, null=True) #Diente afectado por el procedimiento
-    descripcion = models.CharField(max_length=100)
+    descripcion = models.CharField(max_length=100, blank=True, null=True)
     realizado_el = models.DateField()
     
     def __str__(self):

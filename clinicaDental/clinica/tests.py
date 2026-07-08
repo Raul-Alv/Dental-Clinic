@@ -1,3 +1,4 @@
+import uuid
 from datetime import date
 
 from django.test import TestCase
@@ -212,14 +213,16 @@ class ProcedimientoFormTests(TestCase):
             "status",
             "paciente",
             "practicante",
-            "diente",
-            "descripcion",
             "realizado_el",
         )
 
         for field_name in required_fields:
             self.assertTrue(form.fields[field_name].required)
             self.assertEqual(form.errors[field_name], ["Es obligatorio."])
+
+        for field_name in ("diente", "descripcion"):
+            self.assertFalse(form.fields[field_name].required)
+            self.assertNotIn(field_name, form.errors)
 
 
 class PracticanteFormTests(TestCase):
@@ -423,6 +426,40 @@ class PatientProcedureFlowTests(TestCase):
                 descripcion="Procedimiento nuevo",
             ).exists()
         )
+        procedimiento = Procedimiento.objects.get(
+            paciente=self.paciente,
+            descripcion="Procedimiento nuevo",
+        )
+        self.assertIsInstance(procedimiento.id, uuid.UUID)
+
+    def test_create_procedure_allows_empty_tooth_and_notes(self):
+        post_response = self.client.post(
+            reverse("procedimiento_crear"),
+            {
+                "paciente_context": self.paciente.id,
+                "codigo": self.otro_catalogo.id,
+                "codigo_text": self.otro_catalogo.codigo,
+                "status": "completed",
+                "paciente": self.paciente.id,
+                "practicante": self.practicante.id,
+                "diente": "",
+                "descripcion": "",
+                "realizado_el": "2026-05-13",
+            },
+        )
+
+        self.assertRedirects(
+            post_response,
+            reverse("paciente_detail", args=[self.paciente.id]),
+        )
+
+        procedimiento = Procedimiento.objects.get(
+            paciente=self.paciente,
+            codigo=self.otro_catalogo,
+            realizado_el=date(2026, 5, 13),
+        )
+        self.assertIsNone(procedimiento.diente)
+        self.assertFalse(procedimiento.descripcion)
 
     def test_create_procedure_shows_required_messages_when_fields_are_empty(self):
         response = self.client.post(
@@ -442,7 +479,7 @@ class PatientProcedureFlowTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, '<span class="required-indicator" aria-hidden="true">*</span>', html=True)
-        self.assertContains(response, "Es obligatorio.", count=7)
+        self.assertContains(response, "Es obligatorio.", count=5)
 
 
 class DashboardOverviewTests(TestCase):
@@ -894,6 +931,15 @@ class HistorialExportViewTests(TestCase):
             fecha_nacimiento=date(1988, 6, 15),
             estado_civil="M",
         )
+        self.paciente_inactivo = Paciente.objects.create(
+            activo=False,
+            nombre="Clara",
+            apellido="Inactiva",
+            genero="female",
+            telefono="111222333",
+            fecha_nacimiento=date(1992, 3, 20),
+            estado_civil="U",
+        )
         self.practicante = Practicante.objects.create(
             nombre="Marta",
             apellido="Sanz",
@@ -938,3 +984,28 @@ class HistorialExportViewTests(TestCase):
         self.assertContains(response, "Limpieza dental")
         self.assertNotContains(response, "Extraccion simple")
         self.assertContains(response, reverse("export_historial", args=[self.paciente.id]))
+
+    def test_history_export_view_hides_inactive_patients(self):
+        response = self.client.get(reverse("export_historial"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            list(response.context["pacientes"]),
+            [self.paciente, self.otro_paciente],
+        )
+        self.assertContains(response, "Ana Lopez")
+        self.assertContains(response, "Luis Garcia")
+        self.assertNotContains(response, "Clara Inactiva")
+
+    def test_history_export_view_rejects_inactive_patient_selection(self):
+        response = self.client.get(
+            reverse("export_historial"),
+            {"paciente": self.paciente_inactivo.id},
+        )
+
+        self.assertEqual(response.status_code, 404)
+
+    def test_history_rdf_export_rejects_inactive_patient(self):
+        response = self.client.get(reverse("export_historial", args=[self.paciente_inactivo.id]))
+
+        self.assertEqual(response.status_code, 404)

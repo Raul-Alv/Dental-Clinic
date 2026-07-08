@@ -40,7 +40,6 @@ def crearProcedimiento(request):
         form = ProcedimientoForm(request.POST, paciente_fijado=paciente)
         if form.is_valid():
             procedure = form.save(commit=False)
-            procedure.id = Procedimiento.objects.count() + 1
             procedure.paciente = paciente
             procedure.save()
             return redirect("paciente_detail", id=paciente.id)
@@ -129,14 +128,14 @@ def import_data(request):
 
 
 def patient_export_view(request):
-    pacientes = Paciente.objects.all()
+    pacientes = Paciente.objects.filter(activo=True)
     selected_id = request.GET.get("paciente")
 
     procedimientos = []
     paciente = None
 
     if selected_id:
-        paciente = get_object_or_404(Paciente, id=selected_id)
+        paciente = get_object_or_404(Paciente, id=selected_id, activo=True)
         procedimientos = Procedimiento.objects.filter(paciente=paciente).select_related("codigo", "diente")
 
     return render(

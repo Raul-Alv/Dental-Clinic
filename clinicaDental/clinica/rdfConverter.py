@@ -1,9 +1,11 @@
 import io
+import uuid
 import zipfile
 
 from django.core.exceptions import ValidationError
 from django.db import transaction
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
 from django.utils.text import slugify
 from rdflib import BNode, Graph, Literal, URIRef
 from rdflib.namespace import RDF, XSD
@@ -96,6 +98,17 @@ def _numeric_identifier(value):
     if identifier and identifier.isdigit():
         return int(identifier)
     return None
+
+
+def _uuid_identifier(value):
+    identifier = _resource_identifier(value)
+    if not identifier:
+        return None
+
+    try:
+        return uuid.UUID(identifier)
+    except (TypeError, ValueError):
+        return None
 
 
 def _absolute_reference(value):
@@ -243,7 +256,7 @@ def export_teeth_rdf(request):
 
 
 def build_patient_rdf(request, paciente_id):
-    paciente = Paciente.objects.get(id=paciente_id)
+    paciente = get_object_or_404(Paciente, id=paciente_id, activo=True)
     include_patient = request.GET.get("exportar_paciente") == "on"
     procedimientos = list(
         Procedimiento.objects.select_related("codigo", "diente", "practicante").filter(paciente=paciente)
@@ -562,12 +575,7 @@ def _persist_resources(graph, focus_map):
             imported["practicantes"]["creados" if created else "actualizados"] += 1
 
         for procedure_subject in focus_map.get(PROCEDURE_SHAPE, []):
-            procedure_id = _numeric_identifier(procedure_subject)
-            if procedure_id is None:
-                raise ValidationError(
-                    f"El procedimiento {_resource_identifier(procedure_subject) or procedure_subject} no tiene un identificador numerico compatible."
-                )
-
+            procedure_id = _uuid_identifier(procedure_subject)
             patient_reference = _reference_value(graph, procedure_subject, FHIR["Procedure.subject"])
             patient_id = _numeric_identifier(patient_reference)
             paciente = Paciente.objects.get(id=patient_id)
@@ -600,7 +608,11 @@ def _persist_resources(graph, focus_map):
                 "realizado_el": _wrapped_value(graph, procedure_subject, FHIR["Procedure.performedDateTime"]),
             }
 
-            _, created = Procedimiento.objects.update_or_create(id=procedure_id, defaults=defaults)
+            if procedure_id is None:
+                Procedimiento.objects.create(**defaults)
+                created = True
+            else:
+                _, created = Procedimiento.objects.update_or_create(id=procedure_id, defaults=defaults)
             imported["procedimientos"]["creados" if created else "actualizados"] += 1
 
     return imported
